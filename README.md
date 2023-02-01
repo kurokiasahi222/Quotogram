@@ -5,7 +5,7 @@ CSCI 5117, Spring 2023, [assignment description](https://canvas.umn.edu/courses/
 ## App Info:
 
 * Team Name: Upper Five
-* App Name: Quotogram
+* App Name: Quotagram
 * App Link: <https://TODO.com/>
 
 ### Students
