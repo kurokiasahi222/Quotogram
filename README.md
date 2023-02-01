@@ -4,14 +4,17 @@ CSCI 5117, Spring 2023, [assignment description](https://canvas.umn.edu/courses/
 
 ## App Info:
 
-* Team Name: TODO
-* App Name: TODO
+* Team Name: Upper Five
+* App Name: Quotogram
 * App Link: <https://TODO.com/>
 
 ### Students
 
-* First Last, x500@umn.edu
-* ...
+* Anwaar Hadi, hadi0013
+* Jason Woitalla, woita006
+* William Mleziva, mlezi006
+* Aditi Patil, patil112
+* Ash Kuroki, kurok011
 
 
 ## Key Features
