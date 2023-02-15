@@ -2,13 +2,44 @@
 {% block title %}Index{% endblock %}
 {% block head %}
     {{ super() }}
-    <style type="text/css">
-        .important { color: #336699; }
-    </style>
 {% endblock %}
 {% block content %}
-    <h1>Index</h1>
-    <p class="important">
-      Welcome to Quotagram
-    </p>
+    <h2>Quote of the Day</h2>
+    {% with 
+        quote_text="So, if you cannot understand that there is something in man which responds to the challenge of this mountain and goes out to meet it, that the struggle is the struggle of life itself upward and forever upward, then you wont see why we go. What we get from this adventure is just sheer joy. And joy is, after all, the end of life.", 
+        quote_author="George Mallory", 
+        quote_user="Quote of the Day" %}
+        {% include "modules/quote.html" %}
+    {% endwith %}
+
+    <h2>Popular Posts</h2>
+    <div class="popular-posts pure-g">
+        {% with 
+            quote_text = "The whole trick is keeping the truth up front in daily consciousness.",
+            quote_author="David Foster Wallace",
+            quote_user="Random User",
+            min_width="100px",
+            pref_width="25%",
+            max_width="350px" %}
+            {% include "modules/quote.html" %}
+        {% endwith %}
+        {% with 
+            quote_text = "The whole trick is keeping the truth up front in daily consciousness.",
+            quote_author="David Foster Wallace",
+            quote_user="Random User",
+            min_width="100px",
+            pref_width="25%",
+            max_width="350px" %}
+            {% include "modules/quote.html" %}
+        {% endwith %}
+        {% with 
+            quote_text = "The whole trick is keeping the truth up front in daily consciousness.",
+            quote_author="David Foster Wallace",
+            quote_user="Random User",
+            min_width="100px",
+            pref_width="25%",
+            max_width="350px" %}
+            {% include "modules/quote.html" %}
+        {% endwith %}
+    </div>
 {% endblock %}
