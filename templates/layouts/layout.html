@@ -9,23 +9,25 @@
     <link rel="stylesheet" href="/static/quote.css" />
     <link rel="icon" type="image/png" href="/static/images/favicon.png" />
     <script src="https://kit.fontawesome.com/671e01df00.js" crossorigin="anonymous"></script>
+    <script src="/static/javascript/menu.js" defer></script>
     <title>{% block title %}{% endblock %} - Quotagram</title>
     {% endblock %}
 </head>
 <body>
     <nav class="navigation">
-        <div class="pure-g">
-            <div class="pure-u-1-5">
-                <div class="navigation-logo">
-                    <div class="navigation-logo-container">
+        <div class="pure-g navigation-wrapper">
+            <div class="pure-u-1 pure-u-md-1-5">
+                <div class="navigation-logo pure-menu">
+                    <div class="navigation-logo-container pure-menu-heading">
                         <a href="/">
                             <img src="/static/images/logo.png" alt="Quotagram Logo" />
                         </a>
                     </div>
+                    <a href="#" class="navigation-custom-toggle"><s class="navigation-bar"></s><s class="navigation-bar"></s></a>
                 </div>
             </div>
-            <div class="pure-u-3-5">
-                <div class="navigation-links pure-menu pure-menu-horizontal">
+            <div class="pure-u-1 pure-u-md-3-5">
+                <div class="navigation-links pure-menu pure-menu-horizontal custom-can-transform">
                     <ul class="pure-menu-list">
                         <li class="pure-menu-item">
                             <a class="pure-menu-link" href="/">Home Page</a>
@@ -36,8 +38,8 @@
                     </ul>
                 </div>
             </div>
-            <div class="navigation-login pure-u-1-5">
-                <div class="navigation-login-button-div">
+            <div class="navigation-login pure-u-1 pure-u-md-1-5">
+                <div class="navigation-login-button-div custom-can-transform">
                     <a class="pure-button pure-button-primary navigation-login-button" href="/login">Login <i class="fa-solid fa-user"></i></a>
                 </div>
             </div>
