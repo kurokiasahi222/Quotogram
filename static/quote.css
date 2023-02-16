@@ -1,0 +1,22 @@
+.quote {
+    background-color: #e2e0e0;
+    border-radius: 10px;
+    padding: 0.75em 1em;
+    margin: 1em 0;
+    margin-right: 1em;
+}
+
+.quote-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quote-user {
+    float: right;
+}
+
+.quote-user-image {
+    margin-left: 0.5em;
+}

@@ -39,15 +39,19 @@ along with a very brief caption:**
 ![](https://media.giphy.com/media/o0vwzuFwCGAFO/giphy.gif)
 
 
-## Mock-up 
+## Mock-ups
 
-There are a few tools for mock-ups. Paper prototypes (low-tech, but effective and cheap), Digital picture edition software (gimp / photoshop / etc.), or dedicated tools like moqups.com (I'm calling out moqups here in particular since it seems to strike the best balance between "easy-to-use" and "wants your money" -- the free teir isn't perfect, but it should be sufficient for our needs with a little "creative layout" to get around the page-limit)
+![Paper mockups of the homepage](/images/photos/Page1.png)
+**Figure 1:** This is the mockup of the homepage https://www.quotagram.com/. There are 2 similar but different views here. The top is unauthenticated version and the bottom is what the page looks like after login. Note that in the unauthenticated view all buttons that perform an action the only authenticated users can perform will be grayed out. 
 
-In this space please either provide images (around 4) showing your prototypes, OR, a link to an online hosted mock-up tool like moqups.com
+![Homepage links](/images/photos/Page2.png)
+**Figure 2:** These are the pages that are available to users from the homepage. The more info modal is available for both unauthenticated and authenticated users. It will probably blur the background or have a subtle color to obstruct the other content on the homepage to bring it into focus. The new post page is a pretty standard form requiring users to fill out the necessary parts for a post.
 
-**[Add images/photos that show your paper prototype (around 4)](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository) along with a very brief caption:**
+![Profile pages](/images/photos/Page3.png)
+**Figure 3:** There are two options we have for the profile page which we dub "the quote board". The top one is the safer more standard approach. It just displays the users posts and any quotes they've saved to their quote board. It will either scroll infinitely or just display a finite number of quotes at a time allowing users to scroll pages. The second option is more fun and displays their board much like a real life board. This will probably interact with a drawing api / custom JavaScript so we will only implement this design if we have the time and resources.
 
-![](https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif)
+![Explore Page](/images/photos/Page4.png)
+This is our explore and search page. Very standard search bar at the top and also allows users to view quotes in different categories much how the Netflix homepage works.
 
 
 ## External Dependencies

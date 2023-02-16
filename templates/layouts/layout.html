@@ -2,16 +2,56 @@
 <html lang="en">
 <head>
     {% block head %}
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="/static/quote.css" />
+    <link rel="icon" type="image/png" href="/static/images/favicon.png" />
+    <script src="https://kit.fontawesome.com/671e01df00.js" crossorigin="anonymous"></script>
+    <script src="/static/javascript/menu.js" defer></script>
     <title>{% block title %}{% endblock %} - Quotagram</title>
     {% endblock %}
 </head>
 <body>
-    <div id="main-content">{% block content %}{% endblock %}</div>
-    <div id="footer">
-        {% block footer %}
-        &copy; Copyright 2023 by <a href="http://domain.invalid/">you</a>.
-        {% endblock %}
+    <nav class="navigation">
+        <div class="pure-g navigation-wrapper">
+            <div class="pure-u-1 pure-u-md-1-5">
+                <div class="navigation-logo pure-menu">
+                    <div class="navigation-logo-container pure-menu-heading">
+                        <a href="/">
+                            <img src="/static/images/logo.png" alt="Quotagram Logo" />
+                        </a>
+                    </div>
+                    <a href="#" class="navigation-custom-toggle"><s class="navigation-bar"></s><s class="navigation-bar"></s></a>
+                </div>
+            </div>
+            <div class="pure-u-1 pure-u-md-3-5">
+                <div class="navigation-links pure-menu pure-menu-horizontal custom-can-transform">
+                    <ul class="pure-menu-list">
+                        <li class="pure-menu-item">
+                            <a class="pure-menu-link" href="/">Home Page</a>
+                        </li>
+                        <li class="pure-menu-item">
+                            <a class="pure-menu-link" href="/explore">Explore  <i class="fa-sharp fa-solid fa-magnifying-glass"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="navigation-login pure-u-1 pure-u-md-1-5">
+                <div class="navigation-login-button-div custom-can-transform">
+                    <a class="pure-button pure-button-primary navigation-login-button" href="/login">Login <i class="fa-solid fa-user"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="main-content">{% block content %}{% endblock %}</div>
+    <div class="footer">
+        <div class="footer-content">
+            {% block footer %}
+            Quotagram is a project developed at the University of Minnesota &copy; Copyright 2023.
+            {% endblock %}
+        </div>
     </div>
 </body>
 </html>
