@@ -1,0 +1,33 @@
+@import "style.css";
+
+.main-content {
+    width: 85%;
+    margin: 0 auto 0 0;
+}
+
+.side-bar{
+    background-color: var(--color-secondary);
+    text-align: center;
+    height: 100%;
+}
+
+.profile-user-image {
+    margin: 12px 0;
+}
+
+.profile-info{
+    width: 100%;
+    margin: 12px 0 3px 0;
+}
+
+.followers-button, .settings-button{
+    background-color: var(--color-primary);
+    margin: 2px;
+    width: 70%;
+}
+
+.content-placeholder{
+    background-color: darkgrey;
+    margin: 1% 0;
+    height: 300vh;
+}
