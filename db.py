@@ -65,3 +65,10 @@ def get_post_table_json():
     with get_db_cursor() as cur:
         cur.execute("select row_to_json(post) from post")
         return cur.fetchall()
+    
+def get_posts_by_category(category,q=POSTS_BY_CATEGORY):
+    q = q.format(post_category=category) 
+    with get_db_cursor() as cur:
+        current_app.logger.info("Executing query {}".format(q))
+        cur.execute(q)
+        return cur.fetchall()
