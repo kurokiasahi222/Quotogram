@@ -52,10 +52,11 @@ def test_db_connection():
         cur.execute("SELECT 1=1")
         return cur.fetchall()
 
-def get_posts(user_id, q=ALL_POSTS.format(user_id=user_id)):
+def get_posts(user_id, q=ALL_POSTS):
     # make a SELECT query
+    q = q.format(user_id)
     with get_db_cursor() as cur:
-        current_app.logging.info("Executing query {}".format(q))
+        current_app.logger.info("Executing query {}".format(q))
         cur.execute(q)
         return cur.fetchall()
 
