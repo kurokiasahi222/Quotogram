@@ -8,7 +8,7 @@ docs:
 from contextlib import contextmanager
 import logging
 import os
-from flask import current_app, g
+from flask import *
 
 import psycopg2
 from psycopg2.pool import ThreadedConnectionPool
@@ -50,4 +50,17 @@ def get_db_cursor(commit=False):
 def test_db_connection():
     with get_db_cursor() as cur:
         cur.execute("SELECT 1=1")
+        return cur.fetchall()
+
+def get_posts(user_id, q=ALL_POSTS.format(user_id=user_id)):
+    # make a SELECT query
+    with get_db_cursor() as cur:
+        current_app.logging.info("Executing query {}".format(q))
+        cur.execute(q)
+        return cur.fetchall()
+
+def get_post_table_json():
+    #jsonify the post table
+    with get_db_cursor() as cur:
+        cur.execute("select row_to_json(post) from post")
         return cur.fetchall()
