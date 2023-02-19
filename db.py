@@ -52,7 +52,11 @@ def test_db_connection():
         cur.execute("SELECT 1=1")
         return cur.fetchall()
 
-def get_posts(user_id, q=ALL_POSTS):
+<<<<<<<<< Temporary merge branch 1
+def get_posts(q=ALL_POSTS):
+=========
+def get_posts(user_id, q=ALL_POSTS.format(user_id=user_id)):
+>>>>>>>>> Temporary merge branch 2
     # make a SELECT query
     q = q.format(user_id)
     with get_db_cursor() as cur:
