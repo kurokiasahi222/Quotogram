@@ -1,5 +1,6 @@
 CREATE TABLE users (
     user_id VARCHAR(250) PRIMARY KEY,
+    username VARCHAR(250) NOT NULL,
     first_name VARCHAR(250) NOT NULL,
     last_name VARCHAR(250) NOT NULL,
     profile_image TEXT NOT NULL,
@@ -18,6 +19,7 @@ CREATE TABLE post (
     post_id BIGSERIAL PRIMARY KEY,
     user_id VARCHAR(250) NOT NULL,
     quote VARCHAR(500) NOT NULL,
+    quote_author VARCHAR(250) NOT NULL DEFAULT 'Anonymous',
     context VARCHAR(1000),
     creation_time TIMESTAMP NOT NULL DEFAULT CURRENT_DATE,
     FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
