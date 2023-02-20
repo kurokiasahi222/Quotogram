@@ -4,6 +4,7 @@
     {{ super() }}
 {% endblock %}
 {% block content %}
+    {% include "modules/quote_modal.html" %}
     <h2>Quote of the Day</h2>
     {% with 
         quote_text="So, if you cannot understand that there is something in man which responds to the challenge of this mountain and goes out to meet it, that the struggle is the struggle of life itself upward and forever upward, then you wont see why we go. What we get from this adventure is just sheer joy. And joy is, after all, the end of life.", 
