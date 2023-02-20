@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, session, url_for
+from flask import *
 import json
 import os
 from urllib.parse import quote_plus, urlencode
@@ -28,8 +28,16 @@ def init():
 
 @app.route("/")
 def index():
-    print(test_db_connection()) # TODO: remove later
     return render_template("index.html")
+
+@app.route('/api') #default api route jsonifies post table
+def default_table():
+    return get_table_json('post')
+
+@app.route('/api/<table_name>') #need to specify a table name here in the route
+def table(table_name='post'):
+    table_name = str(table_name)
+    return get_table_json(table_name)
 
 ######### Auth0 stuff ########
 
