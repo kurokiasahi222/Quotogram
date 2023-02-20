@@ -46,12 +46,6 @@ def get_db_cursor(commit=False):
       finally:
           cursor.close()
 
-# TODO: Delete this once we have actual queries
-# def test_db_connection():
-#     with get_db_cursor() as cur:
-#         cur.execute("SELECT 1=1")
-#         return cur.fetchall()
-
 def get_posts(uid, q=ALL_POSTS):
     # make a SELECT query
     q = q.format(user_id=uid)
