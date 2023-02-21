@@ -44,3 +44,8 @@ WHERE p.post_id = l.post_id
 ORDER BY l.likes DESC
 LIMIT {limit} OFFSET {offset}"""
 ## print(POSTS_BY_POPULARITY.format(limit=10,offset=0)) # Get top 10 quotes 
+
+ADD_USER = """INSERT INTO users (user_id,username,first_name,last_name,profile_image,email)
+VALUES ('{user_id}','{username}','{first_name}','{last_name}','{profile_image}','{email}')"""
+
+ADD_BOARD = """INSERT INTO board (user_id,title) VALUES ('{user_id}','{title}')"""

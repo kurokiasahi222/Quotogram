@@ -63,11 +63,19 @@ def login():
 def callback():
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
-    session["uid"] = token["userinfo"]["sid"]
+    session["uid"] = token["userinfo"]["sub"]
+    session["username"] = token["userinfo"]["nickname"]
     session["first_name"] = token["userinfo"]["given_name"]
     session["last_name"] = token["userinfo"]["family_name"]
     session["email"] = token["userinfo"]["email"]
     session["picture"] = token["userinfo"]["picture"]
+
+    # If the user is not in the database then add them to the database
+    res = check_user_id_in_database(session["uid"])
+    if len(res) == 0:    # if user is not in the database 
+        add_user(session["uid"], session["username"], session["first_name"],
+                session["last_name"], session["email"], session["picture"])
+
     return redirect("/") # TODO: Change to logged in page
 
 
