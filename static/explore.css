@@ -1,0 +1,24 @@
+.search-form {
+    margin-top: 1em;
+}
+
+.search-form fieldset{
+    position: relative;
+}
+
+.search-form input {
+    width: 100%;
+    padding: 0.75em 0.6em !important;
+}
+
+.search-form button {
+    position: absolute;
+    right: 1px;
+    background-color: transparent;
+    color: #000;
+    bottom: 1em;
+}
+
+.search-form button:hover {
+    background-image: none;
+}
