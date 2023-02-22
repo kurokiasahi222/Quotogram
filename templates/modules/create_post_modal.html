@@ -1,21 +1,32 @@
 <div id="create-post-modal" class="modal micromodal-slide" aria-hidden="true">
   <div class="modal-background" tabindex="-1" data-micromodal-close>
-    <div role="dialog" aria-modal="true" aria-labelledby="create-post-modal-title" >
-      <header>
-        <h2 id="create-post-modal-title">
+    <div class="create-post-modal-widget" role="dialog" aria-modal="true" aria-labelledby="create-post-modal-title" >
+      <div class="create-post-modal-header">
+        <h2 class="create-post-modal-title">
           Create Post
         </h2>
-        <button class="pure-button" aria-label="Close modal" data-micromodal-close>Close</button>
-      </header>
+        <button class="pure-button create-post-modal-close" aria-label="Close modal" data-micromodal-close>Close</button>
+      </div>
       <div id="create-post-modal-content">
-        <form class="pure-from ">
+        <form class="pure-form" method="POST">
           <fieldset class="pure-group">
             <textarea class="pure-input" placeholder="Quote" id="quote"></textarea>
             <input class="pure-input" placeholder="Quote Attribution" id="quote_author"/>
           </fieldset>
           <textarea class="pure-input" placeholder="Quote Context" id="context"></textarea>
-          <fieldset>
-            
+          <fieldset >
+            <div class="category">
+              <input type="checkbox" class="category-check" id="post-category-1" value=""/> 
+              <label for="post-category-1" class="pure-checkbox category"> Movie Quotes </label>
+            </div>
+            <div class="category">
+              <input type="checkbox" class="category-check" id="post-category-2" value=""/>
+              <label for="post-category-2" class="pure-checkbox category"> Inspirational </label>
+            </div>
+            <div class="category">
+              <input type="checkbox" class="category-check" id="post-category-3" value=""/>
+              <label for="post-category-3" class="pure-checkbox category"> Funny </label>
+            </div>
           </fieldset>
           <button type="submit" class="pure-button">Post Quote</button>
         </form>
