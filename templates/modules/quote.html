@@ -1,32 +1,9 @@
-{% block quote %}
-    <div class="{% for class in classes %}{{class ~ ' '}}{% endfor %}quote-conatiner" {% if not custom_width %}style="width:clamp(300px, 50%, 700px);"{% endif %}>
-        <div class="quote">
-            <div class="quote-user pure-g">
-                <div class="quote-user-image">
-                    <img src="/static/images/user.png" alt="User Image" width="64px"/>
-                </div>
-                <div class="quote-user-name">
-                    <a href="#">{{ quote_user }}</a>
-                </div>
-            </div>
-            <div class="quote-content">
-                <div class="quote-content-text">
-                    <p>{{ quote_text }}</p>
-                </div>
-                <div class="quote-content-author">
-                    <p style="font-weight:bold;">{{ quote_author }}</p>
-                </div>
-            </div>
-            <div class="quote-footer">
-                <div class="quote-footer-info">
-                    <a href="#" data-micromodal-trigger="modal-1">More Info</a>
-                </div>
-                <div class="quote-footer-buttons pure-g">
-                    <button class="quote-footer-buttons-like" type="button"><i class="fa-solid fa-heart"></i></button>
-                    <span class="quote-footer-buttons-like-count">0</span>
-                    <button class="quote-footer-buttons-add pure-button" button="button">Add <i class="fa-sharp fa-solid fa-plus"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endblock %}
+{% import "modules/quote_macro.html" as quote %}
+<div class="{% for class in classes %}{{class ~ ' '}}{% endfor %}quote-wrapper" {% if not custom_width %}style="width:clamp(300px, 50%, 700px);"{% endif %}>
+    {{ quote.display(quote_id=quote_id,
+                    user_name=quote_user, 
+                    user_link="#", 
+                    quote_text=quote_text, 
+                    quote_author=quote_author,
+                    quote_context=quote_context)}}
+</div>
