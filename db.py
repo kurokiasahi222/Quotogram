@@ -68,6 +68,30 @@ def get_posts_by_category(category,q=POSTS_BY_CATEGORY):
         cur.execute(q)
         return cur.fetchall()
 
+def check_user_id_in_database(user_id):
+    # Check if a user is in the database
+    q = """SELECT * FROM users WHERE user_id = '{user_id}'"""
+    q = q.format(user_id=user_id)
+    with get_db_cursor() as cur:
+        current_app.logger.info("Executing query {}".format(q))
+        cur.execute(q)
+        return cur.fetchall()
+
+def add_user(user_id,username,first_name,last_name,email,image):
+    # This method is called to add the user to the users table and create a personal board for them 
+
+    q_add_user = ADD_USER.format(user_id=user_id, username=username,first_name=first_name,
+             last_name=last_name,email=email,profile_image=image)
+    
+    q_add_board = ADD_BOARD.format(user_id=user_id,title="Personal Board")
+    
+    with get_db_cursor(True) as cur: # we pass in True to commit after each insert
+        current_app.logger.info("Executing query {}".format(q_add_user))
+        cur.execute(q_add_user)
+        
+        current_app.logger.info("Executing query {}".format(q_add_board))
+        cur.execute(q_add_board)
+
 if __name__ == "__main__":
     # tests for get_posts, get_posts_by_category, get_post_table_json, and get_post_category_json
     app = Flask(__name__)
