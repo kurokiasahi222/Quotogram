@@ -1,6 +1,8 @@
 {% macro display(quote_id=0, user_name="none", user_link="none", quote_text="none", quote_author="none", quote_context="none", inside_modal=false) %}
     {% macro class_name(name) %}{% if inside_modal %}{{name ~ '-modal'}}{% else %}{{name}}{% endif %}{% endmacro %}
     {% macro display_modal() %}onclick={{'displayQuoteModal(' ~ quote_id ~ ')'}}{% endmacro %}
+    {% macro like_button() %}onclick={{'likeQuote(' ~ quote_id ~ ')'}}{% endmacro %}
+    {% macro add_button() %}onclick={{'addQuote(' ~ quote_id ~ ')'}}{% endmacro %}
     <div class="{{ class_name('quote') }}" {% if inside_modal %}role="dialog" aria-modal="true" aria-labelledby="quote-text"{% endif %}>
         {% if inside_modal %}
             <div class="modal-header">
@@ -19,7 +21,7 @@
         </div>
         <div class="quote-content">
             <div class="quote-content-img">
-                <img src="/static/svgs/right_quotation.svg" alt="Quote Image" width="64px"/>
+                <svg width="64px" height="64px"><use href="#icon-right-quotation"/></svg>
             </div>
             <div class="quote-content-text">
                 <p class="quote-content-text-quote" id="quote-text-{{ quote_id }}">
@@ -45,9 +47,17 @@
                 </div>
             {% endif %}
             <div class="quote-footer-buttons pure-g">
-                <button class="quote-footer-buttons-like" type="button"><i class="fa-solid fa-heart"></i></button>
-                <span class="quote-footer-buttons-like-count">0</span>
-                <button class="quote-footer-buttons-add pure-button" button="button">Add <i class="fa-sharp fa-solid fa-plus"></i></a>
+                <div class="quote-footer-buttons-like-group">
+                    <button class="quote-footer-buttons-like pure-button" type="button" {{ like_button() }}>
+                        <i class="fa-solid fa-heart"></i>
+                    </button>
+                    <div class="quote-footer-buttons-like-count-wrapper">
+                        <span class="quote-footer-buttons-like-count" id="quote-like-count-{{ num_likes }}">0</span>
+                    </div>
+                </div>
+                <button class="quote-footer-buttons-add pure-button" button="button" {{ add_button() }}>
+                    Add <i class="fa-sharp fa-solid fa-plus"></i>
+                </button>
             </div>
         </div>
     </div>
