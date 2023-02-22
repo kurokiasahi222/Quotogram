@@ -30,6 +30,9 @@
                         <li class="pure-menu-item">
                             <a class="pure-menu-link" href="/explore">Explore  <i class="fa-sharp fa-solid fa-magnifying-glass"></i></a>
                         </li>
+                        <li class="pure-menu-item">
+                            <button class="pure-button" id="create-post-button" data-micromodal-trigger="create-post-modal">Create Post</button>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -48,5 +51,6 @@
             {% endblock %}
         </div>
     </div>
+    {% include "modules/create_post_modal.html" %}
 </body>
 </html>
