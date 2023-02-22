@@ -2,14 +2,9 @@
 <html lang="en">
 <head>
     {% block head %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
+    {% include "layouts/dependencies.html" %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/static/style.css" />
-    <link rel="stylesheet" href="/static/quote.css" />
     <link rel="icon" type="image/png" href="/static/images/favicon.png" />
-    <script src="https://kit.fontawesome.com/671e01df00.js" crossorigin="anonymous"></script>
-    <script src="/static/javascript/menu.js" defer></script>
     <title>{% block title %}{% endblock %} - Quotagram</title>
     {% endblock %}
 </head>

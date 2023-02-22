@@ -1,0 +1,54 @@
+{% macro display(quote_id=0, user_name="none", user_link="none", quote_text="none", quote_author="none", quote_context="none", inside_modal=false) %}
+    {% macro class_name(name) %}{% if inside_modal %}{{name ~ '-modal'}}{% else %}{{name}}{% endif %}{% endmacro %}
+    {% macro display_modal() %}onclick={{'displayQuoteModal(' ~ quote_id ~ ')'}}{% endmacro %}
+    <div class="{{ class_name('quote') }}" {% if inside_modal %}role="dialog" aria-modal="true" aria-labelledby="quote-text"{% endif %}>
+        {% if inside_modal %}
+            <div class="modal-header">
+                <a href="#" class="modal-close" aria-label="Close modal" data-micromodal-close><s class="modal-close-bar"></s><s class="modal-close-bar"></s></a>
+            </div>
+        {% endif %}
+        <div class="quote-user pure-g">
+            <div class="quote-user-image">
+                <img src="/static/images/user.png" alt="User Image" width="64px"/>
+            </div>
+            <div class="quote-user-name">
+                <a href="{{ user_link }}" class="quote-user-name-content" id="user-link-{{ quote_id }}">
+                    {{ user_name }}
+                </a>
+            </div>
+        </div>
+        <div class="quote-content">
+            <div class="quote-content-img">
+                <img src="/static/svgs/right_quotation.svg" alt="Quote Image" width="64px"/>
+            </div>
+            <div class="quote-content-text">
+                <p class="quote-content-text-quote" id="quote-text-{{ quote_id }}">
+                    {{ quote_text }}
+                </p>
+            </div>
+            <div class="quote-content-author">
+                <p style="font-weight:bold;" class="quote-content-author-name" id="quote-author-{{ quote_id }}">
+                    {{ quote_author }}
+                </p>
+            </div>
+            <div class="quote-content-extra"{% if not inside_modal %}style="display:none;"{% endif %}>
+                <p style="font-style: italic;">User Posted Information</p>
+                <p class="quote-content-extra-text" id="quote-context-{{ quote_id }}">
+                    {{ quote_context | safe }}
+                </p>
+            </div>
+        </div>
+        <div class="quote-footer">
+            {% if not inside_modal %}
+                <div class="quote-footer-info">
+                    <button class="pure-button more-info-button" {{ display_modal() }}>More Info</button>
+                </div>
+            {% endif %}
+            <div class="quote-footer-buttons pure-g">
+                <button class="quote-footer-buttons-like" type="button"><i class="fa-solid fa-heart"></i></button>
+                <span class="quote-footer-buttons-like-count">0</span>
+                <button class="quote-footer-buttons-add pure-button" button="button">Add <i class="fa-sharp fa-solid fa-plus"></i></a>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
