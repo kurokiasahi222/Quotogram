@@ -1,0 +1,16 @@
+{% extends "layouts/layout.html" %}
+{% block title %}Explore{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/explore.css">
+{% endblock %}
+{% block content %}
+    {% include "modules/quote_modal.html" %}
+    <form class="search-form pure-form" action="/explore" method="post">
+        <fieldset>
+            <legend>Search</legend>
+            <input type="text" name="search" placeholder="Search for a quote">
+            <button type="submit" class="pure-button pure-button-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </fieldset>
+    </form>
+{% endblock %}

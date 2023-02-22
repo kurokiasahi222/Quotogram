@@ -89,3 +89,7 @@ def logout():
             quote_via=quote_plus,
         )
     )
+
+@app.route("/explore")
+def explore():
+    return render_template("explore.html")

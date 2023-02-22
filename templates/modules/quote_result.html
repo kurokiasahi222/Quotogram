@@ -1,0 +1,9 @@
+{% import "modules/quote_macro.html" as quote %}
+<div class="pure-u-1 quote-wrapper">
+    {{ quote.display(quote_id=quote_id,
+                    user_name=quote_user, 
+                    user_link="#", 
+                    quote_text=quote_text, 
+                    quote_author=quote_author,
+                    quote_context=quote_context)}}
+</div>
