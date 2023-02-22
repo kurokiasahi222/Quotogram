@@ -48,63 +48,31 @@ def get_db_cursor(commit=False):
 
 def get_posts(uid, q=ALL_POSTS):
     # make a SELECT query
-    q = q.format(user_id=uid)
     with get_db_cursor() as cur:
         current_app.logger.info("Executing query {}".format(q))
-        cur.execute(q)
+        cur.execute(q, uid)
         return cur.fetchall()
     
 def get_table_json(table_name="post"):
     #jsonify a table from the database
     with get_db_cursor() as cur:
-        cur.execute("select row_to_json({name}) from {name}".format(name=table_name))
-        # cur.execute("select row_to_json(%s) from %s", (table_name, table_name))
-        return cur.fetchall()
-
-def get_posts_by_category(category,q=POSTS_BY_CATEGORY):
-    q = q.format(post_category=category) 
-    with get_db_cursor() as cur:
-        current_app.logger.info("Executing query {}".format(q))
-        cur.execute(q)
-        return cur.fetchall()
+        q = "select row_to_json(%s) from %s"
+        current_app.logger.info("Executing query {}".format(q % (table_name, table_name)))
+        cur.execute(q % (table_name, table_name))
+        result =  cur.fetchall()
+        return [ item[0] for item in result]  # return as a list of dictionaries not a nested list
 
 def check_user_id_in_database(user_id):
     # Check if a user is in the database
-    q = """SELECT * FROM users WHERE user_id = '{user_id}'"""
-    q = q.format(user_id=user_id)
     with get_db_cursor() as cur:
-        current_app.logger.info("Executing query {}".format(q))
-        cur.execute(q)
+        current_app.logger.info("Executing query SELECT * FROM users WHERE user_id = {}".format(user_id))
+        cur.execute("SELECT * FROM users WHERE user_id = %s ", (user_id,))
         return cur.fetchall()
 
 def add_user(user_id,username,first_name,last_name,email,image):
-    # This method is called to add the user to the users table and create a personal board for them 
-
-    q_add_user = ADD_USER.format(user_id=user_id, username=username,first_name=first_name,
-             last_name=last_name,email=email,profile_image=image)
-    
-    q_add_board = ADD_BOARD.format(user_id=user_id,title="Personal Board")
-    
+    # This method is called to add the user to the users table
     with get_db_cursor(True) as cur: # we pass in True to commit after each insert
-        current_app.logger.info("Executing query {}".format(q_add_user))
-        cur.execute(q_add_user)
-        
-        current_app.logger.info("Executing query {}".format(q_add_board))
-        cur.execute(q_add_board)
-
-if __name__ == "__main__":
-    # tests for get_posts, get_posts_by_category, get_post_table_json, and get_post_category_json
-    app = Flask(__name__)
-    with app.app_context():
-        setup()
-        # get_posts tests
-        # print(get_posts("quotagram"))
-        # print(get_posts("idk"))
-        # # get_posts_by_category tests
-        # print(get_posts_by_category("inspirational"))
-        # print(get_posts_by_category("idk"))
-        # json tests
-        print(get_table_json())
-        print(get_table_json("board"))
-        print(get_table_json("followers"))
-        print(get_table_json("post_category"))
+        current_app.logger.info("Executing query {}".format(ADD_USER % (user_id,username,first_name,
+            last_name,email,image)))
+        cur.execute(ADD_USER, (user_id,username,first_name,
+            last_name,email,image))
