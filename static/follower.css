@@ -2,29 +2,31 @@
 
 .follower {
     background-color: #e2e0e0;
-    width: 70%;
+    width: 100%;
     border-radius: 10px;
     padding: 0.75em 1em;
     margin: 1em 0;
     margin-right: 1em;
+
+    display:flex;
 }
 
-.follower-user {
-    float: right;
-}
 
 .follower-user-image {
     margin-left: 0.5em;
 }
 
+.follower-user-name{
+    margin:auto;
+}
 .unfollow-button{
     margin: 5px;
     background-color: var(--color-primary);
-    width: 20%;
+    width: auto;
 } 
 
 .follow-button{
     margin: 5px;
     background-color: var(--color-secondary);
-    width: 20%;
+    width: auto;
 } 
