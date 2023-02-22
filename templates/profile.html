@@ -3,6 +3,7 @@
 {% block head %}
     {{ super() }}
     <link rel="stylesheet" href="/static/profile.css" />
+    <link rel="stylesheet" href="/static/follower.css" />
 {% endblock %}
 
 {% with 
@@ -52,4 +53,21 @@
             {% include "modules/quote.html" %}
         {% endwith %}
         {% endwith %}
+<h2> My Followers</h2><br>
+{% with 
+    quote_user = "Tom Brady",
+    following = True %}
+    {% include "modules/follower.html" %}
+{% endwith %}
+{% with 
+    quote_user = "Aaron Rodgers",
+    following = False %}
+    {% include "modules/follower.html" %}
+{% endwith %}
+{% with 
+    quote_user = "Patrick Mahomes",
+    following = False %}
+    {% include "modules/follower.html" %}
+{% endwith %}
 {% endblock %}
+
