@@ -1,33 +1,81 @@
 @import "style.css";
 
-.main-content {
-    width: 85%;
-    margin: 0 auto 0 0;
+.navigation{
+    position:relative;
 }
 
-.side-bar{
+aside {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    
     background-color: var(--color-secondary);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  
+    box-shadow: 3px 1px 5px 0px rgba(0, 0, 0, 0.75)
+  }
+       
+  .sidebar-toggle {
+    position: absolute;
+    font-size: 2em;
+    top: 85px;
+    left: 245px;
+    background: var(--color-secondary);
+    padding: 4px 11px;
+    
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  input {
+    display: none;
+  }
+  
+  /* Toggler Functionality */
+  input:checked ~ aside {
+    left: -240px;
+  }
+
+.sidebar {
+    padding: 0 40px;
+    box-sizing: border-box;
     text-align: center;
-    height: 100%;
+}
+  
+.profile-user-name {
+    margin-top: 120px;
+    font-size: 1.5em;
+    position: relative;
 }
 
 .profile-user-image {
-    margin: 12px 0;
+    margin: 1% auto;
 }
 
-.profile-info{
-    width: 100%;
-    margin: 12px 0 3px 0;
+.profile-user-quote-count{
+    font-size: 1.25em;
+    margin: 8% auto;
+}
+
+.profile-user-follower-count{
+    font-size: 1.25em;
+    margin: 8% auto;
+}
+
+.sidebar-buttons{
+    margin-top: 55%;
 }
 
 .followers-button, .settings-button{
+    margin: 5px;
     background-color: var(--color-primary);
-    margin: 2px;
     width: 70%;
-}
+} 
 
-.content-placeholder{
+.content{
     background-color: darkgrey;
     margin: 1% 0;
-    height: 300vh;
+    min-height: 100vh;
 }

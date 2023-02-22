@@ -1,25 +1,32 @@
 {% block profileSideBar %}
-    <div class="side-bar pure-u-1-3 pure-u-sm-1-4 pure-u-md-1-6 pure-u-lg-1-8">
-        <div class="profile-user-image">
-            <img src="/static/images/user.png" alt="User Image" width="64px"/>
-        </div>
-        <div class="profile-username">
-            <div class="profile-info"> {{ user_name }} </div>
-        </div>
-        <div class="profile-user-quote-count">
-            <div class="profile-info"> {{ user_quote_count }} </div>
-            <div> Quotes </div>
-        </div>
-        <div class="profile-user-follower-count">
-            <div class="profile-info"> {{ user_follower_count }} </div>
-            <div> Followers </div>
-        </div>
-        <div class="sidebar-buttons">
-            <button class="pure-button followers-button">Followers</button>
-            <button class="pure-button settings-button">Settings</button>
-        </div>
+
+<!-- https://codepen.io/swastikyadav/pen/zYZPyrN?editors=1100 -->
+<input type="checkbox" id="toggler" />
+<aside class="sidebar"> 
+    <div class="profile-user-name">
+        {{ user_name }}
     </div>
+    <label for="toggler">
+        <i class="fas fa-solid fa-user sidebar-toggle"></i>
+    </label>
     
+    <div class="profile-user-image">
+        <img src="/static/images/user.png" alt="User Image" width="64px"/>
+    </div>
+    <div class="profile-user-quote-count">
+        <div class="profile-info"> {{ user_quote_count }} </div>
+        <div> Quotes </div>
+    </div>
+    <div class="profile-user-follower-count">
+        <div class="profile-info"> {{ user_follower_count }} </div>
+        <div> Followers </div>
+    </div>
+    <div class="sidebar-buttons">
+        <button class="pure-button followers-button">Followers</button>
+        <button class="pure-button settings-button">Settings</button>
+    </div>
+
+</aside>   
 
 
 {% endblock %}
