@@ -30,6 +30,10 @@ def init():
 def index():
     return render_template("index.html")
 
+@app.route("/profile")
+def profile():
+    return render_template("profile.html")
+
 @app.route('/api') #default api route jsonifies post table
 def default_table():
     return get_table_json('post')
