@@ -33,12 +33,12 @@ aside {
     cursor: pointer;
   }
   
-  input {
+#toggler{
     display: none;
   }
   
   /* Toggler Functionality */
-  input:checked ~ aside {
+#toggler:checked ~ aside {
     left: -240px;
   }
 
