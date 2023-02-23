@@ -46,16 +46,22 @@ def index():
         user = session['user']
         res = get_posts_logged_in(session["uid"]) 
         posts = json.dumps(res)  # convert result to json string
-        print(posts)
+        posts = json.loads(posts)  # convert json string to python list
+        print("User: ", user)
+        print("Posts: ", posts)
+        return render_template("index.html", user=user, posts=posts)
     else:
         # TODO: Get posts from non-logged in version
         pass
-    return render_template("index.html", user=user, posts=posts)
+    return render_template("index.html", user=user)
 
 @app.route("/profile")
 @requires_auth                              # need to be logged in to access this page
 def profile():
-    return render_template("profile.html", session=session["user"])
+    user = None
+    if 'user' in session:
+        user = session['user']
+    return render_template("profile.html", user=user)
 
 @app.route('/api')                          #default api route jsonifies post table
 def default_table():

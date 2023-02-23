@@ -56,7 +56,7 @@
                         <span class="quote-footer-buttons-like-count" id="quote-like-count-{{ quote_id }}">{{ num_likes }}</span>
                     </div>
                 </div>
-                {% if user is defined %}
+                {% if user is defined and user is not none %}
                     <button class="quote-footer-buttons-add pure-button" button="button" {{ add_button(true) }} id="quote-add-{{ num_likes }}"
                         {% if quote_added %}style="display:none;"{% endif %}>
                         Add <i class="fa-sharp fa-solid fa-plus"></i>

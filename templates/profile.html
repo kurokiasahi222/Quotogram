@@ -71,8 +71,9 @@
 {% endblock %}
 
 {% with 
-    user_name = "UserNameEX",
+    user_name=user['userinfo']['name'],
     user_quote_count = "1234",
-    user_follower_count = "5678" %}
+    user_follower_count = "5678",
+    user_profile_pic =user['userinfo']['picture'] %}
     {% include "modules/profileSideBar.html" %}
 {% endwith %}

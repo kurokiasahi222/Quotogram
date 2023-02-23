@@ -63,10 +63,10 @@ posts_not_added AS (
     SELECT * FROM posts_added 
 )
 
-SELECT p.post_id,p.user_id,p.quote,p.context, p.creation_time, l.num_likes, false as quote_added
+SELECT p.post_id,p.user_id,p.quote,p.quote_author,p.context, p.creation_time, l.num_likes, false as quote_added
 FROM posts_not_added p , likes_for_all_posts_id l
 WHERE p.post_id = l.post_id
 UNION
-SELECT p.post_id,p.user_id,p.quote,p.context, p.creation_time, l.num_likes, true as quote_added
+SELECT p.post_id,p.user_id,p.quote,p.quote_author,p.context, p.creation_time, l.num_likes, true as quote_added
 FROM posts_added p, likes_for_all_posts_id l
 WHERE p.post_id = l.post_id"""
