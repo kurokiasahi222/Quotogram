@@ -1,5 +1,6 @@
 {% macro display(quote_id=0, user_name="none", user_link="none", quote_text="none", quote_author="none", quote_context="none", 
-        quote_added=false, user_pic="static/images/user.png", date_posted="01-01-1970", num_likes=0, inside_modal=false) %}
+        quote_added=false, user_pic="static/images/user.png", date_posted="01-01-1970", num_likes=0, 
+        user=none, inside_modal=false) %}
     {% macro class_name(name) %}{% if inside_modal %}{{name ~ '-modal'}}{% else %}{{name}}{% endif %}{% endmacro %}
     {% macro display_modal() %}onclick={{'displayQuoteModal(' ~ quote_id ~ ')'}}{% endmacro %}
     {% macro like_button() %}onclick={{'likeQuote(' ~ quote_id ~ ')'}}{% endmacro %}
