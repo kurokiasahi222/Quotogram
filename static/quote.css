@@ -74,6 +74,12 @@
     color: var(--color-accent);
 }
 
+.quote-footer-buttons-like:active,
+.quote-footer-buttons-like:focus {
+    background-image: none;
+    color: var(--color-accent);
+}
+
 .quote-footer-buttons-like-count-wrapper {
     display: flex;
     align-items: center;
