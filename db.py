@@ -46,13 +46,13 @@ def get_db_cursor(commit=False):
       finally:
           cursor.close()
 
-def get_posts(uid, q=ALL_POSTS):
+def get_posts(uid, q=ALL_POSTS):  #TODO: Fix to get USER_POSTS and POSTS_FOLLOWING with the post likes
     # make a SELECT query
     with get_db_cursor() as cur:
         current_app.logger.info("Executing query {}".format(q))
-        cur.execute(q, uid)
+        cur.execute(q, (uid,uid,uid))
         return cur.fetchall()
-    
+
 def get_table_json(table_name="post"):
     #jsonify a table from the database
     with get_db_cursor() as cur:
@@ -76,3 +76,11 @@ def add_user(user_id,username,first_name,last_name,email,image):
             last_name,email,image)))
         cur.execute(ADD_USER, (user_id,username,first_name,
             last_name,email,image))
+    
+def get_posts_logged_in(user_id):
+    with get_db_cursor() as cur:
+        q = "SELECT row_to_json(t) FROM ("+ POSTS_LOGGED_IN +") t"
+        current_app.logger.info("Executing query {}".format(q % (user_id,user_id)))
+        cur.execute(q, (user_id,user_id))
+        result = cur.fetchall()
+        return [ item[0] for item in result] # return as a list of dictionaries

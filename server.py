@@ -41,9 +41,16 @@ def init():
 @app.route("/")
 def index():
     user = None
+    posts = None
     if 'user' in session:                   # check if user is logged in or not
         user = session['user']
-    return render_template("index.html", user=user)
+        res = get_posts_logged_in(session["uid"]) 
+        posts = json.dumps(res)  # convert result to json string
+        print(posts)
+    else:
+        # TODO: Get posts from non-logged in version
+        pass
+    return render_template("index.html", user=user, posts=posts)
 
 @app.route("/profile")
 @requires_auth                              # need to be logged in to access this page
