@@ -34,6 +34,7 @@
     font-size: 1.25em;
     text-indent: 3em;
     padding-top: 1em;
+    overflow-wrap: break-word;
 }
 
 .quote-content-img {

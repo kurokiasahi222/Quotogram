@@ -9,12 +9,12 @@
           <button class="pure-button create-post-modal-close" aria-label="Close modal" data-micromodal-close>Close</button>
         </div>
         <div id="create-post-modal-content">
-          <form class="pure-form" method="POST">
+          <form class="pure-form" action="/new_post" method="POST">
             <fieldset class="pure-group">
-              <textarea class="pure-input" placeholder="Quote" id="quote"></textarea>
-              <input class="pure-input" placeholder="Quote Attribution" id="quote_author"/>
+              <textarea class="pure-input" placeholder="Quote" id="quote" name="quote"></textarea>
+              <input class="pure-input" placeholder="Quote Attribution" id="quote_author" name="quote_author"/>
             </fieldset>
-            <textarea class="pure-input" placeholder="Quote Context" id="context"></textarea>
+            <textarea class="pure-input" placeholder="Quote Context" id="context" name="context"></textarea>
             <fieldset >
               <div class="category">
                 <input type="checkbox" class="category-check" id="post-category-1" value=""/> 
