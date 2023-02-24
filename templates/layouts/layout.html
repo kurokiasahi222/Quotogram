@@ -41,8 +41,14 @@
                 </div>
             </div>
             <div class="navigation-login pure-u-1 pure-u-md-1-5">
-                <div class="navigation-login-button-div custom-can-transform">
-                    <a class="pure-button pure-button-primary navigation-login-button" href="/login">Login <i class="fa-solid fa-user"></i></a>
+                <div class="navigation-login-button-div custom-can-transform pure-g">
+                    {% if user is not defined or user is none %}
+                        <a class="pure-button pure-button-primary navigation-login-button" href="/login">Login <i class="fa-solid fa-user"></i></a>
+                    {% else %}
+                        <p>Welcome {{ user['userinfo']['name'] }}</p>
+                        <img src="{{ user['userinfo']['picture'] }}" alt="User Profile Picture" crossorigin="anonymous" width="48px" height="48px"/>
+                        <a class="pure-button pure-button-primary navigation-login-button" href="/logout">Logout</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
