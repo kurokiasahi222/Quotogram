@@ -129,6 +129,10 @@
 }
 
 @media (max-width: 47.999em) {
+    .main-content {
+        width: 90%;
+    }
+
     .navigation-custom-toggle {
         display: block;
     }
