@@ -58,11 +58,11 @@
                     </div>
                 </div>
                 {% if user is defined and user is not none %}
-                    <button class="quote-footer-buttons-add pure-button" button="button" {{ add_button(true) }} id="quote-add-{{ num_likes }}"
+                    <button class="quote-footer-buttons-add pure-button" button="button" {{ add_button(true) }} id="quote-add-{{ quote_id }}"
                         {% if quote_added %}style="display:none;"{% endif %}>
                         Add <i class="fa-sharp fa-solid fa-plus"></i>
                     </button>
-                    <button class="quote-footer-buttons-add pure-button" button="button" {{ add_button(false) }} id="quote-remove-{{ num_likes }}"
+                    <button class="quote-footer-buttons-add pure-button" button="button" {{ add_button(false) }} id="quote-remove-{{ quote_id }}"
                         {% if not quote_added %}style="display:none;"{% endif %}>
                         Remove <i class="fa-solid fa-check"></i>
                     </button>
