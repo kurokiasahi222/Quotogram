@@ -55,7 +55,6 @@ def index():
         posts = json.loads(json.dumps(res))  # convert result to json string
     return render_template("index.html", user=user, posts=posts)
 
-
 @app.route("/profile")
 @requires_auth                              # need to be logged in to access this page
 def profile():
