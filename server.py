@@ -82,7 +82,8 @@ def table(table_name='post'):
 @app.route('/api/delete', methods=["POST"])
 def delete_quote():
     if 'user' in session:       # user has to be logged in
-        quote_id = request.form.get("quote_id", "NOT FILLED OUT")
+        body = request.get_json()
+        quote_id = body['quote_id']
         if remove_post(session['uid'], quote_id):
             return jsonify({"status": "success"})
         else:

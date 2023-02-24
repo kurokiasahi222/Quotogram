@@ -1,10 +1,13 @@
 {% macro display(quote_id=0, user_name="none", user_link="none", quote_text="none", quote_author="none", quote_context="none", 
         quote_added=false, user_pic="static/images/user.png", date_posted="01-01-1970", num_likes=0, 
-        user=none, inside_modal=false) %}
+        user=none, user_id=0, inside_modal=false) %}
     {% macro class_name(name) %}{% if inside_modal %}{{name ~ '-modal'}}{% else %}{{name}}{% endif %}{% endmacro %}
     {% macro display_modal() %}onclick={{'displayQuoteModal(' ~ quote_id ~ ')'}}{% endmacro %}
     {% macro like_button() %}onclick={{'likeQuote(' ~ quote_id ~ ')'}}{% endmacro %}
     {% macro add_button(add) %}{% if add %}onclick={{'addQuote(' ~ quote_id ~ ')'}}{% else %}onclick={{'removeQuote(' ~ quote_id ~ ')'}}{% endif %}{% endmacro %}
+    {% macro delete_quote() %}onclick={{'displayDeleteModal(' ~ quote_id ~ ')'}}{% endmacro %}
+    {% macro edit_quote() %}onclick={{'displayEditModal(' ~ quote_id ~ ')'}}{% endmacro %}
+    {% macro toggle_options() %}onclick={{'toggleEditOptions(' ~ quote_id ~ ')'}}{% endmacro %}
     <div class="{{ class_name('quote') }}" {% if inside_modal %}role="dialog" aria-modal="true" aria-labelledby="quote-text"{% endif %}>
         {% if inside_modal %}
             <div class="modal-header">
@@ -48,9 +51,33 @@
                     <button class="pure-button more-info-button" {{ display_modal() }}>More Info</button>
                 </div>
             {% endif %}
-            <div class="quote-footer-buttons pure-g">
+            <div class="quote-footer-buttons pure-g">    
+                {% if not inside_modal %}
+                    <div class="quote-footer-buttons-dropdown-container">
+                        <button class="quote-footer-buttons-dropdown pure-button" type="button" aria-label="More Options" {{ toggle_options() }}>
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                        <div class="quote-footer-buttons-dropdown-content" id="quote-dropdown-content-{{ quote_id }}">
+                            <div class="quote-footer-buttons-dropdown-wrapper">
+                                <button class="quote-footer-buttons-dropdown-content-info pure-button dropdown-button" type="button" {{ display_modal() }}>
+                                    More Info <i class="fa-solid fa-circle-info"></i>
+                                </button>
+                                {% if user is defined and user is not none %}
+                                    {% if user_id == user['userinfo']['sub'] %}
+                                        <button class="quote-footer-buttons-dropdown-content-delete pure-button dropdown-button" type="button" {{ delete_quote() }}>
+                                            Delete Quote <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                        <button class="quote-footer-buttons-dropdown-content-edit pure-button dropdown-button" type="button" {{ edit_quote() }}>
+                                            Edit Quote <i class="fa-solid fa-pencil"></i>
+                                        </button>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
                 <div class="quote-footer-buttons-like-group">
-                    <button class="quote-footer-buttons-like pure-button" type="button" {{ like_button() }} aria-label="Like Quote">
+                    <button class="quote-footer-buttons-like pure-button" id="quote-like-button-{{ quote_id }}" type="button" {{ like_button() }} aria-label="Like Quote">
                         <i class="fa-solid fa-heart"></i>
                     </button>
                     <div class="quote-footer-buttons-like-count-wrapper">
@@ -58,11 +85,11 @@
                     </div>
                 </div>
                 {% if user is defined and user is not none %}
-                    <button class="quote-footer-buttons-add pure-button" button="button" {{ add_button(true) }} id="quote-add-{{ num_likes }}"
+                    <button class="quote-footer-buttons-add pure-button" button="button" {{ add_button(true) }} id="quote-add-{{ quote_id }}"
                         {% if quote_added %}style="display:none;"{% endif %}>
                         Add <i class="fa-sharp fa-solid fa-plus"></i>
                     </button>
-                    <button class="quote-footer-buttons-add pure-button" button="button" {{ add_button(false) }} id="quote-remove-{{ num_likes }}"
+                    <button class="quote-footer-buttons-add pure-button" button="button" {{ add_button(false) }} id="quote-remove-{{ quote_id }}"
                         {% if not quote_added %}style="display:none;"{% endif %}>
                         Remove <i class="fa-solid fa-check"></i>
                     </button>
