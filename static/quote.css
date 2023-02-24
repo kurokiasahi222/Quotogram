@@ -89,6 +89,10 @@
     align-items: center;
 }
 
+.quote-footer-buttons-like-count.spin {
+    animation: spin 1s linear infinite;
+}
+
 .quote-footer-buttons-add {
     background-color: var(--color-tertiary);
     color: #fff;
@@ -149,5 +153,14 @@
 @container (min-width: 325px) {
     .more-info-button {
         display: block;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
     }
 }
