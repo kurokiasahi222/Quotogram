@@ -81,6 +81,20 @@ def delete_quote(quote_id):
             return jsonify({"status": "failed"})
     else:
         abort(401) # send back an 401 Unauthorized message
+
+@app.route('/api/like/<quote_id>', methods=["POST"])
+def like_quote(quote_id):
+    # if 'user' in session:       # user has to be logged in
+    #     if like_post(session['uid'],quote_id):
+    #         return jsonify({"status": "success"})
+    #     else:
+    #         return jsonify({"status": "failed"})
+    # else:
+    #     abort(401) # send back an 401 Unauthorized message
+    if like_post("google-oauth2|117698261146042655235",quote_id):
+            return jsonify({"status": "success"})
+    else:
+        return jsonify({"status": "failed"})
     
 ######### Auth0 stuff ########
 
