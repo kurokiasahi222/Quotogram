@@ -76,6 +76,13 @@ def add_user(user_id,username,first_name,last_name,email,image):
             last_name,email,image)))
         cur.execute(ADD_USER, (user_id,username,first_name,
             last_name,email,image))
+
+def add_post(user_id, quote, quote_author, context):
+    with get_db_cursor(True) as cur:
+        current_app.logger.info("Executing query INSERT INTO post (user_id, quote, quote_author, context) VALUES ({user_id}, {quote}, {quote_author}, {context})"
+            .format(user_id=user_id, quote=quote, quote_author=quote_author, context=context))
+        cur.execute("INSERT INTO post (user_id, quote, quote_author, context) VALUES (%s, %s, %s, %s)", 
+            (user_id, quote, quote_author, context))
     
 def get_posts_logged_in(user_id):
     with get_db_cursor() as cur:
@@ -84,6 +91,15 @@ def get_posts_logged_in(user_id):
         cur.execute(q, (user_id,user_id))
         result = cur.fetchall()
         return [ item[0] for item in result] # return as a list of dictionaries
+    
+
+def get_posts_not_logged_in():
+   with get_db_cursor() as cur:
+       q = "SELECT row_to_json(t) FROM ("+ POSTS_NOT_LOGGED_IN +") t"
+       current_app.logger.info("Executing query {}".format(q))
+       cur.execute(q)
+       result = cur.fetchall()
+       return [ item[0] for item in result] # return as a list of dictionaries
 
 def remove_post(user_id, quote_id):
     with get_db_cursor(True) as cur: 
