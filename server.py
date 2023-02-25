@@ -49,7 +49,9 @@ def index():
         print(posts)
     else:
         # TODO: Get posts from non-logged in version
-        pass
+        res = get_posts_not_logged_in()
+        posts = json.dumps(res)  # convert result to json string
+        # print(posts)
     return render_template("index.html", user=user, posts=posts)
 
 @app.route("/profile")
