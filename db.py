@@ -84,3 +84,22 @@ def get_posts_logged_in(user_id):
         cur.execute(q, (user_id,user_id))
         result = cur.fetchall()
         return [ item[0] for item in result] # return as a list of dictionaries
+
+def remove_post(user_id, quote_id):
+    with get_db_cursor(True) as cur: 
+        verify_query = "SELECT user_id FROM post WHERE post_id = %s"
+        delete_query = "DELETE FROM post WHERE post_id = %s AND user_id = %s"
+
+        # Get the user_id associated with the quote_id
+        current_app.logger.info("Executing query {}".format(verify_query % (quote_id,)))
+        cur.execute(verify_query, (quote_id,))
+        res = cur.fetchall()
+        if len(res) > 0: 
+            if res[0][0] == user_id:    # check if the user_id of the requester matches the owner's user_id
+                current_app.logger.info("Executing query {}".format(delete_query % (quote_id,user_id)))
+                cur.execute(delete_query, (quote_id,user_id))
+                return True
+            else:
+                current_app.logger.info("Received an Unauthorized request: User tried to delete someone else's post")
+                return False
+        return False
