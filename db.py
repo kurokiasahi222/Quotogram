@@ -119,3 +119,14 @@ def remove_post(user_id, quote_id):
                 current_app.logger.info("Received an Unauthorized request: User tried to delete someone else's post")
                 return False
         return False
+    
+def like_post(user_id, post_id):
+    with get_db_cursor(True) as cur: 
+        try:
+            q = "INSERT INTO post_like (post_id,user_id) VALUES (%s,%s)"
+            current_app.logger.info("Executing query {}".format(q % (post_id,user_id)))
+            cur.execute(q, (post_id,user_id))
+            return True
+        except Exception as e:
+            current_app.logger.error(e)
+            return False
