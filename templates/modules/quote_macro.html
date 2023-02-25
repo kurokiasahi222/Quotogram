@@ -1,6 +1,9 @@
-{% macro display(quote_id=0, user_name="none", user_link="none", quote_text="none", quote_author="none", quote_context="none", inside_modal=false) %}
+{% macro display(quote_id=0, user_name="none", user_link="none", quote_text="none", quote_author="none", quote_context="none", 
+        quote_added=false, user_pic="static/images/user.png", date_posted="01-01-1970", num_likes=0, inside_modal=false) %}
     {% macro class_name(name) %}{% if inside_modal %}{{name ~ '-modal'}}{% else %}{{name}}{% endif %}{% endmacro %}
     {% macro display_modal() %}onclick={{'displayQuoteModal(' ~ quote_id ~ ')'}}{% endmacro %}
+    {% macro like_button() %}onclick={{'likeQuote(' ~ quote_id ~ ')'}}{% endmacro %}
+    {% macro add_button(add) %}{% if add %}onclick={{'addQuote(' ~ quote_id ~ ')'}}{% else %}onclick={{'removeQuote(' ~ quote_id ~ ')'}}{% endif %}{% endmacro %}
     <div class="{{ class_name('quote') }}" {% if inside_modal %}role="dialog" aria-modal="true" aria-labelledby="quote-text"{% endif %}>
         {% if inside_modal %}
             <div class="modal-header">
@@ -9,7 +12,7 @@
         {% endif %}
         <div class="quote-user pure-g">
             <div class="quote-user-image">
-                <img src="/static/images/user.png" alt="User Image" width="64px"/>
+                <img src="{{ user_pic }}" alt="User Image" width="64px" id="user-picture-{{ quote_id }}"/>
             </div>
             <div class="quote-user-name">
                 <a href="{{ user_link }}" class="quote-user-name-content" id="user-link-{{ quote_id }}">
@@ -19,7 +22,7 @@
         </div>
         <div class="quote-content">
             <div class="quote-content-img">
-                <img src="/static/svgs/right_quotation.svg" alt="Quote Image" width="64px"/>
+                <svg width="64px" height="64px"><use href="#icon-right-quotation"/></svg>
             </div>
             <div class="quote-content-text">
                 <p class="quote-content-text-quote" id="quote-text-{{ quote_id }}">
@@ -45,9 +48,29 @@
                 </div>
             {% endif %}
             <div class="quote-footer-buttons pure-g">
-                <button class="quote-footer-buttons-like" type="button"><i class="fa-solid fa-heart"></i></button>
-                <span class="quote-footer-buttons-like-count">0</span>
-                <button class="quote-footer-buttons-add pure-button" button="button">Add <i class="fa-sharp fa-solid fa-plus"></i></a>
+                <div class="quote-footer-buttons-like-group">
+                    <button class="quote-footer-buttons-like pure-button" type="button" {{ like_button() }}>
+                        <i class="fa-solid fa-heart"></i>
+                    </button>
+                    <div class="quote-footer-buttons-like-count-wrapper">
+                        <span class="quote-footer-buttons-like-count" id="quote-like-count-{{ quote_id }}">{{ num_likes }}</span>
+                    </div>
+                </div>
+                {% if user is defined %}
+                    <button class="quote-footer-buttons-add pure-button" button="button" {{ add_button(true) }} id="quote-add-{{ num_likes }}"
+                        {% if quote_added %}style="display:none;"{% endif %}>
+                        Add <i class="fa-sharp fa-solid fa-plus"></i>
+                    </button>
+                    <button class="quote-footer-buttons-add pure-button" button="button" {{ add_button(false) }} id="quote-remove-{{ num_likes }}"
+                        {% if not quote_added %}style="display:none;"{% endif %}>
+                        Remove <i class="fa-solid fa-check"></i>
+                    </button>
+                {% endif %}
+            </div>
+            <div class="quote-footer-date"{% if not inside_modal %}style="display:none;"{% endif %}>
+                <p class="quote-footer-date-text" style="font-style:italic;" id="quote-date-posted-{{ quote_id }}">
+                    {{ date_posted }}
+                </p>
             </div>
         </div>
     </div>

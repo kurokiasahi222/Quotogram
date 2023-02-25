@@ -72,6 +72,16 @@ def table(table_name='post'):
         # if the table doesn't exist then send back an 500 error
         abort(500)
 
+@app.route('/api/delete/<quote_id>', methods=["POST"])
+def delete_quote(quote_id):
+    if 'user' in session:       # user has to be logged in
+        if remove_post(session['uid'],quote_id):
+            return jsonify({"status": "success"})
+        else:
+            return jsonify({"status": "failed"})
+    else:
+        abort(401) # send back an 401 Unauthorized message
+    
 ######### Auth0 stuff ########
 
 @app.route("/login")

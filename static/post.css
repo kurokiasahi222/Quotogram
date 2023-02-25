@@ -1,0 +1,25 @@
+.create-post-modal-widget{
+    background-color: #fff;
+    padding: 30px;
+    max-width: 600px;
+    max-height: 70vh;
+    border-radius: 4px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    min-width: 35%;
+}
+
+.create-post-modal-close{
+    float: right;
+}
+/* .category{
+    background-color:red;
+} */
+
+.category{
+    display: flex;
+}
+
+.category-check:checked ~ .category{
+    background-color:green;
+}
