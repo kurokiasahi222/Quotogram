@@ -1,32 +1,26 @@
 <div id="create-post-modal" class="modal micromodal-slide" aria-hidden="true">
-  <div class="modal-background" tabindex="-1" data-micromodal-close>
+  <div class="modal-background" tabindex="-1" >
     <div class="create-post-modal-widget" role="dialog" aria-modal="true" aria-labelledby="create-post-modal-title" >
       <div class="create-post-modal-header">
         <h2 class="create-post-modal-title">
-          Create Post
+          Create Post <a href="#" class="create-post-modal-close" data-micromodal-close><i class="fa-solid fa-xmark"></i></a>
         </h2>
-        <button class="pure-button create-post-modal-close" aria-label="Close modal" data-micromodal-close>Close</button>
+        <hr>
       </div>
-      <div id="create-post-modal-content">
-        <form class="pure-form" method="POST">
-          <fieldset class="pure-group">
-            <textarea class="pure-input" placeholder="Quote" id="quote"></textarea>
-            <input class="pure-input" placeholder="Quote Attribution" id="quote_author"/>
-          </fieldset>
-          <textarea class="pure-input" placeholder="Quote Context" id="context"></textarea>
-          <fieldset >
-            <div class="category">
-              <input type="checkbox" class="category-check" id="post-category-1" value=""/> 
-              <label for="post-category-1" class="pure-checkbox category"> Movie Quotes </label>
-            </div>
-            <div class="category">
-              <input type="checkbox" class="category-check" id="post-category-2" value=""/>
-              <label for="post-category-2" class="pure-checkbox category"> Inspirational </label>
-            </div>
-            <div class="category">
-              <input type="checkbox" class="category-check" id="post-category-3" value=""/>
-              <label for="post-category-3" class="pure-checkbox category"> Funny </label>
-            </div>
+      <div id="create-post-modal-content" class="create-post-modal-content">
+        <form class="pure-form pure-form-stacked" method="POST">
+          <label for="quote">Quote</label>
+          <textarea class="pure-input" placeholder="Share a quote" id="quote" minlength="5" maxlength="500" required rows="5" cols="28"></textarea>
+          <label for="quote_author">Quote Attribution</label>
+          <textarea class="pure-input" placeholder="Who said or wrote your quote?" id="quote_author" minlength="1" maxlength="250" rows="1" cols="28"></textarea>
+          <label for="context">Quote Context</label>
+          <textarea class="pure-input" placeholder="Share more info about the quote" id="context" minlength="5" maxlength="1000" rows="3" cols="28"></textarea>
+          <label for="tags">Tags</label>
+          <div class="tags">
+            {% for tag in ['Movies','Inspirational','Funny','Anime','SciFi','Books','TV','Videogame','Superhero','Historical','Athlete','Philosophy','Educational','Sad','Epic','Romantic','Family','Music','Famous','Politics','Artist'] %} 
+              {% include "modules/category.html" %} 
+            {% endfor %}
+          </div>
           </fieldset>
           <button type="submit" class="pure-button">Post Quote</button>
         </form>
