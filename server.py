@@ -46,10 +46,9 @@ def index():
         user = session['user']
         res = get_posts_logged_in(session["uid"]) 
         posts = json.dumps(res)  # convert result to json string
-        print(posts)
     else:
-        # TODO: Get posts from non-logged in version
-        pass
+        res = get_posts_not_logged_in()
+        posts = json.dumps(res)  # convert result to json string
     return render_template("index.html", user=user, posts=posts)
 
 @app.route("/profile")
@@ -70,6 +69,39 @@ def table(table_name='post'):
         # if the table doesn't exist then send back an 500 error
         abort(500)
 
+@app.route('/api/delete/<quote_id>', methods=["POST"])
+def delete_quote(quote_id):
+    if 'user' in session:       # user has to be logged in
+        if remove_post(session['uid'],quote_id):
+            return jsonify({"status": "success"})
+        else:
+            return jsonify({"status": "failed"})
+    else:
+        abort(401) # send back an 401 Unauthorized message
+
+@app.route('/api/like/<quote_id>', methods=["POST"])
+def like_quote(quote_id):
+    if 'user' in session:       # user has to be logged in
+        if like_post(session['uid'],quote_id):
+            return jsonify({"status": "success"})
+        else:
+            return jsonify({"status": "failed"})
+    else:
+        abort(401) # send back an 401 Unauthorized message
+
+@app.route("/explore")
+def explore():
+    return render_template("explore.html")
+
+@app.route("/new_post", methods=["POST"])
+def new_post():
+    user_id = session.get("uid", "jakdghjgdshJHBshjqUAs") # can change the default uid later
+    quote = request.form.get("quote", "NOT FILLED OUT")
+    quote_author = request.form.get("quote_author", "NOT FILLED OUT")
+    context = request.form.get("context", "NOT FILLED OUT")
+    add_post(user_id, quote, quote_author, context)
+    return redirect("/")
+  
 ######### Auth0 stuff ########
 
 @app.route("/login")
@@ -112,7 +144,3 @@ def logout():
             quote_via=quote_plus,
         )
     )
-
-@app.route("/explore")
-def explore():
-    return render_template("explore.html")
