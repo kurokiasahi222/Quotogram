@@ -116,3 +116,12 @@ def logout():
 @app.route("/explore")
 def explore():
     return render_template("explore.html")
+
+@app.route("/new_post", methods=["POST"])
+def new_post():
+    user_id = session.get("uid", "jakdghjgdshJHBshjqUAs") # can change the default uid later
+    quote = request.form.get("quote", "NOT FILLED OUT")
+    quote_author = request.form.get("quote_author", "NOT FILLED OUT")
+    context = request.form.get("context", "NOT FILLED OUT")
+    add_post(user_id, quote, quote_author, context)
+    return redirect("/")
