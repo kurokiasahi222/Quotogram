@@ -54,7 +54,10 @@ def index():
 @app.route("/profile")
 @requires_auth                              # need to be logged in to access this page
 def profile():
-    return render_template("profile.html", session=session["user"])
+    user = None
+    if 'user' in session:
+        user = session['user']
+    return render_template("profile.html", user=user)
 
 @app.route('/api')                          #default api route jsonifies post table
 def default_table():
