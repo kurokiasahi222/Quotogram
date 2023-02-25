@@ -22,6 +22,10 @@ WHERE p.user_id IN (
 # Getting all the posts from the above categories (user's, their following posts, and their follower's posts)
 ALL_POSTS = USER_POSTS + """\nUNION\n"""+ POSTS_FOLLOWING  + """\nUNION\n"""+ FOLLOWER_POSTS 
 
+# Also maybe you could also work on modifying the query constant ALL_POSTS to have only user posts and their 
+# follower posts (you would have to modify the queries to add the num_likes to the data). 
+# This way we can call get_posts (db.py) to display the posts of the user on the profile page (which is when the user is logged in).
+
 ADD_USER = """INSERT INTO users (user_id,username,first_name,last_name,profile_image,email)
 VALUES (%s,%s,%s,%s,%s,%s)"""
 
