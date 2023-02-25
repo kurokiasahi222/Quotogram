@@ -35,7 +35,9 @@
             </div>
             <div class="navigation-create-post pure-u-1 pure-u-md-1-5">
                 <div class="navigation-create-post-button-div custom-can-transform">
-                    <button class="pure-button navigation-create-post-button" data-micromodal-trigger="create-post-modal">Create Post</button>
+                    {% if user is defined and user is not none %}
+                        <button class="pure-button navigation-create-post-button" data-micromodal-trigger="create-post-modal">Create Post</button>
+                    {% endif %} 
                 </div>
             </div>
             <div class="navigation-login pure-u-1 pure-u-md-1-5">
