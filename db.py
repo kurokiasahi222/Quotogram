@@ -91,3 +91,11 @@ def get_posts_logged_in(user_id):
         cur.execute(q, (user_id,user_id))
         result = cur.fetchall()
         return [ item[0] for item in result] # return as a list of dictionaries
+    
+def get_posts_not_logged_in():
+   with get_db_cursor() as cur:
+       q = "SELECT row_to_json(t) FROM ("+ POSTS_NOT_LOGGED_IN +") t"
+       current_app.logger.info("Executing query {}".format(q))
+       cur.execute(q)
+       result = cur.fetchall()
+       return [ item[0] for item in result] # return as a list of dictionaries
