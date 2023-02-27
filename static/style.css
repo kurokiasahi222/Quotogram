@@ -22,7 +22,7 @@
 }
 
 .navigation-wrapper.open {
-    height: 20em;
+    height: 25em;
 }
 
 .navigation-custom-toggle {
@@ -93,26 +93,23 @@
     background-color: var(--color-secondary);
 }
 
-.navigation-login {
+.navigation-login, .navigation-create-post{
     position: relative;
 }
 
-.navigation-login-button-div {
+.navigation-login-button-div, .navigation-create-post-button-div {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
 }
 
-.navigation-login-button {
+.navigation-login-button, .navigation-create-post-button {
     border-radius: 8px;
     padding: 0.8em 1.4em;
 }
 
-.create-post-button {
+.navigation-create-post-button {
     background-color: var(--color-secondary);
-    margin: 15px 2px;
-    border-radius: 8px;
-    padding: 0.8em 1.4em;
 }
 
 .footer {
@@ -145,12 +142,13 @@
         height: auto;
     }
 
-    .navigation-login {
+    .navigation-login,.navigation-create-post {
         margin-top: 2em;
+        margin-bottom: 2.5em;
         margin-left: 1em;
     }
 
-    .navigation-login-button {
-        width: 25%;
+    .navigation-login-button,.navigation-create-post-button {
+        width: 35%;
     }
 }

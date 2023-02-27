@@ -21,7 +21,7 @@
                     <a href="#" class="navigation-custom-toggle"><s class="navigation-bar"></s><s class="navigation-bar"></s></a>
                 </div>
             </div>
-            <div class="pure-u-1 pure-u-md-3-5">
+            <div class="pure-u-1 pure-u-md-2-5">
                 <div class="navigation-links pure-menu pure-menu-horizontal custom-can-transform">
                     <ul class="pure-menu-list">
                         <li class="pure-menu-item">
@@ -30,12 +30,14 @@
                         <li class="pure-menu-item">
                             <a class="pure-menu-link" href="/explore">Explore  <i class="fa-sharp fa-solid fa-magnifying-glass"></i></a>
                         </li>
-                        {% if user is defined and user is not none %}
-                            <li class="pure-menu-item">
-                                <a class="pure-menu-link" href="#" class="create-post-button" data-micromodal-trigger="create-post-modal">Create Post</a>
-                            </li>
-                        {% endif %}
                     </ul>
+                </div>
+            </div>
+            <div class="navigation-create-post pure-u-1 pure-u-md-1-5">
+                <div class="navigation-create-post-button-div custom-can-transform">
+                    {% if user is defined and user is not none %}
+                        <button class="pure-button navigation-create-post-button" data-micromodal-trigger="create-post-modal">Create Post</button>
+                    {% endif %} 
                 </div>
             </div>
             <div class="navigation-login pure-u-1 pure-u-md-1-5">
