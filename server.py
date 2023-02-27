@@ -121,6 +121,18 @@ def new_post():
     add_post(user_id, quote, quote_author, context)
     return redirect("/")
 
+@app.route('/api/follow/post', methods=["POST"])
+def add_post_to_following():
+    if 'user' in session:               # user has to be logged in
+        req = request.get_json()        # get the request object
+        if 'quote_id' in req:
+            follow_unfollow_post(session['uid'], req['quote_id']) # follow or unfollow the quote
+            return jsonify({"status": 'success'})
+        else: 
+            return jsonify({"status": 'failed'})
+    else:
+        abort(401) # send back an 401 Unauthorized message
+    
 
 ######### Auth0 stuff ########
 

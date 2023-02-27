@@ -164,3 +164,12 @@ def like_post(user_id, post_id):
         print("Found the number of likes for this post: {}".format(num_likes))
 
         return status, num_likes
+
+def follow_unfollow_post(user_id, post_id):
+    with get_db_cursor(True) as cur:
+        # Depending on whether the user already follows the quote or not INSERT OR DELETE
+        #   if user is not following we insert into post_following table
+        #   else we delete row from  post_following table
+        # Check QUOTE_FOLLOW_UNFOLLOW for how the query handles this in database
+        current_app.logger.info("Executing query {}".format(QUOTE_FOLLOW_UNFOLLOW %  (user_id,post_id)))
+        cur.execute(QUOTE_FOLLOW_UNFOLLOW, (user_id,post_id))
