@@ -22,6 +22,7 @@ oauth.register(
     server_metadata_url=f'https://{os.environ.get("AUTH0_DOMAIN")}/.well-known/openid-configuration'
 )
 
+
 # The funtion below can be used with an annotation @requires_auth  
 # This will ensure that while visiting certain pages the users will be logged in or will have to log in
 def requires_auth(f):
@@ -34,9 +35,11 @@ def requires_auth(f):
 
     return decorated
 
+
 @app.before_first_request
 def init():
     setup()  # call setup from the db.py file
+
 
 @app.route("/")
 def index():
@@ -45,10 +48,11 @@ def index():
     if 'user' in session:                   # check if user is logged in or not
         user = session['user']
         res = get_posts_logged_in(session["uid"]) 
-        posts = json.dumps(res)  # convert result to json string
+        posts = json.loads(json.dumps(res))  # convert result to json string
+        print(posts)
     else:
         res = get_posts_not_logged_in()
-        posts = json.dumps(res)  # convert result to json string
+        posts = json.loads(json.dumps(res))  # convert result to json string
     return render_template("index.html", user=user, posts=posts)
 
 @app.route("/profile")
@@ -59,9 +63,11 @@ def profile():
         user = session['user']
     return render_template("profile.html", user=user)
 
+
 @app.route('/api')                          #default api route jsonifies post table
 def default_table():
     return jsonify(get_table_json('post'))
+
 
 @app.route('/api/<table_name>')             #need to specify a table name here in the route
 def table(table_name='post'):
@@ -72,29 +78,39 @@ def table(table_name='post'):
         # if the table doesn't exist then send back an 500 error
         abort(500)
 
-@app.route('/api/delete/<quote_id>', methods=["POST"])
-def delete_quote(quote_id):
+
+@app.route('/api/delete', methods=["POST"])
+def delete_quote():
     if 'user' in session:       # user has to be logged in
-        if remove_post(session['uid'],quote_id):
+        quote_id = request.form.get("quote_id", "NOT FILLED OUT")
+        if remove_post(session['uid'], quote_id):
             return jsonify({"status": "success"})
         else:
             return jsonify({"status": "failed"})
     else:
         abort(401) # send back an 401 Unauthorized message
 
-@app.route('/api/like/<quote_id>', methods=["POST"])
-def like_quote(quote_id):
+
+@app.route('/api/like', methods=["POST"])
+def like_quote():
     if 'user' in session:       # user has to be logged in
-        if like_post(session['uid'],quote_id):
-            return jsonify({"status": "success"})
+        body = request.get_json()
+        quote_id = body["quote_id"]
+        print("Attempting to like a quote with id: " + str(quote_id))
+        success, num_likes = like_post(session['uid'], quote_id)
+
+        if success:
+            return jsonify({"status": "success", "num_likes": num_likes})
         else:
-            return jsonify({"status": "failed"})
+            return jsonify({"status": "failed", "num_likes": num_likes})
     else:
         abort(401) # send back an 401 Unauthorized message
+
 
 @app.route("/explore")
 def explore():
     return render_template("explore.html")
+
 
 @app.route("/new_post", methods=["POST"])
 def new_post():
@@ -104,7 +120,8 @@ def new_post():
     context = request.form.get("context", "NOT FILLED OUT")
     add_post(user_id, quote, quote_author, context)
     return redirect("/")
-  
+
+
 ######### Auth0 stuff ########
 
 @app.route("/login")
@@ -112,6 +129,7 @@ def login():
     return oauth.auth0.authorize_redirect(
         redirect_uri=url_for("callback", _external=True)
     )
+
 
 @app.route("/callback", methods=["GET", "POST"])
 def callback():
