@@ -78,3 +78,19 @@ WHERE p.post_id = l.post_id"""
 POST_LIKES = """SELECT COUNT(*) AS num_likes
                 FROM post_like
                 WHERE post_id = %s"""
+
+QUOTE_FOLLOW_UNFOLLOW = """
+DO
+$$
+DECLARE var_user_id VARCHAR := %s;
+DECLARE var_quote_id BIGINT := %s;
+BEGIN
+    IF (
+        SELECT COUNT(*) as count FROM post_following WHERE user_id = var_user_id AND post_id = var_quote_id
+    ) = 0 THEN INSERT INTO post_following VALUES (var_user_id,var_quote_id);
+    ELSE
+        DELETE FROM post_following WHERE user_id = var_user_id and post_ID = var_quote_id;
+    END IF;
+END;
+$$;
+"""
