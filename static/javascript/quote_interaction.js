@@ -37,15 +37,13 @@ function likeQuote(quote_id) {
 }
 
 function addQuote(quote_id) {
-    apiRequest(quote_id, 'api/add')
+    apiRequest(quote_id, '/api/follow/post')
         .then(data => {
-            if(data.successful) {
-                const addQuoteButton = document.getElementById(`quote-add-${quote_id}`);
-                const removeQuoteButton = document.getElementById(`quote-remove-${quote_id}`);
+            const addQuoteButton = document.getElementById(`quote-add-${quote_id}`);
+            const removeQuoteButton = document.getElementById(`quote-remove-${quote_id}`);
 
-                addQuoteButton.style.display = "none";
-                removeQuoteButton.style.display = "block";
-            }
+            addQuoteButton.style.display = "none";
+            removeQuoteButton.style.display = "block";
         })
         .catch(error => {
             console.error(error);
@@ -53,7 +51,7 @@ function addQuote(quote_id) {
 }
 
 function removeQuote(quote_id) {
-    apiRequest(quote_id, 'api/remove')
+    apiRequest(quote_id, '/api/follow/post')
         .then(data => {
             const addQuoteButton = document.getElementById(`quote-add-${quote_id}`);
             const removeQuoteButton = document.getElementById(`quote-remove-${quote_id}`);
