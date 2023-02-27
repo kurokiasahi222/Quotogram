@@ -29,7 +29,9 @@
                         quote_context=post.context,
                         date_posted=post.creation_time.split("T")[0],
                         num_likes=post.num_likes,
-                        quote_added=post.quote_added
+                        quote_added=post.quote_added,
+                        user_id=post.user_id,
+                        custom_width=true
                         %}
                         {% include "modules/quote.html" %}
                     {% endwith %}

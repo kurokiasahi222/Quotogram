@@ -4,11 +4,17 @@
     --color-tertiary: #343a1a;
     --color-accent: #7f2982;
     --color-error: #ec5858;
+
+    --color-accent-values: 127, 41, 130;
 }
 
 .main-content {
     width: 70%;
     margin: 0 auto;
+}
+
+.button-error {
+    background-color: var(--color-error);
 }
 
 .navigation {

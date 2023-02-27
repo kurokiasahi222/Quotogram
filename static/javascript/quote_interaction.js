@@ -7,19 +7,23 @@ async function apiRequest(quote_id, request) {
         body: JSON.stringify({
             quote_id: quote_id
         })
-    }).then(response => {
-        if(response.status !== 200) {
-            throw new Error("Error while performing request");
-        }
-
-        const data = response.json();
-        return data;
     });
+
+    console.log("Response status: " + response.status);
+    if(response.status !== 200) {
+        throw new Error("Error: " + response.status);
+    }
+
+    let result = response.json();
+    console.log("Data: " + result);
+    return result;
 }
 
 function likeQuote(quote_id) {
     apiRequest(quote_id, 'api/like')
         .then(data => {
+            console.log("Finished liking the quote, here is the call back data: " + data);
+
             const likeCountSpan = document.getElementById(`quote-like-count-${quote_id}`);
             likeCountSpan.innerHTML = data.num_likes;
 
@@ -65,11 +69,37 @@ function removeQuote(quote_id) {
 function deleteQuote(quote_id) {
     apiRequest(quote_id, 'api/delete')
         .then(data => {
-            if(data.successful) {
-                // TODO: perform a page reload
+            if(data.status === 'success') {
+                location.reload();
             }
         })
         .catch(error => {
             console.error(error);
         });
 }
+
+let openDropdown = null;
+
+function toggleEditOptions(quote_id) {
+    if(openDropdown) {
+        const editOptions = document.getElementById(`quote-dropdown-content-${openDropdown}`);
+        editOptions.style.display = "none";
+    }
+    
+    const editOptions = document.getElementById(`quote-dropdown-content-${quote_id}`);
+    editOptions.style.display = "block";
+    openDropdown = quote_id;
+
+    let bounding = editOptions.getBoundingClientRect();
+    if(bounding.bottom > (window.innerHeight || document.documentElement.clientHeight)) {
+        editOptions.style.top = "-1em";
+    }
+}
+
+document.addEventListener('click', function(event) {
+    if(openDropdown !== null && !event.target.matches(`#quote-dropdown-${openDropdown}`) && !event.target.matches('.quote-footer-buttons-dropdown')) {
+        const editOptions = document.getElementById(`quote-dropdown-content-${openDropdown}`);
+        editOptions.style.display = "none";
+        openDropdown = null;
+    }
+});

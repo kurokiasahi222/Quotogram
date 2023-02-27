@@ -12,7 +12,8 @@
     backdrop-filter: blur(6px);
 }
 
-.quote-modal {
+.quote-modal,
+.delete-quote-modal-widget {
     background-color: #fff;
     padding: 30px;
     max-width: 600px;
@@ -23,7 +24,8 @@
     min-width: 35%;
 }
 
-.modal-header {
+.modal-header,
+.delete-quote-modal-header {
     position: relative;
     height: 1.25em;
 }
