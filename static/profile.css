@@ -1,3 +1,7 @@
+.main-content {
+    width: 90%;
+}
+
 .navigation{
     position:relative;
 }
@@ -82,4 +86,24 @@ aside {
     background-color: darkgrey;
     margin: 1% 0;
     min-height: 100vh;
+}
+
+.profile-posts {
+    overflow: hidden;
+    width: 100%;
+    height: 80vh;
+    border: 1px solid var(--color-primary);
+}
+
+.profile-posts-wrapper {
+    width: 100%;
+    position: relative;
+    height: 300vh;
+    width: 300vw;
+
+    background-image: url("/");
+}
+
+.quote-wrapper {
+    position: absolute;
 }

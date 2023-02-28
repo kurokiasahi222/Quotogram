@@ -61,7 +61,7 @@ def profile():
     user = None
     if 'user' in session:
         user = session['user']
-    return render_template("profile.html", user=user)
+    return render_template("profile_dynamic.html", user=user)
 
 
 @app.route('/api')                          #default api route jsonifies post table
