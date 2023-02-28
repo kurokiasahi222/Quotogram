@@ -173,3 +173,15 @@ def follow_unfollow_post(user_id, post_id):
         # Check QUOTE_FOLLOW_UNFOLLOW for how the query handles this in database
         current_app.logger.info("Executing query {}".format(QUOTE_FOLLOW_UNFOLLOW %  (user_id,post_id)))
         cur.execute(QUOTE_FOLLOW_UNFOLLOW, (user_id,post_id))
+
+def search_quotes(user_id, search_text):
+    with get_db_cursor() as cur:
+        # We are performing OR operations of all words inputed 
+        # So the query FULL_TEXT_SEARCH's search_query requires words to be separated by | 
+        search_words = search_text.split()                      # split at space and get words into a list
+        search_text = " | ".join(search_words)                  # join the list into a string separated by |
+        
+        current_app.logger.info("Executing query {}".format(FULL_TEXT_SEARCH %  {"user_id":user_id, "search_query":search_text}))
+        cur.execute(FULL_TEXT_SEARCH,  {"user_id":user_id, "search_query":search_text})
+        result = cur.fetchall()
+        return [ item[0] for item in result] # return as a list of dictionaries
