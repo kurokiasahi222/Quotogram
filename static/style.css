@@ -19,6 +19,7 @@
 
 .navigation {
     background-color: var(--color-primary);
+    z-index: +3;
 }
 
 .navigation-wrapper {
