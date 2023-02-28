@@ -103,10 +103,22 @@
     position: relative;
 }
 
-.navigation-login-button-div, .navigation-create-post-button-div {
+.navigation-login-button-div {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+}
+
+.navigation-create-post-button-div{
+    position: relative;
+    top: 40%;
+    transform: translateY(-50%);
+}
+
+.nav-photo{
+    border-radius: 8px;
+    position: absolute;
+    margin: 12px 3px;
 }
 
 .navigation-login-button, .navigation-create-post-button {
@@ -116,6 +128,7 @@
 
 .navigation-create-post-button {
     background-color: var(--color-secondary);
+    margin-top: 15px;
 }
 
 .footer {
@@ -148,7 +161,12 @@
         height: auto;
     }
 
-    .navigation-login,.navigation-create-post {
+    .navigation-create-post {
+        margin-bottom: 2.5em;
+        margin-left: 1em;
+    }
+
+    .navigation-login {
         margin-top: 2em;
         margin-bottom: 2.5em;
         margin-left: 1em;
