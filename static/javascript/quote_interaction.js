@@ -20,16 +20,23 @@ async function apiRequest(quote_id, request) {
 }
 
 function likeQuote(quote_id) {
+    const likeCountSpan = document.getElementById(`quote-like-count-${quote_id}`);
+    const modalLikeCountSpan = document.getElementById("quote-like-count-modal");
+
+    likeCountSpan.innerHTML = '<i class="fa-solid fa-spinner"></i>';
+    modalLikeCountSpan.innerHTML = likeCountSpan.innerHTML;
+
+    likeCountSpan.classList.toggle("spin");
+    modalLikeCountSpan.classList.toggle("spin");
+
     apiRequest(quote_id, 'api/like')
         .then(data => {
             console.log("Finished liking the quote, here is the call back data: " + data);
-
-            const likeCountSpan = document.getElementById(`quote-like-count-${quote_id}`);
             likeCountSpan.innerHTML = data.num_likes;
-
-            // In case modal is active we set the likes for modal as well
-            const modalLikeCountSpan = document.getElementById("quote-like-count-modal");
             modalLikeCountSpan.innerHTML = data.num_likes;
+
+            likeCountSpan.classList.toggle("spin");
+            modalLikeCountSpan.classList.toggle("spin");
         })
         .catch(error => {
             console.error(error);
