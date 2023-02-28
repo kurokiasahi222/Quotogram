@@ -49,7 +49,6 @@ def index():
         user = session['user']
         res = get_posts_logged_in(session["uid"]) 
         posts = json.loads(json.dumps(res))  # convert result to json string
-        print(posts)
     else:
         res = get_posts_not_logged_in()
         posts = json.loads(json.dumps(res))  # convert result to json string
@@ -82,7 +81,8 @@ def table(table_name='post'):
 @app.route('/api/delete', methods=["POST"])
 def delete_quote():
     if 'user' in session:       # user has to be logged in
-        quote_id = request.form.get("quote_id", "NOT FILLED OUT")
+        body = request.get_json()
+        quote_id = body['quote_id']
         if remove_post(session['uid'], quote_id):
             return jsonify({"status": "success"})
         else:
@@ -107,9 +107,17 @@ def like_quote():
         abort(401) # send back an 401 Unauthorized message
 
 
-@app.route("/explore")
+@app.route("/explore", methods=["GET","POST"])
 def explore():
-    return render_template("explore.html")
+    if request.method == 'GET':
+        return render_template("explore.html", results=None)
+    if request.method == 'POST':
+        search_query = request.form.get("search")
+        if 'user' in session:
+            res  = search_quotes(session['uid'],search_query)
+        else:
+            res  = search_quotes(None,search_query)
+        return render_template("explore.html", results=json.loads(json.dumps(res)))
 
 
 @app.route("/new_post", methods=["POST"])
@@ -133,7 +141,7 @@ def add_post_to_following():
     else:
         abort(401) # send back an 401 Unauthorized message
     
-
+  
 ######### Auth0 stuff ########
 
 @app.route("/login")
