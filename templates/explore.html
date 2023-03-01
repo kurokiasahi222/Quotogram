@@ -18,7 +18,7 @@
         {% for result in results %}
             {% with 
                 quote_id=result.post_id,
-                quote_user="Need User Name",
+                quote_user=result.username,
                 quote_text=result.quote,
                 quote_author=result.quote_author,
                 quote_context=result.context,
@@ -26,6 +26,7 @@
                 num_likes=result.num_likes,
                 quote_added=result.is_following,
                 user_id=result.user_id,
+                user_pic=result.profile_image,
                 custom_width=true
                 %}
             {% include "modules/quote.html" %}
