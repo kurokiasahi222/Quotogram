@@ -1,6 +1,7 @@
 from flask import *
 import json
 import os
+import requests
 from urllib.parse import quote_plus, urlencode
 from authlib.integrations.flask_client import OAuth
 from functools import wraps
@@ -126,7 +127,15 @@ def new_post():
     quote = request.form.get("quote", "NOT FILLED OUT")
     quote_author = request.form.get("quote_author", "NOT FILLED OUT")
     context = request.form.get("context", "NOT FILLED OUT")
-    add_post(user_id, quote, quote_author, context)
+    add_post(user_id, quote, quote_author, context) # add the post to the post table
+
+    # automatically follow the post after posting
+    res = requests.get("http://127.0.0.1:5000/api/post")
+    res = res.json()
+    pid = -1
+    for post in res: #get the most recent post
+        pid = max(post['post_id'], pid)
+    follow_unfollow_post(user_id, pid)
     return redirect("/")
 
 @app.route('/api/follow/post', methods=["POST"])
