@@ -54,7 +54,16 @@
             {% endif %}
         </div>
     </nav>
-    <div class="main-content">{% block content %}{% endblock %}</div>
+    <div class="main-content">
+        {% block content %}{% endblock %}
+        {% if user is defined and user is not none %}
+            <div class="new-post-circle">
+                <button class="new-post-circle-button pure-button" onclick="displayCreatePostModal()">
+                    <svg width="100px" height="100px" style="stroke: var(--color-accent);"><use href="#icon-circleplus"/></svg>
+                </button>
+            </div>
+        {% endif %}
+    </div>
     <div class="footer">
         <div class="footer-content">
             {% block footer %}
