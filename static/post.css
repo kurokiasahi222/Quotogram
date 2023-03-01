@@ -30,6 +30,7 @@
 
 textarea{
     resize: none;
+    width: 100%;
 }
 
 .create-post-modal-content{
@@ -39,7 +40,6 @@ textarea{
 }
 
 .tags{
-    margin-right: 20%;
     margin-bottom: 15px;
     display: flex;
     flex-wrap: wrap;
@@ -52,7 +52,7 @@ textarea{
 .category label{
     border: 2px solid black;
     border-radius: 6px;
-    padding: 2px 3px;
+    padding: 6px;
     margin: 1px !important;
 
     box-shadow: 3px 1px 5px 0px rgba(0, 0, 0, 0.75);
@@ -72,3 +72,8 @@ textarea{
     color: gray;
 }
 
+.create-post-modal-form-submit{
+    background-color: var(--color-secondary);
+    border-radius: 8px;
+    font-size: 1.3em;
+}
