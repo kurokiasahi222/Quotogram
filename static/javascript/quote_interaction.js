@@ -83,17 +83,23 @@ function deleteQuote(quote_id) {
         });
 }
 
+let openWrapper = null;
 let openDropdown = null;
 
 function toggleEditOptions(quote_id) {
+    let wrapper = document.querySelector(".quote-wrapper[data-quote-id='" + quote_id + "']");
+    wrapper.style.zIndex = 1;
+
     if(openDropdown) {
         const editOptions = document.getElementById(`quote-dropdown-content-${openDropdown}`);
         editOptions.style.display = "none";
+        openWrapper.style.zIndex = 0;
     }
     
     const editOptions = document.getElementById(`quote-dropdown-content-${quote_id}`);
     editOptions.style.display = "block";
     openDropdown = quote_id;
+    openWrapper = wrapper;
 
     let bounding = editOptions.getBoundingClientRect();
     if(bounding.bottom > (window.innerHeight || document.documentElement.clientHeight)) {
@@ -106,5 +112,6 @@ document.addEventListener('click', function(event) {
         const editOptions = document.getElementById(`quote-dropdown-content-${openDropdown}`);
         editOptions.style.display = "none";
         openDropdown = null;
+        openWrapper.style.zIndex = 0;
     }
 });
