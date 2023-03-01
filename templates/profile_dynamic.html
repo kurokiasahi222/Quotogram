@@ -51,6 +51,30 @@
                 date_posted="1970-01-05" %}
                 {% include "modules/quote.html" %}
             {% endwith %}
+            {% with 
+                quote_id=6,
+                quote_text = "This is a new quote that I am testing. Here is more of the quote: The whole trick is keeping the truth up front in daily consciousness.",
+                quote_author="Some old dude",
+                quote_user="Me",
+                date_posted="1970-01-05" %}
+                {% include "modules/quote.html" %}
+            {% endwith %}
+            {% with 
+                quote_id=7,
+                quote_text = "Haha now we have even more quotes. I'm just coming up with content to pad this profile page so I can see how it looks",
+                quote_author="Some young girl?",
+                quote_user="Not me",
+                date_posted="1970-01-05" %}
+                {% include "modules/quote.html" %}
+            {% endwith %}
+            {% with 
+                quote_id=8,
+                quote_text = "I want to see how a really full quote board looks!",
+                quote_author="Random",
+                quote_user="This one was me",
+                date_posted="1970-01-05" %}
+                {% include "modules/quote.html" %}
+            {% endwith %}
         </div>
     </div>
     <script src="https://d3js.org/d3.v7.min.js"></script>

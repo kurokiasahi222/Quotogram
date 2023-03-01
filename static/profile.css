@@ -101,7 +101,7 @@ aside {
     height: 300vh;
     width: 300vw;
 
-    background-image: url("/");
+    background-image: url("/static/images/cork-repeat.png");
 }
 
 .quote-wrapper {
