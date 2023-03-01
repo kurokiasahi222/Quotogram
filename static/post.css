@@ -43,6 +43,7 @@ textarea{
     margin-bottom: 15px;
     display: flex;
     flex-wrap: wrap;
+    user-select: none;
 }
 
 .category{
