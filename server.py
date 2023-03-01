@@ -120,7 +120,6 @@ def explore():
             res  = search_quotes(session['uid'],search_query)
         else:
             res  = search_quotes(None,search_query)
-        print(res)
         return render_template("explore.html",user=user, results=json.loads(json.dumps(res)))
 
 
