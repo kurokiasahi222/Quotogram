@@ -107,3 +107,7 @@ aside {
 .quote-wrapper {
     position: absolute;
 }
+
+.quote-wrapper > div {
+    margin: 0;
+}
