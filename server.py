@@ -58,10 +58,13 @@ def index():
 @requires_auth                              # need to be logged in to access this page
 def profile():
     user = None
+    posts, num_quotes, followers, num_followers, num_following = get_profile_data(session['uid']) 
     if 'user' in session:
         user = session['user']
-    return render_template("profile.html", user=user)
-
+    return render_template("profile.html", 
+                           user=user,profile=profile, 
+                           num_quotes=num_quotes,followers=followers, 
+                           num_followers=num_followers, num_following=num_following)
 
 @app.route('/api')                          #default api route jsonifies post table
 def default_table():
