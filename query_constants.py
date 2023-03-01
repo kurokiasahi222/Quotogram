@@ -94,3 +94,40 @@ BEGIN
 END;
 $$;
 """
+
+FULL_TEXT_SEARCH = """
+WITH text_search_categories AS (
+    SELECT * FROM post
+    WHERE post_id IN (
+        SELECT post_id FROM post_category WHERE to_tsvector(category) @@ to_tsquery(%(search_query)s)
+    )
+),
+text_search_posts AS (
+    SELECT * FROM post WHERE to_tsvector(quote || ' ' || quote_author || ' ' || context) @@ to_tsquery(%(search_query)s)
+),
+results AS (
+    SELECT t.post_id, t.user_id, t.quote, t.quote_author, t.context, t.creation_time,
+        CASE 
+            WHEN (SELECT COUNT(*) FROM post_following f WHERE f.post_id = t.post_id AND f.user_id = %(user_id)s) > 0 THEN true 
+            ELSE false
+        END AS is_following,
+        CASE WHEN (SELECT COUNT(*) FROM post_like l WHERE l.post_id = t.post_id ) > 0
+                THEN (SELECT COUNT(*)  FROM post_like l WHERE l.post_id = t.post_id) 
+            ELSE 0
+        END AS num_likes
+    FROM  text_search_posts t
+
+    UNION
+
+    SELECT t.post_id, t.user_id, t.quote, t.quote_author, t.context, t.creation_time,
+        CASE 
+            WHEN (SELECT COUNT(*) FROM post_following f WHERE f.post_id = t.post_id AND f.user_id = %(user_id)s) > 0 THEN true 
+            ELSE false
+        END AS is_following,
+        CASE WHEN (SELECT COUNT(*) FROM post_like l WHERE l.post_id = t.post_id ) > 0
+                THEN (SELECT COUNT(*)  FROM post_like l WHERE l.post_id = t.post_id) 
+            ELSE 0
+        END AS num_likes
+    FROM  text_search_categories t
+)
+SELECT row_to_json(t) FROM results t """

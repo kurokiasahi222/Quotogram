@@ -49,3 +49,28 @@ function displayDeleteModal(quoteId) {
         disableScroll: true,
     })
 }
+
+function displayEditModal(quoteId) {
+    document.querySelector(".create-post-modal-title-text").innerHTML = "Edit Post";
+    document.querySelector(".create-post-modal-form-submit").innerHTML = "Confirm Edit";
+
+    let quoteText = document.getElementById("quote-text-" + quoteId).innerText;
+    let quoteAuthor = document.getElementById("quote-author-" + quoteId).innerText;
+    let quoteContext = document.getElementById("quote-context-" + quoteId).innerText;
+
+    let form = document.getElementById("quote-post-form");
+    let formText = document.getElementById("form-quote");
+    let formAuthor = document.getElementById("form-quote-author");
+    let formContext = document.getElementById("form-context");
+    let formQuoteId = document.getElementById("form-quote-id");
+
+    formText.value = quoteText;
+    formAuthor.value = quoteAuthor;
+    formContext.value = quoteContext.trim();
+    formQuoteId.value = quoteId;
+    form.setAttribute("action", "/edit_post");
+
+    MicroModal.show("create-post-modal", {
+        disableScroll: true,
+    });
+}

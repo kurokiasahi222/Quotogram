@@ -22,7 +22,7 @@ aside {
   
     box-shadow: 3px 1px 5px 0px rgba(0, 0, 0, 0.75);
 
-    z-index: +1;
+    z-index: +2;
   }
        
   .sidebar-toggle {
@@ -73,10 +73,10 @@ aside {
 }
 
 .sidebar-buttons{
-    margin-top: 55%;
+    margin-top: 35%;
 }
 
-.followers-button, .settings-button{
+.followers-button, .following-button, .settings-button, .logout-button{
     margin: 5px;
     background-color: var(--color-primary);
     width: 70%;

@@ -34,9 +34,10 @@ CREATE TABLE post_following (
 );
 
 CREATE TABLE post_category (
-    post_id BIGINT PRIMARY KEY,
+    post_id BIGINT,
     category VARCHAR(250),
-    FOREIGN KEY(post_id) REFERENCES post(post_id) ON DELETE CASCADE
+    FOREIGN KEY(post_id) REFERENCES post(post_id) ON DELETE CASCADE,
+    PRIMARY KEY(post_id,category)
 );
 
 CREATE TABLE post_like (

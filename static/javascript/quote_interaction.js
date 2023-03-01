@@ -20,16 +20,23 @@ async function apiRequest(quote_id, request) {
 }
 
 function likeQuote(quote_id) {
+    const likeCountSpan = document.getElementById(`quote-like-count-${quote_id}`);
+    const modalLikeCountSpan = document.getElementById("quote-like-count-modal");
+
+    likeCountSpan.innerHTML = '<i class="fa-solid fa-spinner"></i>';
+    modalLikeCountSpan.innerHTML = likeCountSpan.innerHTML;
+
+    likeCountSpan.classList.toggle("spin");
+    modalLikeCountSpan.classList.toggle("spin");
+
     apiRequest(quote_id, 'api/like')
         .then(data => {
             console.log("Finished liking the quote, here is the call back data: " + data);
-
-            const likeCountSpan = document.getElementById(`quote-like-count-${quote_id}`);
             likeCountSpan.innerHTML = data.num_likes;
-
-            // In case modal is active we set the likes for modal as well
-            const modalLikeCountSpan = document.getElementById("quote-like-count-modal");
             modalLikeCountSpan.innerHTML = data.num_likes;
+
+            likeCountSpan.classList.toggle("spin");
+            modalLikeCountSpan.classList.toggle("spin");
         })
         .catch(error => {
             console.error(error);
@@ -76,17 +83,23 @@ function deleteQuote(quote_id) {
         });
 }
 
+let openWrapper = null;
 let openDropdown = null;
 
 function toggleEditOptions(quote_id) {
+    let wrapper = document.querySelector(".quote-wrapper[data-quote-id='" + quote_id + "']");
+    wrapper.style.zIndex = 1;
+
     if(openDropdown) {
         const editOptions = document.getElementById(`quote-dropdown-content-${openDropdown}`);
         editOptions.style.display = "none";
+        openWrapper.style.zIndex = 0;
     }
     
     const editOptions = document.getElementById(`quote-dropdown-content-${quote_id}`);
     editOptions.style.display = "block";
     openDropdown = quote_id;
+    openWrapper = wrapper;
 
     let bounding = editOptions.getBoundingClientRect();
     if(bounding.bottom > (window.innerHeight || document.documentElement.clientHeight)) {
@@ -99,5 +112,6 @@ document.addEventListener('click', function(event) {
         const editOptions = document.getElementById(`quote-dropdown-content-${openDropdown}`);
         editOptions.style.display = "none";
         openDropdown = null;
+        openWrapper.style.zIndex = 0;
     }
 });
