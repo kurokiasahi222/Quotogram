@@ -134,8 +134,13 @@ def new_post():
     res = res.json()
     pid = -1
     for post in res: #get the most recent post
-        pid = max(post['post_id'], pid)
+        if post['user_id'] == user_id:
+            pid = max(post['post_id'], pid)
     follow_unfollow_post(user_id, pid)
+    
+    #category addition for a new post
+    category = request.form.get('category', 'NOT FILLED OUT')
+    add_post_category(pid, category)
     return redirect("/")
 
 @app.route('/api/follow/post', methods=["POST"])

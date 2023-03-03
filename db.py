@@ -174,6 +174,13 @@ def follow_unfollow_post(user_id, post_id):
         current_app.logger.info("Executing query {}".format(QUOTE_FOLLOW_UNFOLLOW %  (user_id,post_id)))
         cur.execute(QUOTE_FOLLOW_UNFOLLOW, (user_id,post_id))
 
+def add_post_category(post_id, category):
+    # add a category for a new post
+    with get_db_cursor(True) as cur:
+        current_app.logger.info('Executing query INSERT INTO post_category (post_id, category) VALUES ({post_id}, {category})'
+                                .format(post_id=post_id, category=category))
+        cur.execute('INSERT INTO post_category VALUES (%s, %s)', (post_id, category))
+
 def search_quotes(user_id, search_text):
     with get_db_cursor() as cur:
         # We are performing OR operations of all words inputed 
