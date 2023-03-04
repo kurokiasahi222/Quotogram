@@ -181,6 +181,19 @@ def add_post_category(post_id, category):
                                 .format(post_id=post_id, category=category))
         cur.execute('INSERT INTO post_category VALUES (%s, %s)', (post_id, category))
 
+
+def edit_post(post_id, user_id, quote, quote_author, context):
+    with get_db_cursor(True) as cur:
+        current_app.logger.info("Executing query UPDATE post SET user_id = {user_id}, quote = {quote}, quote_author = {quote_author}, context = {context} WHERE post_id = {post_id}"
+                                .format(user_id=user_id, quote=quote, quote_author=quote_author, context=context, post_id=post_id))
+        cur.execute('UPDATE post SET user_id = %s, quote = %s, quote_author = %s, context = %s WHERE post_id = %s', (user_id, quote, quote_author, context, post_id))
+
+def edit_post_category(post_id, category):
+    with get_db_cursor(True) as cur:
+        current_app.logger.info("Executing query UPDATE post_category SET category = {category} WHERE post_id = {post_id}"
+                                .format(category=category, post_id=post_id))
+        cur.execute('UPDATE post_category SET category = %s WHERE post_id = %s', (category, post_id))
+
 def search_quotes(user_id, search_text):
     with get_db_cursor() as cur:
         # We are performing OR operations of all words inputed 

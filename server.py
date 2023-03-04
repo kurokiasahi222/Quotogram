@@ -143,6 +143,24 @@ def new_post():
     add_post_category(pid, category)
     return redirect("/")
 
+@app.route("/edit_post", methods=["POST"])
+def edit_post():
+    # I can't really test this without the form for 
+    if 'user' in session:
+        body = request.get_json()
+        post_id = body.get('quote_id', -1)
+        user_id = session.get("uid", "jakdghjgdshJHBshjqUAs")
+        quote = request.form.get("quote", "NOT FILLED OUT")
+        quote_author = request.form.get("quote_author", "NOT FILLED OUT")
+        context = request.form.get("context", "NOT FILLED OUT")
+        category = request.form.get('category', 'NOT FILLED OUT')
+        edit_post(post_id, user_id, quote, quote_author, context)
+        edit_post_category(post_id, category)
+        return redirect("/")
+    else:
+        abort(401)
+    
+
 @app.route('/api/follow/post', methods=["POST"])
 def add_post_to_following():
     if 'user' in session:               # user has to be logged in
