@@ -110,4 +110,16 @@ aside {
 
 .quote-wrapper > div {
     margin: 0;
+    box-shadow: 7px 7px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.quote {
+    position: relative;
+}
+
+.quote-pin-handle {
+    position: absolute;
+    top: 0;
+    left: 250px;
+    cursor: move;
 }
