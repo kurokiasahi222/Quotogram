@@ -31,6 +31,7 @@
 
 textarea{
     resize: none;
+    width: 100%;
 }
 
 .create-post-modal-content{
@@ -40,10 +41,10 @@ textarea{
 }
 
 .tags{
-    margin-right: 20%;
     margin-bottom: 15px;
     display: flex;
     flex-wrap: wrap;
+    user-select: none;
 }
 
 .category{
@@ -53,7 +54,7 @@ textarea{
 .category label{
     border: 2px solid black;
     border-radius: 6px;
-    padding: 2px 3px;
+    padding: 6px;
     margin: 1px !important;
 
     box-shadow: 3px 1px 5px 0px rgba(0, 0, 0, 0.75);
@@ -71,6 +72,12 @@ textarea{
     box-shadow: 3px 1px 5px 0px rgba(0, 0, 0, 0.1);
     border: 2px solid grey;
     color: gray;
+}
+
+.create-post-modal-form-submit{
+    background-color: var(--color-secondary);
+    border-radius: 8px;
+    font-size: 1.3em;
 }
 
 @media screen and (min-width: 768px) {
