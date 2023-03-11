@@ -23,7 +23,7 @@
                 {% for post in posts %}
                     {% with 
                         quote_id=post.post_id,
-                        quote_user="Need User Name",
+                        quote_user=post.username,
                         quote_text=post.quote,
                         quote_author=post.quote_author,
                         quote_context=post.context,
@@ -31,6 +31,7 @@
                         num_likes=post.num_likes,
                         quote_added=post.quote_added,
                         user_id=post.user_id,
+                        user_pic=post.profile_image,
                         custom_width=true
                         %}
                         {% include "modules/quote.html" %}

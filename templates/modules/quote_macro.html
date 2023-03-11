@@ -1,5 +1,5 @@
 {% macro display(quote_id=0, user_name="none", user_link="none", quote_text="none", quote_author="none", quote_context="none", 
-        quote_added=false, user_pic="static/images/user.png", date_posted="01-01-1970", num_likes=0, 
+        quote_added=false, user_pic=user_pic, date_posted="01-01-1970", num_likes=0, 
         user=none, user_id=0, inside_modal=false) %}
     {% macro class_name(name) %}{% if inside_modal %}{{name ~ '-modal'}}{% else %}{{name}}{% endif %}{% endmacro %}
     {% macro display_modal() %}onclick={{'displayQuoteModal(' ~ quote_id ~ ')'}}{% endmacro %}
@@ -16,7 +16,7 @@
         {% endif %}
         <div class="quote-user pure-g">
             <div class="quote-user-image">
-                <img src="{{ user_pic }}" alt="User Image" width="64px" id="user-picture-{{ quote_id }}"/>
+                <img src="{{ user_pic }}" alt="User Image" width="64px" crossorigin="anonymous" id="user-picture-{{ quote_id }}"/>
             </div>
             <div class="quote-user-name">
                 <a href="{{ user_link }}" class="quote-user-name-content" id="user-link-{{ quote_id }}">
