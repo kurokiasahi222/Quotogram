@@ -54,12 +54,17 @@ aside {
   
 .profile-user-name {
     margin-top: 120px;
+    margin-bottom: 1em;
     font-size: 1.5em;
     position: relative;
 }
 
 .profile-user-image {
     margin: 1% auto;
+}
+
+.profile-user-image > img {
+    border-radius: 8px;
 }
 
 .profile-user-quote-count{
@@ -72,6 +77,10 @@ aside {
     margin: 8% auto;
 }
 
+.profile-info {
+    font-weight: bold;
+}
+
 .sidebar-buttons{
     margin-top: 35%;
 }
@@ -80,6 +89,8 @@ aside {
     margin: 5px;
     background-color: var(--color-primary);
     width: 70%;
+    color: white;
+    font-weight: 500;
 } 
 
 .content{

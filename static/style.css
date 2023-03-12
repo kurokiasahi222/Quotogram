@@ -1,11 +1,12 @@
 :root {
-    --color-primary: #bda0d1;
+    --color-primary: #8b62a7;
     --color-secondary: #17b890;
     --color-tertiary: #343a1a;
     --color-accent: #7f2982;
     --color-error: #ec5858;
 
     --color-accent-values: 127, 41, 130;
+    --text-secondary-color: #ffeeca;
 }
 
 .main-content {
@@ -130,6 +131,7 @@
 .navigation-create-post-button {
     background-color: var(--color-secondary);
     margin-top: 15px;
+    margin-right: 1em;
 }
 
 .footer {
