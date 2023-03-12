@@ -22,6 +22,31 @@ WHERE p.user_id IN (
 # Getting all the posts from the above categories (user's, their following posts, and their follower's posts)
 ALL_POSTS = USER_POSTS + """\nUNION\n"""+ POSTS_FOLLOWING  + """\nUNION\n"""+ FOLLOWER_POSTS 
 
+# Get all the post user is following
+# including their own posts (you follow your own posts by default)
+USER_ALL_FOLLOWING_POSTS = """ WITH all_posts_following AS (SELECT pf.post_id, pf.user_id, 
+post.quote, post.quote_author, post.context, post.creation_time
+FROM post_following pf
+JOIN post using(post_id))
+SELECT *
+FROM all_posts_following
+WHERE user_id = %s
+""" 
+
+# Get followers of a user
+GET_FOLLOWERS = """
+WITH user_followers AS (SELECT *
+FROM users 
+JOIN followers ON users.user_id = followers.followed_id)
+SELECT user_id, username, first_name, last_name, 
+profile_image
+FROM user_followers
+WHERE user_id = %s
+"""
+
+# Get the number of peole user is following
+NUMBER_FOLLOWING = "SELECT COUNT(*) FROM followers WHERE follower_id = %s"
+
 ADD_USER = """INSERT INTO users (user_id,username,first_name,last_name,profile_image,email)
 VALUES (%s,%s,%s,%s,%s,%s)"""
 

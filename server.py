@@ -57,12 +57,26 @@ def index():
 @app.route("/profile")
 @requires_auth                              # need to be logged in to access this page
 def profile():
+    # Check if user is logged in 
+    if 'user' not in session:
+        # redirect to login page
+        return redirect('/login')
+    # Check for query string
     user = None
+    user_name = request.args.get("username")
+    if user_name is not None:
+        # check if the username exits 
+        user_exists = check_username_in_database(user_name)
+        if user_exists == []:
+            # if the username does not exist then redirect to profile page
+            return redirect('/profile')
+        posts = get_user_posts_from_username(user_name)
+        return render_template("profile.html", user=user, posts=posts)
+    # If no query string, then get the user's profile
     posts, num_quotes, followers, num_followers, num_following = get_profile_data(session['uid']) 
-    if 'user' in session:
-        user = session['user']
+    user = session['user']
     return render_template("profile.html", 
-                           user=user,profile=profile, 
+                           user=user,posts=posts, 
                            num_quotes=num_quotes,followers=followers, 
                            num_followers=num_followers, num_following=num_following)
 
@@ -188,3 +202,6 @@ def logout():
             quote_via=quote_plus,
         )
     )
+
+if __name__ == '__main__':
+    app.run(host="localhost", port=8000, debug=True)
