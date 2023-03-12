@@ -147,6 +147,35 @@
     padding-bottom: 1em;
 }
 
+.new-post-circle {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 25;
+    pointer-events: none;
+}
+
+.new-post-circle-button {
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+    background-color: transparent;
+    pointer-events: all;
+}
+
+.new-post-circle-button > svg {
+    filter: drop-shadow(0 0 0.5em rgba(0, 0, 0, 0.75));
+}
+
+.new-post-circle-button:hover,
+.new-post-circle-button:focus,
+.new-post-circle-button:active {
+    background-image: none;
+}
+
 @media (max-width: 47.999em) {
     .main-content {
         width: 90%;
@@ -178,4 +207,8 @@
     .navigation-login-button,.navigation-create-post-button {
         width: 35%;
     }
+
+    .new-post-circle {
+        display: block;
+    }   
 }
