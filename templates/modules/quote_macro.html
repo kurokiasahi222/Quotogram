@@ -1,6 +1,6 @@
 {% macro display(quote_id=0, user_name="none", user_link="none", quote_text="none", quote_author="none", quote_context="none", 
         quote_added=false, user_pic=user_pic, date_posted="01-01-1970", num_likes=0, 
-        user=none, user_id=0, inside_modal=false) %}
+        user=none, user_id=0, on_profile_page=false, inside_modal=false) %}
     {% macro class_name(name) %}{% if inside_modal %}{{name ~ '-modal'}}{% else %}{{name}}{% endif %}{% endmacro %}
     {% macro display_modal() %}onclick={{'displayQuoteModal(' ~ quote_id ~ ')'}}{% endmacro %}
     {% macro like_button() %}onclick={{'likeQuote(' ~ quote_id ~ ')'}}{% endmacro %}
@@ -12,6 +12,11 @@
         {% if inside_modal %}
             <div class="modal-header">
                 <a href="#" class="modal-close" aria-label="Close modal" data-micromodal-close><s class="modal-close-bar"></s><s class="modal-close-bar"></s></a>
+            </div>
+        {% endif %}
+        {% if on_profile_page and not inside_modal %}
+            <div class="quote-pin-handle">
+                <svg width="32px" height="32px"><use href="#icon-thumbtack"/></svg>
             </div>
         {% endif %}
         <div class="quote-user pure-g">
