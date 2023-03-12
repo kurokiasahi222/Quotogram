@@ -144,7 +144,45 @@ def add_post_to_following():
     else:
         abort(401) # send back an 401 Unauthorized message
     
-  
+
+@app.errorhandler(404)
+def page_not_found(e):
+    user = None
+    if 'user' in session:
+        user = session['user']
+    return render_template("errors/404.html", user=user), 404
+
+
+@app.errorhandler(403)
+def forbidden(e):
+    user = None
+    if 'user' in session:
+        user = session['user']
+    return render_template("errors/403.html", user=user), 403
+
+
+@app.errorhandler(410)
+def gone(e):
+    user = None
+    if 'user' in session:
+        user = session['user']
+    return render_template("errors/410.html", user=user), 410
+
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    user = None
+    if 'user' in session:
+        user = session['user']
+    return render_template("errors/500.html", user=user), 500
+
+
+app.register_error_handler(404, page_not_found)
+app.register_error_handler(403, forbidden)
+app.register_error_handler(410, gone)
+app.register_error_handler(500, internal_server_error)
+
+
 ######### Auth0 stuff ########
 
 @app.route("/login")
