@@ -4,7 +4,7 @@
     {% macro class_name(name) %}{% if inside_modal %}{{name ~ '-modal'}}{% else %}{{name}}{% endif %}{% endmacro %}
     {% macro display_modal() %}onclick={{'displayQuoteModal(' ~ quote_id ~ ')'}}{% endmacro %}
     {% macro like_button() %}onclick={{'likeQuote(' ~ quote_id ~ ')'}}{% endmacro %}
-    {% macro add_button(add) %}{% if add %}onclick={{'addQuote(' ~ quote_id ~ ')'}}{% else %}onclick={{'removeQuote(' ~ quote_id ~ ')'}}{% endif %}{% endmacro %}
+    {% macro add_button() %}onclick={{'addQuote(' ~ quote_id ~ ')'}}{% endmacro %}
     {% macro delete_quote() %}onclick={{'displayDeleteModal(' ~ quote_id ~ ')'}}{% endmacro %}
     {% macro edit_quote() %}onclick={{'displayEditModal(' ~ quote_id ~ ')'}}{% endmacro %}
     {% macro toggle_options() %}onclick={{'toggleEditOptions(' ~ quote_id ~ ')'}}{% endmacro %}
@@ -90,13 +90,23 @@
                     </div>
                 </div>
                 {% if user is defined and user is not none %}
-                    <button class="quote-footer-buttons-add pure-button" button="button" {{ add_button(true) }} id="quote-add-{{ quote_id }}"
-                        {% if quote_added %}style="display:none;"{% endif %}>
-                        Add <i class="fa-sharp fa-solid fa-plus"></i>
-                    </button>
-                    <button class="quote-footer-buttons-add pure-button" button="button" {{ add_button(false) }} id="quote-remove-{{ quote_id }}"
-                        {% if not quote_added %}style="display:none;"{% endif %}>
-                        Remove <i class="fa-solid fa-check"></i>
+                    <button class="quote-footer-buttons-add pure-button" button="button" {{ add_button() }} id="quote-add-{{ quote_id }}"
+                        quote-added="{% if quote_added %}true{% else %}false{% endif %}">
+                        {% if not quote_added %}
+                            <span class="quote-footer-buttons-add-label">
+                                Add 
+                            </span>
+                            <span class="quote-footer-buttons-add-icon">
+                                <i class="fa-sharp fa-solid fa-plus"></i>
+                            </span>
+                        {% else %}
+                            <span class="quote-footer-buttons-add-label">
+                                Remove 
+                            </span>
+                            <span class="quote-footer-buttons-add-icon">
+                                <i class="fa-solid fa-check"></i>
+                            </span>
+                        {% endif %}
                     </button>
                 {% endif %}
             </div>

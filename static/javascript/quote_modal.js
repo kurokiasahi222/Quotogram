@@ -12,7 +12,6 @@ function displayQuoteModal(quoteId) {
     let likeCount = document.getElementById("quote-like-count-" + quoteId).innerText;
     let datePosted = document.getElementById("quote-date-posted-" + quoteId).innerText;
     let addButton = document.getElementById("quote-add-" + quoteId);
-    let removeButton = document.getElementById("quote-remove-" + quoteId);
 
     document.getElementById("quote-text-modal").innerText = quoteText;
     document.getElementById("quote-author-modal").innerText = quoteAuthor;
@@ -24,17 +23,16 @@ function displayQuoteModal(quoteId) {
     document.getElementById("quote-date-posted-modal").innerText = datePosted;
 
     // Buttons
-    if(addButton) {
-        if(addButton.style.display === "none") {
-            document.getElementById("quote-add-modal").style.display = "none";
-            document.getElementById("quote-remove-modal").style.display = "block";
-            document.getElementById("quote-remove-modal").setAttribute("onclick", "removeQuote(" + quoteId + ")");
-        } else {
-            document.getElementById("quote-add-modal").style.display = "block";
-            document.getElementById("quote-remove-modal").style.display = "none";
-            document.getElementById("quote-add-modal").setAttribute("onclick", "addQuote(" + quoteId + ")");
-        }
+    let modalButton = document.getElementById("quote-add-modal");
+    if(addButton.getAttribute("quote-added") === "false") {
+        modalButton.querySelector(".quote-footer-buttons-add-label").innerHTML = "Add";
+        modalButton.querySelector(".quote-footer-buttons-add-icon").innerHTML = '<i class="fa-solid fa-plus"></i>';
+    } else {
+        modalButton.querySelector(".quote-footer-buttons-add-label").innerHTML = "Remove";
+        modalButton.querySelector(".quote-footer-buttons-add-icon").innerHTML = '<i class="fa-solid fa-check"></i>';
     }
+    modalButton.setAttribute("onclick", "addQuote(" + quoteId + ")");
+
     document.getElementById("quote-like-button-modal").setAttribute("onclick", "likeQuote(" + quoteId + ")");
 
     MicroModal.show("modal-1", {

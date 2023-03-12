@@ -44,27 +44,41 @@ function likeQuote(quote_id) {
 }
 
 function addQuote(quote_id) {
+    const quoteButton = document.getElementById(`quote-add-${quote_id}`);
+    const quoteButtonIcon = quoteButton.querySelector(".quote-footer-buttons-add-icon");
+    let status = quoteButton.getAttribute("quote-added");
+
+    const quoteButtonModal = document.getElementById("quote-add-modal");
+    const quoteButtonIconModal = quoteButtonModal.querySelector(".quote-footer-buttons-add-icon");
+    
+    quoteButtonIcon.innerHTML = '<i class="fa-solid fa-spinner"></i>';
+    quoteButtonIconModal.innerHTML = quoteButtonIcon.innerHTML;
+
+    quoteButtonIcon.classList.toggle("spin");
+    quoteButtonIconModal.classList.toggle("spin");
+
     apiRequest(quote_id, '/api/follow/post')
         .then(data => {
-            const addQuoteButton = document.getElementById(`quote-add-${quote_id}`);
-            const removeQuoteButton = document.getElementById(`quote-remove-${quote_id}`);
+            if(status === 'true') { // The quote was added, so now show that it was removed
+                quoteButton.setAttribute("quote-added", "false");
 
-            addQuoteButton.style.display = "none";
-            removeQuoteButton.style.display = "block";
-        })
-        .catch(error => {
-            console.error(error);
-        });
-}
+                quoteButton.querySelector(".quote-footer-buttons-add-label").innerHTML = "Add";
+                quoteButtonModal.querySelector(".quote-footer-buttons-add-label").innerHTML = "Add";
 
-function removeQuote(quote_id) {
-    apiRequest(quote_id, '/api/follow/post')
-        .then(data => {
-            const addQuoteButton = document.getElementById(`quote-add-${quote_id}`);
-            const removeQuoteButton = document.getElementById(`quote-remove-${quote_id}`);
+                quoteButtonIcon.innerHTML = '<i class="fa-solid fa-plus"></i>';
+                quoteButtonIconModal.innerHTML = quoteButtonIcon.innerHTML;
+            } else {
+                quoteButton.setAttribute("quote-added", "true");
 
-            addQuoteButton.style.display = "block";
-            removeQuoteButton.style.display = "none";
+                quoteButton.querySelector(".quote-footer-buttons-add-label").innerHTML = "Remove";
+                quoteButtonModal.querySelector(".quote-footer-buttons-add-label").innerHTML = "Remove";
+
+                quoteButtonIcon.innerHTML = '<i class="fa-solid fa-check"></i>';
+                quoteButtonIconModal.innerHTML = quoteButtonIcon.innerHTML;
+            }
+
+            quoteButtonIcon.classList.toggle("spin");
+            quoteButtonIconModal.classList.toggle("spin");
         })
         .catch(error => {
             console.error(error);
