@@ -97,6 +97,34 @@ function deleteQuote(quote_id) {
         });
 }
 
+function followUser(user_id) {
+    const followUserButton = document.getElementById("quote-follow-user-modal");
+    const followUserButtonLabel = followUserButton.querySelector(".quote-footer-buttons-follow-label");
+    const followUserButtonIcon = followUserButton.querySelector(".quote-footer-buttons-follow-icon");
+    let following = followUserButton.getAttribute("data-following");
+
+    followUserButtonIcon.innerHTML = '<i class="fa-solid fa-spinner"></i>';
+    followUserButtonIcon.classList.toggle("spin");
+
+    apiRequest(user_id, 'api/follow/user')
+        .then(data => {
+            console.log("Finished following the user " + data);
+            if(following) { // user has unfollowed the user
+                followUserButton.setAttribute("data-following", false);
+                followUserButtonLabel.innerHTML = "Follow User";
+                followUserButtonIcon.innerHTML = '<i class="fa-solid fa-plus"></i>';
+            } else {
+                followUserButton.setAttribute("data-following", true);
+                followUserButtonLabel.innerHTML = "Unfollow User";
+                followUserButtonIcon.innerHTML = '<i class="fa-solid fa-check"></i>';
+            }
+            followUserButtonIcon.classList.toggle("spin");
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
 let openWrapper = null;
 let openDropdown = null;
 
