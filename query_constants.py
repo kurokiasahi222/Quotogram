@@ -27,9 +27,14 @@ ALL_POSTS = USER_POSTS + """\nUNION\n"""+ POSTS_FOLLOWING  + """\nUNION\n"""+ FO
 USER_ALL_FOLLOWING_POSTS = """ WITH all_posts_following AS (SELECT pf.post_id, pf.user_id, 
 post.quote, post.quote_author, post.context, post.creation_time
 FROM post_following pf
-JOIN post using(post_id))
+JOIN post using(post_id)),
+all_posts_with_userinfo AS (
+    SELECT *
+    FROM all_posts_following
+    JOIN users USING(user_id)
+)
 SELECT *
-FROM all_posts_following
+FROM all_posts_with_userinfo
 WHERE user_id = %s
 """ 
 
@@ -43,6 +48,9 @@ profile_image
 FROM user_followers
 WHERE user_id = %s
 """
+
+# Get users posts from username
+USER_POSTS_FROM_USERNAME = "SELECT * FROM post p, users u WHERE p.user_id = u.user_id AND u.username = %s "
 
 # Get the number of peole user is following
 NUMBER_FOLLOWING = "SELECT COUNT(*) FROM followers WHERE follower_id = %s"

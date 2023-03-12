@@ -229,7 +229,6 @@ def get_number_following(user_id):
 
 def get_user_posts_from_username(username):
     with get_db_cursor(True) as cur:
-        USER_POSTS_FROM_USERNAME = "SELECT * FROM post p, users u WHERE p.user_id = u.user_id AND u.username = %s "
         current_app.logger.info("Executing query {}".format(USER_POSTS_FROM_USERNAME % (username,)))
         cur.execute(USER_POSTS_FROM_USERNAME, (username,))
         result = cur.fetchall()
