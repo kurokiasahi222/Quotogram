@@ -198,6 +198,12 @@ def perform_follow_unfollow():
     else: 
         return jsonify({"status": 'failed'})
 
+@app.route("/api/post-category/<post_id>")
+def fetch_post_categories(post_id):
+    return jsonify({
+        "categories": get_post_categories(post_id)
+        }) 
+
 @app.errorhandler(404)
 def page_not_found(e):
     user = None
