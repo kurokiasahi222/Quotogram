@@ -10,17 +10,17 @@
     <h2>Most Liked Quote</h2>
     {% if qod is defined %}
         {% with 
-            quote_id=qod.post_id,
-            quote_user=qod.username,
-            quote_text=qod.quote,
-            quote_author=qod.quote_author,
-            quote_context=qod.context,
-            date_posted=qod.creation_time.split("T")[0],
-            num_likes=qod.num_likes,
-            quote_added=qod.quote_added,
-            user_id=qod.user_id,
-            user_pic=qod.profile_image,
-            following_user=qod.following_user
+            quote_id=qod[0].post_id,
+            quote_user=qod[0].username,
+            quote_text=qod[0].quote,
+            quote_author=qod[0].quote_author,
+            quote_context=qod[0].context,
+            date_posted=qod[0].creation_time.split("T")[0],
+            num_likes=qod[0].num_likes,
+            quote_added=qod[0].quote_added,
+            user_id=qod[0].user_id,
+            user_pic=qod[0].profile_image,
+            following_user=qod[0].following_user
             %}
             {% include "modules/quote.html" %}
         {% endwith %}
