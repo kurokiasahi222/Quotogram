@@ -26,14 +26,16 @@ function displayQuoteModal(quoteId) {
 
     // Add and Remove Buttons
     let modalButton = document.getElementById("quote-add-modal");
-    if(addButton.getAttribute("quote-added") === "false") {
-        modalButton.querySelector(".quote-footer-buttons-add-label").innerHTML = "Add";
-        modalButton.querySelector(".quote-footer-buttons-add-icon").innerHTML = '<i class="fa-solid fa-plus"></i>';
-    } else {
-        modalButton.querySelector(".quote-footer-buttons-add-label").innerHTML = "Remove";
-        modalButton.querySelector(".quote-footer-buttons-add-icon").innerHTML = '<i class="fa-solid fa-check"></i>';
+    if(addButton) {
+        if(addButton.getAttribute("quote-added") === "false") {
+            modalButton.querySelector(".quote-footer-buttons-add-label").innerHTML = "Add";
+            modalButton.querySelector(".quote-footer-buttons-add-icon").innerHTML = '<i class="fa-solid fa-plus"></i>';
+        } else {
+            modalButton.querySelector(".quote-footer-buttons-add-label").innerHTML = "Remove";
+            modalButton.querySelector(".quote-footer-buttons-add-icon").innerHTML = '<i class="fa-solid fa-check"></i>';
+        }
+        modalButton.setAttribute("onclick", `addQuote(${quoteId})`);
     }
-    modalButton.setAttribute("onclick", `addQuote(${quoteId})`);
 
     // Like Button
     document.getElementById("quote-like-button-modal").setAttribute("onclick", `likeQuote(${quoteId})`);
