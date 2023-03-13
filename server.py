@@ -76,6 +76,20 @@ def profile():
                            num_quotes=num_quotes,followers=followers, 
                            num_followers=num_followers, num_following=num_following)
 
+@app.route("/followers")
+@requires_auth                              # need to be logged in to access this page
+def followers():
+    user = session['user']
+    followers = get_user_followers(session['uid'])
+    return render_template("followers.html", user=user, followers=followers)
+
+@app.route("/following")
+@requires_auth                              # need to be logged in to access this page
+def following():
+    user = session['user']
+    following = get_user_following(session['uid'])
+    return render_template("following.html", user=user, following=following)
+
 @app.route('/api')                          #default api route jsonifies post table
 def default_table():
     return jsonify(get_table_json('post'))

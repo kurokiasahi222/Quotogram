@@ -49,6 +49,18 @@ FROM user_followers
 WHERE user_id = %s
 """
 
+# Get following of a user
+GET_FOLLOWING = """
+WITH user_following AS (SELECT *
+FROM users
+JOIN followers ON users.user_id = followers.follower_id)
+SELECT user_id, username, first_name, last_name,
+profile_image
+FROM user_following
+WHERE user_id = %s
+"""
+
+
 # Get users posts from username
 USER_POSTS_FROM_USERNAME = "SELECT * FROM post p, users u WHERE p.user_id = u.user_id AND u.username = %s "
 
