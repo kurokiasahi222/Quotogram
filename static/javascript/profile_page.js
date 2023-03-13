@@ -28,7 +28,7 @@ let axiom = "F";
 let rules = [
     {a: "F", b: "FF+[+F-F-F]-[-F+F+F]"},
 ]
-let angle = 22;
+let angle = 28;
 let iterations = 3;
 let len = 700;
 
@@ -102,6 +102,9 @@ document.addEventListener("mousedown", function(event) {
     var draggable = event.target.closest(".quote-pin-handle");
 
     if (draggable) {
+        const circle = draggable.querySelector(".quote-pin-handle-circle");
+        const pin = draggable.querySelector(".quote-pin-handle-thumbtack");
+
         if(!isDragging) {
             isDragging = true;
             instance.pause();
@@ -110,11 +113,15 @@ document.addEventListener("mousedown", function(event) {
             let wrapperPos = quoteWrapper.getBoundingClientRect();
             let postPos = post.getBoundingClientRect();
 
+            circle.style.display = "none";
+            pin.style.display = "block";
+
             let mousePos = {
                 x: event.clientX - postPos.left + wrapperPos.left - instance.getTransform().x, 
                 y: event.clientY - postPos.top + wrapperPos.top - instance.getTransform().y
             };
             post.style.zIndex = 1000;
+            draggable.style.filter = "drop-shadow(0.25em 0.25em 0.5em rgba(0, 0, 0, 0.75))";
             
             let drag = function(event) {
                 let translatedX = (event.clientX - mousePos.x - instance.getTransform().x) / instance.getTransform().scale;
@@ -126,6 +133,9 @@ document.addEventListener("mousedown", function(event) {
                 isDragging = false;
                 instance.resume();
                 post.style.zIndex = 0;
+                draggable.style.filter = "none";
+                circle.style.display = "block";
+                pin.style.display = "none";
                 document.removeEventListener("mousemove", drag);
                 document.removeEventListener("mouseup", drop);
             }

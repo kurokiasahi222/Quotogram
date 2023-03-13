@@ -109,8 +109,8 @@ aside {
 .profile-posts-wrapper {
     width: 100%;
     position: relative;
-    height: 300vh;
-    width: 300vw;
+    height: 500vh;
+    width: 500vw;
 
     background-image: url("/static/images/cork-repeat.png");
 }

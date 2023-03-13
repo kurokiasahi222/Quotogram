@@ -227,15 +227,16 @@ def get_profile_data(user_id):
     followers = get_followers(user_id) # gets the followers of user_id (user_id, first, last name, image, is_following )
     num_followers = len(followers)
     num_following = get_number_following(user_id) # number of people the user is following
-    return (posts,followers, num_quotes, num_followers,num_following)
+    return (posts, followers, num_quotes, num_followers, num_following)
 
 def get_user_posts(user_id):
     with get_db_cursor(True) as cur:
         # Get the posts you are following
         # You automatically follow your own posts
-        current_app.logger.info("Executing query {}".format(USER_POSTS % (user_id,)))
+        current_app.logger.info("Executing query {}".format(USER_ALL_FOLLOWING_POSTS % (user_id,)))
         cur.execute(USER_ALL_FOLLOWING_POSTS, (user_id,))
         result = cur.fetchall()
+        print(result)
         return [ item[0] for item in result] # return as a list of dictionaries
 
 def get_followers(user_id):
@@ -243,8 +244,8 @@ def get_followers(user_id):
         # Get the followers of the user
         # Join followers and users table
         # Check if you are following them
-        current_app.logger.info("Executing query {}".format(POSTS_FOLLOWING % (user_id,)))
-        cur.execute(POSTS_FOLLOWING, (user_id,))
+        current_app.logger.info("Executing query {}".format(GET_FOLLOWERS % (user_id,)))
+        cur.execute(GET_FOLLOWERS, (user_id,))
         result = cur.fetchall()
         return [ item for item in result] # return as a list of dictionaries
     

@@ -154,6 +154,12 @@
     background-color: rgba(var(--color-accent-values), 0.5);
 }
 
+.quote-pin-handle-thumbtack {
+    position: absolute;
+    top: -1em;
+    left: 0.5em;
+}
+
 @keyframes spin {
     from {
         transform:rotate(0deg);

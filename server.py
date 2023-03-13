@@ -73,10 +73,11 @@ def profile():
             # if the username does not exist then redirect to profile page
             return redirect('/profile')
         posts = get_user_posts_from_username(user_name)
-        return render_template("profile.html", user=user, posts=posts)
+        return render_template("profile_dynamic.html", user=user, posts=posts)
     # If no query string, then get the user's profile
-    posts, num_quotes, followers, num_followers, num_following = get_profile_data(session['uid']) 
-    return render_template("profile.html", 
+    posts, followers, num_quotes, num_followers, num_following = get_profile_data(session['uid']) 
+    print("My posts" + str(posts))
+    return render_template("profile_dynamic.html", 
                            user=user,posts=posts, 
                            num_quotes=num_quotes,followers=followers, 
                            num_followers=num_followers, num_following=num_following)

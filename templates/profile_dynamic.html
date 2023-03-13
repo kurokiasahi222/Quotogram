@@ -25,7 +25,7 @@
                         user_id=post.user_id,
                         user_pic=post.profile_image,
                         following_user=post.following_user,
-                        %}
+                        on_profile_page=true %}
                         {% include "modules/quote.html" %}
                     {% endwith %}
                 {% endfor %}
@@ -38,8 +38,8 @@
 
 {% with 
     user_name=user['userinfo']['name'],
-    user_quote_count = "1234",
-    user_follower_count = "5678",
-    user_profile_pic =user['userinfo']['picture'] %}
+    user_quote_count=num_quotes,
+    user_follower_count=num_followers,
+    user_profile_pic=user['userinfo']['picture'] %}
     {% include "modules/profileSideBar.html" %}
 {% endwith %}

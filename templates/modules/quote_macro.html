@@ -15,8 +15,9 @@
             </div>
         {% endif %}
         {% if on_profile_page and not inside_modal %}
-            <div class="quote-pin-handle">
-                <svg width="32px" height="32px"><use href="#icon-thumbtack"/></svg>
+            <div class="quote-pin-handle" width="32px" height="32px">
+                <svg width="32px" height="32px" class="quote-pin-handle-circle"><use href="#icon-circle"/></svg>
+                <svg width="32px" height="32px" class="quote-pin-handle-thumbtack" style="display:none;"><use href="#icon-thumbtack"/></svg>
             </div>
         {% endif %}
         <div class="quote-user pure-g" id="quote-user-{{ quote_id }}"

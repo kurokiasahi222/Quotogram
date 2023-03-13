@@ -24,19 +24,32 @@ ALL_POSTS = USER_POSTS + """\nUNION\n"""+ POSTS_FOLLOWING  + """\nUNION\n"""+ FO
 
 # Get all the post user is following
 # including their own posts (you follow your own posts by default)
-USER_ALL_FOLLOWING_POSTS = """ WITH all_posts_following AS (SELECT pf.post_id, pf.user_id, 
-post.quote, post.quote_author, post.context, post.creation_time
-FROM post_following pf
-JOIN post using(post_id)),
-all_posts_with_userinfo AS (
+USER_ALL_FOLLOWING_POSTS = """ 
+WITH all_posts_following AS (
+    SELECT post.post_id, post.user_id, 
+    post.quote, post.quote_author, post.context, post.creation_time, true as quote_added
+    FROM post_following
+    JOIN post using(post_id)
+    WHERE post_following.user_id = %s
+    ), 
+likes_per_post AS ( 
+    SELECT a.post_id, COUNT(post_like.user_id) AS num_likes
+    FROM all_posts_following a
+    LEFT JOIN post_like ON a.post_id = post_like.post_id
+    GROUP BY a.post_id), 
+all_posts_following_with_likes AS (
     SELECT *
     FROM all_posts_following
+    JOIN likes_per_post USING(post_id)
+), 
+all_posts_following_with_userinfo AS (
+    SELECT *
+    FROM all_posts_following_with_likes
     JOIN users USING(user_id)
 )
-SELECT *
-FROM all_posts_with_userinfo
-WHERE user_id = %s
-""" 
+SELECT row_to_json(a)
+FROM all_posts_following_with_userinfo a; 
+"""
 
 # Get followers of a user
 GET_FOLLOWERS = """
@@ -62,7 +75,8 @@ WHERE user_id = %s
 
 
 # Get users posts from username
-USER_POSTS_FROM_USERNAME = "SELECT * FROM post p, users u WHERE p.user_id = u.user_id AND u.username = %s "
+USER_POSTS_FROM_USERNAME = """SELECT row_to_json(p.post_id,p.user_id,p.quote,p.quote_author,p.context, p.creation_time, p.num_likes, p.quote_added, u.profile_image, u.username)
+                                FROM post p, users u WHERE p.user_id = u.user_id AND u.username = %s """
 
 # Get the number of peole user is following
 NUMBER_FOLLOWING = "SELECT COUNT(*) FROM followers WHERE follower_id = %s"
