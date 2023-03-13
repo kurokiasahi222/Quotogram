@@ -47,7 +47,8 @@ function displayQuoteModal(quoteId) {
         } else {
             followUserButton.style.display = "block";
             let userNum = userId.split('|')[1];
-            followUserButton.setAttribute("onclick", `followUser(${userNum})`);
+            console.log("User Num: " + userNum);
+            followUserButton.setAttribute("onclick", "followUser('" + userId + "')");
             followUserButton.setAttribute("data-following", isFollowing);
             if(isFollowing === "true") {
                 followUserButton.querySelector(".quote-footer-buttons-follow-label").innerHTML = "Unfollow User";

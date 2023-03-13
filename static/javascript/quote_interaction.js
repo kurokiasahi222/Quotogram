@@ -105,11 +105,12 @@ function followUser(user_id) {
 
     followUserButtonIcon.innerHTML = '<i class="fa-solid fa-spinner"></i>';
     followUserButtonIcon.classList.toggle("spin");
+    console.log("Following user: " + user_id);
 
     apiRequest(user_id, 'api/follow/user')
         .then(data => {
-            console.log("Finished following the user " + data);
-            if(following) { // user has unfollowed the user
+            console.log("Finished following, with following: " + following);
+            if(following === 'true') { // user has unfollowed the user
                 followUserButton.setAttribute("data-following", false);
                 followUserButtonLabel.innerHTML = "Follow User";
                 followUserButtonIcon.innerHTML = '<i class="fa-solid fa-plus"></i>';

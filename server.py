@@ -192,7 +192,7 @@ def add_post_to_following():
 def perform_follow_unfollow():
     req = request.get_json()        # get the request object
     if 'quote_id' in req:
-        followed_user_id = req['quote_id']
+        followed_user_id = str(req['quote_id'])
         follow_unfollow_user(session['uid'], followed_user_id) # follow or unfollow the user
         return jsonify({"status": 'success'})
     else: 
