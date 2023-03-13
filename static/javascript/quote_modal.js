@@ -79,15 +79,15 @@ function displayEditModal(quoteId) {
     document.querySelector(".create-post-modal-title-text").innerHTML = "Edit Post";
     document.querySelector(".create-post-modal-form-submit").innerHTML = "Confirm Edit";
 
-    let quoteText = document.getElementById("quote-text-" + quoteId).innerText;
-    let quoteAuthor = document.getElementById("quote-author-" + quoteId).innerText;
-    let quoteContext = document.getElementById("quote-context-" + quoteId).innerText;
+    const quoteText = document.getElementById("quote-text-" + quoteId).innerText;
+    const quoteAuthor = document.getElementById("quote-author-" + quoteId).innerText;
+    const quoteContext = document.getElementById("quote-context-" + quoteId).innerText;
 
-    let form = document.getElementById("quote-post-form");
-    let formText = document.getElementById("form-quote");
-    let formAuthor = document.getElementById("form-quote-author");
-    let formContext = document.getElementById("form-context");
-    let formQuoteId = document.getElementById("form-quote-id");
+    const form = document.getElementById("quote-post-form");
+    const formText = document.getElementById("form-quote");
+    const formAuthor = document.getElementById("form-quote-author");
+    const formContext = document.getElementById("form-context");
+    const formQuoteId = document.getElementById("form-quote-id");
 
     formText.value = quoteText;
     formAuthor.value = quoteAuthor;
