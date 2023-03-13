@@ -20,6 +20,9 @@ async function apiRequest(quote_id, request) {
 }
 
 function likeQuote(quote_id) {
+    if(!canInteract())
+        return;
+
     const likeCountSpan = document.getElementById(`quote-like-count-${quote_id}`);
     const modalLikeCountSpan = document.getElementById("quote-like-count-modal");
 
@@ -44,6 +47,9 @@ function likeQuote(quote_id) {
 }
 
 function addQuote(quote_id) {
+    if(!canInteract())
+        return;
+
     const quoteButton = document.getElementById(`quote-add-${quote_id}`);
     const quoteButtonIcon = quoteButton.querySelector(".quote-footer-buttons-add-icon");
     let status = quoteButton.getAttribute("quote-added");
@@ -86,6 +92,9 @@ function addQuote(quote_id) {
 }
 
 function deleteQuote(quote_id) {
+    if(!canInteract())
+        return;
+
     apiRequest(quote_id, 'api/delete')
         .then(data => {
             if(data.status === 'success') {
@@ -98,6 +107,9 @@ function deleteQuote(quote_id) {
 }
 
 function followUser(user_id) {
+    if(!canInteract())
+        return;
+
     const followUserButton = document.getElementById("quote-follow-user-modal");
     const followUserButtonLabel = followUserButton.querySelector(".quote-footer-buttons-follow-label");
     const followUserButtonIcon = followUserButton.querySelector(".quote-footer-buttons-follow-icon");
@@ -158,3 +170,8 @@ document.addEventListener('click', function(event) {
         openWrapper.style.zIndex = 0;
     }
 });
+
+function canInteract() {
+    console.log("Can interact: " + document.querySelector("body").getAttribute("data-can-interact"));
+    return document.querySelector("body").getAttribute("data-can-interact") === "true";
+}

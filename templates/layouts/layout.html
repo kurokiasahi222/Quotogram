@@ -8,7 +8,7 @@
     <title>{% block title %}{% endblock %} - Quotagram</title>
     {% endblock %}
 </head>
-<body>
+<body data-can-interact="{% if user is defined and user is not none %}true{% else %}false{% endif %}">
     <nav class="navigation">
         <div class="pure-g navigation-wrapper">
             <div class="pure-u-1 pure-u-md-1-5">
