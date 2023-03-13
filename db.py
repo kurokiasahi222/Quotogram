@@ -269,3 +269,17 @@ def get_post_categories(post_id):
         cur.execute(GET_POST_CATGEGORIES, (post_id,))
         result = cur.fetchall()
         return [ item[0] for item in result] # return categories as a list
+    
+def get_user_followers(user_id):
+    with get_db_cursor(True) as cur:
+        current_app.logger.info("Executing query {}".format(GET_FOLLOWERS % (user_id,)))
+        cur.execute(GET_FOLLOWERS, (user_id,))
+        result = cur.fetchall()
+        return [ item[0] for item in result] # return as a list of dictionaries
+    
+def get_user_following(user_id):
+    with get_db_cursor(True) as cur:
+        current_app.logger.info("Executing query {}".format(GET_FOLLOWING % (user_id,)))
+        cur.execute(GET_FOLLOWING, (user_id,))
+        result = cur.fetchall()
+        return [ item[0] for item in result] # return as a list of dictionaries
