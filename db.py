@@ -189,7 +189,7 @@ def add_post_category(post_id, category):
         cur.execute('INSERT INTO post_category VALUES (%s, %s)', (post_id, category))
 
 
-def edit_post(post_id, user_id, quote, quote_author, context):
+def edit_post_db(post_id, user_id, quote, quote_author, context):
     with get_db_cursor(True) as cur:
         current_app.logger.info("Executing query UPDATE post SET user_id = {user_id}, quote = {quote}, quote_author = {quote_author}, context = {context} WHERE post_id = {post_id}"
                                 .format(user_id=user_id, quote=quote, quote_author=quote_author, context=context, post_id=post_id))
