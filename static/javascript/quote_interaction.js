@@ -57,6 +57,7 @@ function addQuote(quote_id) {
     const quoteButtonModal = document.getElementById("quote-add-modal");
     const quoteButtonIconModal = quoteButtonModal.querySelector(".quote-footer-buttons-add-icon");
     
+    let initalVaue = quoteButtonIcon.innerHTML;
     quoteButtonIcon.innerHTML = '<i class="fa-solid fa-spinner"></i>';
     quoteButtonIconModal.innerHTML = quoteButtonIcon.innerHTML;
 
@@ -65,6 +66,12 @@ function addQuote(quote_id) {
 
     apiRequest(quote_id, '/api/follow/post')
         .then(data => {
+            if(data.status === 'failed') {
+                quoteButtonIcon.innerHTML = initalVaue;
+                quoteButtonIcon.classList.toggle("spin");
+                quoteButtonIconModal.classList.toggle("spin");
+                return;
+            }
             if(status === 'true') { // The quote was added, so now show that it was removed
                 quoteButton.setAttribute("quote-added", "false");
 
