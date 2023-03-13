@@ -75,9 +75,9 @@ likes_for_all_posts_id AS (
 )"""
 
 POSTS_NOT_LOGGED_IN = POST_LIKES_HEADER + """
-SELECT p.post_id,p.user_id,p.quote,p.context, p.creation_time, l.num_likes, false as quote_added
-FROM post p, likes_for_all_posts_id l
-WHERE p.post_id = l.post_id"""
+SELECT p.post_id,p.user_id,p.quote,p.context, p.creation_time, l.num_likes, false as quote_added, u.profile_image, u.username
+FROM post p, likes_for_all_posts_id l, users u
+WHERE p.post_id = l.post_id AND p.user_id = u.user_id"""
 
 POSTS_LOGGED_IN = POST_LIKES_HEADER + """,
 posts_added AS (
@@ -94,15 +94,19 @@ posts_not_added AS (
     SELECT * FROM post p 
     EXCEPT
     SELECT * FROM posts_added 
+),
+all_posts AS (
+    SELECT p.post_id,p.user_id,p.quote,p.quote_author,p.context, p.creation_time, l.num_likes, false as quote_added
+    FROM posts_not_added p , likes_for_all_posts_id l
+    WHERE p.post_id = l.post_id
+    UNION
+    SELECT p.post_id,p.user_id,p.quote,p.quote_author,p.context, p.creation_time, l.num_likes, true as quote_added
+    FROM posts_added p, likes_for_all_posts_id l
+    WHERE p.post_id = l.post_id
 )
-
-SELECT p.post_id,p.user_id,p.quote,p.quote_author,p.context, p.creation_time, l.num_likes, false as quote_added
-FROM posts_not_added p , likes_for_all_posts_id l
-WHERE p.post_id = l.post_id
-UNION
-SELECT p.post_id,p.user_id,p.quote,p.quote_author,p.context, p.creation_time, l.num_likes, true as quote_added
-FROM posts_added p, likes_for_all_posts_id l
-WHERE p.post_id = l.post_id"""
+SELECT  p.post_id,p.user_id,p.quote,p.quote_author,p.context, p.creation_time, p.num_likes, p.quote_added, u.profile_image, u.username
+FROM all_posts p , users u
+WHERE p.user_id = u.user_id"""
 
 POST_LIKES = """SELECT COUNT(*) AS num_likes
                 FROM post_like
@@ -158,5 +162,10 @@ results AS (
             ELSE 0
         END AS num_likes
     FROM  text_search_categories t
+),
+posts_with_user_data AS (
+    SELECT r.post_id, r.user_id, r.quote, r.quote_author, r.context, r.creation_time, r.is_following, r.num_likes, u.profile_image, u.username
+    FROM results r, users u
+    WHERE r.user_id = u.user_id
 )
-SELECT row_to_json(t) FROM results t """
+SELECT row_to_json(t) FROM posts_with_user_data t """

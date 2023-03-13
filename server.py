@@ -122,15 +122,18 @@ def like_quote():
 
 @app.route("/explore", methods=["GET","POST"])
 def explore():
+    user = None
+    if 'user' in session:                   # check if user is logged in or not
+        user = session['user']
     if request.method == 'GET':
-        return render_template("explore.html", results=None)
+        return render_template("explore.html",user=user, results=None)
     if request.method == 'POST':
         search_query = request.form.get("search")
         if 'user' in session:
             res  = search_quotes(session['uid'],search_query)
         else:
             res  = search_quotes(None,search_query)
-        return render_template("explore.html", results=json.loads(json.dumps(res)))
+        return render_template("explore.html",user=user, results=json.loads(json.dumps(res)))
 
 
 @app.route("/new_post", methods=["POST"])

@@ -15,13 +15,13 @@
                 <div class="navigation-logo pure-menu">
                     <div class="navigation-logo-container pure-menu-heading">
                         <a href="/">
-                            <img src="/static/images/logo.png" alt="Quotagram Logo" />
+                            <img src="/static/images/logo.png" alt="Quotagram Logo" height="64px" />
                         </a>
                     </div>
                     <a href="#" class="navigation-custom-toggle"><s class="navigation-bar"></s><s class="navigation-bar"></s></a>
                 </div>
             </div>
-            <div class="pure-u-1 pure-u-md-2-5">
+            <div class="pure-u-1 pure-u-md-3-5">
                 <div class="navigation-links pure-menu pure-menu-horizontal custom-can-transform">
                     <ul class="pure-menu-list">
                         <li class="pure-menu-item">
@@ -30,30 +30,40 @@
                         <li class="pure-menu-item">
                             <a class="pure-menu-link" href="/explore">Explore  <i class="fa-sharp fa-solid fa-magnifying-glass"></i></a>
                         </li>
+                        {% if user is defined and user is not none %}
+                            <li class="pure-menu-item">
+                                <a class="pure-menu-link" href="/profile">Profile <i class="fas fa-solid fa-user"></i></a>
+                            </li>
+                        {% endif %} 
                     </ul>
                 </div>
             </div>
-            <div class="navigation-create-post pure-u-1 pure-u-md-1-5">
-                <div class="navigation-create-post-button-div custom-can-transform">
-                    {% if user is defined and user is not none %}
-                        <button class="pure-button navigation-create-post-button" data-micromodal-trigger="create-post-modal">Create Post</button>
-                    {% endif %} 
+            {% if user is defined and user is not none %}
+                <div class="navigation-create-post pure-u-1 pure-u-md-1-5">
+                    <div class="navigation-create-post-button-div custom-can-transform">
+                        <button class="pure-button navigation-create-post-button" onclick="displayCreatePostModal()">Create Post</button>
+                        <img src="{{ user['userinfo']['picture'] }}" alt="User Profile Picture" class="nav-photo" crossorigin="anonymous" width="48px" height="48px"/>
+                    </div>
                 </div>
-            </div>
-            <div class="navigation-login pure-u-1 pure-u-md-1-5">
-                <div class="navigation-login-button-div custom-can-transform pure-g">
-                    {% if user is not defined or user is none %}
+            {% else %}
+                <div class="navigation-login pure-u-1 pure-u-md-1-5">
+                    <div class="navigation-login-button-div custom-can-transform pure-g">
                         <a class="pure-button pure-button-primary navigation-login-button" href="/login">Login <i class="fa-solid fa-user"></i></a>
-                    {% else %}
-                        <p>Welcome {{ user['userinfo']['name'] }}</p>
-                        <img src="{{ user['userinfo']['picture'] }}" alt="User Profile Picture" crossorigin="anonymous" width="48px" height="48px"/>
-                        <a class="pure-button pure-button-primary navigation-login-button" href="/logout">Logout</a>
-                    {% endif %}
+                    </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
     </nav>
-    <div class="main-content">{% block content %}{% endblock %}</div>
+    <div class="main-content">
+        {% block content %}{% endblock %}
+        {% if user is defined and user is not none %}
+            <div class="new-post-circle">
+                <button class="new-post-circle-button pure-button" onclick="displayCreatePostModal()">
+                    <svg width="100px" height="100px" style="stroke: var(--color-accent);"><use href="#icon-circleplus"/></svg>
+                </button>
+            </div>
+        {% endif %}
+    </div>
     <div class="footer">
         <div class="footer-content">
             {% block footer %}

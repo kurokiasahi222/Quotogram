@@ -12,7 +12,6 @@ function displayQuoteModal(quoteId) {
     let likeCount = document.getElementById("quote-like-count-" + quoteId).innerText;
     let datePosted = document.getElementById("quote-date-posted-" + quoteId).innerText;
     let addButton = document.getElementById("quote-add-" + quoteId);
-    let removeButton = document.getElementById("quote-remove-" + quoteId);
 
     document.getElementById("quote-text-modal").innerText = quoteText;
     document.getElementById("quote-author-modal").innerText = quoteAuthor;
@@ -24,17 +23,16 @@ function displayQuoteModal(quoteId) {
     document.getElementById("quote-date-posted-modal").innerText = datePosted;
 
     // Buttons
-    if(addButton) {
-        if(addButton.style.display === "none") {
-            document.getElementById("quote-add-modal").style.display = "none";
-            document.getElementById("quote-remove-modal").style.display = "block";
-            document.getElementById("quote-remove-modal").setAttribute("onclick", "removeQuote(" + quoteId + ")");
-        } else {
-            document.getElementById("quote-add-modal").style.display = "block";
-            document.getElementById("quote-remove-modal").style.display = "none";
-            document.getElementById("quote-add-modal").setAttribute("onclick", "addQuote(" + quoteId + ")");
-        }
+    let modalButton = document.getElementById("quote-add-modal");
+    if(addButton.getAttribute("quote-added") === "false") {
+        modalButton.querySelector(".quote-footer-buttons-add-label").innerHTML = "Add";
+        modalButton.querySelector(".quote-footer-buttons-add-icon").innerHTML = '<i class="fa-solid fa-plus"></i>';
+    } else {
+        modalButton.querySelector(".quote-footer-buttons-add-label").innerHTML = "Remove";
+        modalButton.querySelector(".quote-footer-buttons-add-icon").innerHTML = '<i class="fa-solid fa-check"></i>';
     }
+    modalButton.setAttribute("onclick", "addQuote(" + quoteId + ")");
+
     document.getElementById("quote-like-button-modal").setAttribute("onclick", "likeQuote(" + quoteId + ")");
 
     MicroModal.show("modal-1", {
@@ -48,4 +46,29 @@ function displayDeleteModal(quoteId) {
     MicroModal.show("delete-quote-modal", {
         disableScroll: true,
     })
+}
+
+function displayEditModal(quoteId) {
+    document.querySelector(".create-post-modal-title-text").innerHTML = "Edit Post";
+    document.querySelector(".create-post-modal-form-submit").innerHTML = "Confirm Edit";
+
+    let quoteText = document.getElementById("quote-text-" + quoteId).innerText;
+    let quoteAuthor = document.getElementById("quote-author-" + quoteId).innerText;
+    let quoteContext = document.getElementById("quote-context-" + quoteId).innerText;
+
+    let form = document.getElementById("quote-post-form");
+    let formText = document.getElementById("form-quote");
+    let formAuthor = document.getElementById("form-quote-author");
+    let formContext = document.getElementById("form-context");
+    let formQuoteId = document.getElementById("form-quote-id");
+
+    formText.value = quoteText;
+    formAuthor.value = quoteAuthor;
+    formContext.value = quoteContext.trim();
+    formQuoteId.value = quoteId;
+    form.setAttribute("action", "/edit_post");
+
+    MicroModal.show("create-post-modal", {
+        disableScroll: true,
+    });
 }

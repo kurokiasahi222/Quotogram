@@ -1,0 +1,98 @@
+{% extends "layouts/layout.html" %}
+{% block title %}Profile{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/profile.css" />
+    <link rel="stylesheet" href="/static/follower.css" />
+{% endblock %}
+
+{% block content %}
+    {% include "modules/quote_modal.html" %}
+    <h2> My Quote Board</h2>
+    <div class="profile-posts">
+        <div class="profile-posts-wrapper">
+            {% with 
+                quote_id=1,
+                quote_text = "So, if you cannot understand that there is something in man which responds to the challenge of this mountain and goes out to meet it, that the struggle is the struggle of life itself upward and forever upward, then you wont see why we go. What we get from this adventure is just sheer joy. And joy is, after all, the end of life.",
+                quote_author="David Foster Wallace",
+                quote_user="Random User",
+                date_posted="1970-01-01",
+                on_profile_page=true %}
+                {% include "modules/quote.html" %}
+            {% endwith %}
+            {% with 
+                quote_id=2,
+                quote_text = "The whole trick is keeping the truth up front in daily consciousness.",
+                quote_author="David Foster Wallace",
+                quote_user="Random User",
+                date_posted="1970-01-01",
+                on_profile_page=true %}
+                {% include "modules/quote.html" %}
+            {% endwith %}
+            {% with 
+                quote_id=3,
+                quote_text = "The whole trick is keeping the truth up front in daily consciousness.",
+                quote_author="David Foster Wallace",
+                quote_user="Random User",
+                date_posted="1970-01-02",
+                on_profile_page=true %}
+                {% include "modules/quote.html" %}
+            {% endwith %}
+            {% with 
+                quote_id=4,
+                quote_text = "The whole trick is keeping the truth up front in daily consciousness.",
+                quote_author="David Foster Wallace",
+                quote_user="Random User",
+                date_posted="1970-01-03",
+                on_profile_page=true %}
+                {% include "modules/quote.html" %}
+            {% endwith %}
+            {% with 
+                quote_id=5,
+                quote_text = "The whole trick is keeping the truth up front in daily consciousness.",
+                quote_author="David Foster Wallace",
+                quote_user="Random User",
+                date_posted="1970-01-05",
+                on_profile_page=true %}
+                {% include "modules/quote.html" %}
+            {% endwith %}
+            {% with 
+                quote_id=6,
+                quote_text = "This is a new quote that I am testing. Here is more of the quote: The whole trick is keeping the truth up front in daily consciousness.",
+                quote_author="Some old dude",
+                quote_user="Me",
+                date_posted="1970-01-05",
+                on_profile_page=true %}
+                {% include "modules/quote.html" %}
+            {% endwith %}
+            {% with 
+                quote_id=7,
+                quote_text = "Haha now we have even more quotes. I'm just coming up with content to pad this profile page so I can see how it looks",
+                quote_author="Some young girl?",
+                quote_user="Not me",
+                date_posted="1970-01-05",
+                on_profile_page=true %}
+                {% include "modules/quote.html" %}
+            {% endwith %}
+            {% with 
+                quote_id=8,
+                quote_text = "I want to see how a really full quote board looks!",
+                quote_author="Random",
+                quote_user="This one was me",
+                date_posted="1970-01-05",
+                on_profile_page=true %}
+                {% include "modules/quote.html" %}
+            {% endwith %}
+        </div>
+    </div>
+    <script src='https://unpkg.com/panzoom@9.4.0/dist/panzoom.min.js'></script>
+    <script src="/static/javascript/profile_page.js"></script>
+{% endblock %}
+
+{% with 
+    user_name=user['userinfo']['name'],
+    user_quote_count = "1234",
+    user_follower_count = "5678",
+    user_profile_pic =user['userinfo']['picture'] %}
+    {% include "modules/profileSideBar.html" %}
+{% endwith %}

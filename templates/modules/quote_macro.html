@@ -1,10 +1,10 @@
 {% macro display(quote_id=0, user_name="none", user_link="none", quote_text="none", quote_author="none", quote_context="none", 
-        quote_added=false, user_pic="static/images/user.png", date_posted="01-01-1970", num_likes=0, 
-        user=none, user_id=0, inside_modal=false) %}
+        quote_added=false, user_pic=user_pic, date_posted="01-01-1970", num_likes=0, 
+        user=none, user_id=0, on_profile_page=false, inside_modal=false) %}
     {% macro class_name(name) %}{% if inside_modal %}{{name ~ '-modal'}}{% else %}{{name}}{% endif %}{% endmacro %}
     {% macro display_modal() %}onclick={{'displayQuoteModal(' ~ quote_id ~ ')'}}{% endmacro %}
     {% macro like_button() %}onclick={{'likeQuote(' ~ quote_id ~ ')'}}{% endmacro %}
-    {% macro add_button(add) %}{% if add %}onclick={{'addQuote(' ~ quote_id ~ ')'}}{% else %}onclick={{'removeQuote(' ~ quote_id ~ ')'}}{% endif %}{% endmacro %}
+    {% macro add_button() %}onclick={{'addQuote(' ~ quote_id ~ ')'}}{% endmacro %}
     {% macro delete_quote() %}onclick={{'displayDeleteModal(' ~ quote_id ~ ')'}}{% endmacro %}
     {% macro edit_quote() %}onclick={{'displayEditModal(' ~ quote_id ~ ')'}}{% endmacro %}
     {% macro toggle_options() %}onclick={{'toggleEditOptions(' ~ quote_id ~ ')'}}{% endmacro %}
@@ -14,9 +14,14 @@
                 <a href="#" class="modal-close" aria-label="Close modal" data-micromodal-close><s class="modal-close-bar"></s><s class="modal-close-bar"></s></a>
             </div>
         {% endif %}
+        {% if on_profile_page and not inside_modal %}
+            <div class="quote-pin-handle">
+                <svg width="32px" height="32px"><use href="#icon-thumbtack"/></svg>
+            </div>
+        {% endif %}
         <div class="quote-user pure-g">
             <div class="quote-user-image">
-                <img src="{{ user_pic }}" alt="User Image" width="64px" id="user-picture-{{ quote_id }}"/>
+                <img src="{{ user_pic }}" alt="User Image" width="64px" crossorigin="anonymous" id="user-picture-{{ quote_id }}"/>
             </div>
             <div class="quote-user-name">
                 <a href="{{ user_link }}" class="quote-user-name-content" id="user-link-{{ quote_id }}">
@@ -85,13 +90,23 @@
                     </div>
                 </div>
                 {% if user is defined and user is not none %}
-                    <button class="quote-footer-buttons-add pure-button" button="button" {{ add_button(true) }} id="quote-add-{{ quote_id }}"
-                        {% if quote_added %}style="display:none;"{% endif %}>
-                        Add <i class="fa-sharp fa-solid fa-plus"></i>
-                    </button>
-                    <button class="quote-footer-buttons-add pure-button" button="button" {{ add_button(false) }} id="quote-remove-{{ quote_id }}"
-                        {% if not quote_added %}style="display:none;"{% endif %}>
-                        Remove <i class="fa-solid fa-check"></i>
+                    <button class="quote-footer-buttons-add pure-button" button="button" {{ add_button() }} id="quote-add-{{ quote_id }}"
+                        quote-added="{% if quote_added %}true{% else %}false{% endif %}">
+                        {% if not quote_added %}
+                            <span class="quote-footer-buttons-add-label">
+                                Add 
+                            </span>
+                            <span class="quote-footer-buttons-add-icon">
+                                <i class="fa-sharp fa-solid fa-plus"></i>
+                            </span>
+                        {% else %}
+                            <span class="quote-footer-buttons-add-label">
+                                Remove 
+                            </span>
+                            <span class="quote-footer-buttons-add-icon">
+                                <i class="fa-solid fa-check"></i>
+                            </span>
+                        {% endif %}
                     </button>
                 {% endif %}
             </div>

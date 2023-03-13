@@ -1,12 +1,13 @@
-.create-post-modal-widget{
+.create-post-modal-widget {
     background-color: #fff;
     padding: 30px;
-    max-width: 600px;
-    max-height: 70vh;
     border-radius: 4px;
     overflow-y: auto;
     box-sizing: border-box;
     min-width: 35%;
+
+    width: 100%;
+    height: 100%;
 }
 
 .create-post-modal-header {
@@ -30,6 +31,7 @@
 
 textarea{
     resize: none;
+    width: 100%;
 }
 
 .create-post-modal-content{
@@ -39,10 +41,10 @@ textarea{
 }
 
 .tags{
-    margin-right: 20%;
     margin-bottom: 15px;
     display: flex;
     flex-wrap: wrap;
+    user-select: none;
 }
 
 .category{
@@ -52,7 +54,7 @@ textarea{
 .category label{
     border: 2px solid black;
     border-radius: 6px;
-    padding: 2px 3px;
+    padding: 6px;
     margin: 1px !important;
 
     box-shadow: 3px 1px 5px 0px rgba(0, 0, 0, 0.75);
@@ -72,3 +74,15 @@ textarea{
     color: gray;
 }
 
+.create-post-modal-form-submit{
+    background-color: var(--color-secondary);
+    border-radius: 8px;
+    font-size: 1.3em;
+}
+
+@media screen and (min-width: 768px) {
+    .create-post-modal-widget {
+        max-width: 600px;
+        max-height: 70vh;
+    }
+}

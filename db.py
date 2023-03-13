@@ -86,7 +86,7 @@ def add_user(user_id,username,first_name,last_name,email,image):
         current_app.logger.info("Executing query {}".format(ADD_USER % (user_id,username,first_name,
             last_name,email,image)))
         cur.execute(ADD_USER, (user_id,username,first_name,
-            last_name,email,image))
+            last_name,image,email))
 
 
 def add_post(user_id, quote, quote_author, context):

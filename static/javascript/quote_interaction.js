@@ -20,16 +20,23 @@ async function apiRequest(quote_id, request) {
 }
 
 function likeQuote(quote_id) {
+    const likeCountSpan = document.getElementById(`quote-like-count-${quote_id}`);
+    const modalLikeCountSpan = document.getElementById("quote-like-count-modal");
+
+    likeCountSpan.innerHTML = '<i class="fa-solid fa-spinner"></i>';
+    modalLikeCountSpan.innerHTML = likeCountSpan.innerHTML;
+
+    likeCountSpan.classList.toggle("spin");
+    modalLikeCountSpan.classList.toggle("spin");
+
     apiRequest(quote_id, 'api/like')
         .then(data => {
             console.log("Finished liking the quote, here is the call back data: " + data);
-
-            const likeCountSpan = document.getElementById(`quote-like-count-${quote_id}`);
             likeCountSpan.innerHTML = data.num_likes;
-
-            // In case modal is active we set the likes for modal as well
-            const modalLikeCountSpan = document.getElementById("quote-like-count-modal");
             modalLikeCountSpan.innerHTML = data.num_likes;
+
+            likeCountSpan.classList.toggle("spin");
+            modalLikeCountSpan.classList.toggle("spin");
         })
         .catch(error => {
             console.error(error);
@@ -37,27 +44,41 @@ function likeQuote(quote_id) {
 }
 
 function addQuote(quote_id) {
+    const quoteButton = document.getElementById(`quote-add-${quote_id}`);
+    const quoteButtonIcon = quoteButton.querySelector(".quote-footer-buttons-add-icon");
+    let status = quoteButton.getAttribute("quote-added");
+
+    const quoteButtonModal = document.getElementById("quote-add-modal");
+    const quoteButtonIconModal = quoteButtonModal.querySelector(".quote-footer-buttons-add-icon");
+    
+    quoteButtonIcon.innerHTML = '<i class="fa-solid fa-spinner"></i>';
+    quoteButtonIconModal.innerHTML = quoteButtonIcon.innerHTML;
+
+    quoteButtonIcon.classList.toggle("spin");
+    quoteButtonIconModal.classList.toggle("spin");
+
     apiRequest(quote_id, '/api/follow/post')
         .then(data => {
-            const addQuoteButton = document.getElementById(`quote-add-${quote_id}`);
-            const removeQuoteButton = document.getElementById(`quote-remove-${quote_id}`);
+            if(status === 'true') { // The quote was added, so now show that it was removed
+                quoteButton.setAttribute("quote-added", "false");
 
-            addQuoteButton.style.display = "none";
-            removeQuoteButton.style.display = "block";
-        })
-        .catch(error => {
-            console.error(error);
-        });
-}
+                quoteButton.querySelector(".quote-footer-buttons-add-label").innerHTML = "Add";
+                quoteButtonModal.querySelector(".quote-footer-buttons-add-label").innerHTML = "Add";
 
-function removeQuote(quote_id) {
-    apiRequest(quote_id, '/api/follow/post')
-        .then(data => {
-            const addQuoteButton = document.getElementById(`quote-add-${quote_id}`);
-            const removeQuoteButton = document.getElementById(`quote-remove-${quote_id}`);
+                quoteButtonIcon.innerHTML = '<i class="fa-solid fa-plus"></i>';
+                quoteButtonIconModal.innerHTML = quoteButtonIcon.innerHTML;
+            } else {
+                quoteButton.setAttribute("quote-added", "true");
 
-            addQuoteButton.style.display = "block";
-            removeQuoteButton.style.display = "none";
+                quoteButton.querySelector(".quote-footer-buttons-add-label").innerHTML = "Remove";
+                quoteButtonModal.querySelector(".quote-footer-buttons-add-label").innerHTML = "Remove";
+
+                quoteButtonIcon.innerHTML = '<i class="fa-solid fa-check"></i>';
+                quoteButtonIconModal.innerHTML = quoteButtonIcon.innerHTML;
+            }
+
+            quoteButtonIcon.classList.toggle("spin");
+            quoteButtonIconModal.classList.toggle("spin");
         })
         .catch(error => {
             console.error(error);
@@ -76,17 +97,23 @@ function deleteQuote(quote_id) {
         });
 }
 
+let openWrapper = null;
 let openDropdown = null;
 
 function toggleEditOptions(quote_id) {
+    let wrapper = document.querySelector(".quote-wrapper[data-quote-id='" + quote_id + "']");
+    wrapper.style.zIndex = 1;
+
     if(openDropdown) {
         const editOptions = document.getElementById(`quote-dropdown-content-${openDropdown}`);
         editOptions.style.display = "none";
+        openWrapper.style.zIndex = 0;
     }
     
     const editOptions = document.getElementById(`quote-dropdown-content-${quote_id}`);
     editOptions.style.display = "block";
     openDropdown = quote_id;
+    openWrapper = wrapper;
 
     let bounding = editOptions.getBoundingClientRect();
     if(bounding.bottom > (window.innerHeight || document.documentElement.clientHeight)) {
@@ -99,5 +126,6 @@ document.addEventListener('click', function(event) {
         const editOptions = document.getElementById(`quote-dropdown-content-${openDropdown}`);
         editOptions.style.display = "none";
         openDropdown = null;
+        openWrapper.style.zIndex = 0;
     }
 });
