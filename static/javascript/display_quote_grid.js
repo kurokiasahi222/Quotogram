@@ -18,12 +18,15 @@ function resizeGridItem(item, rowHeight, rowGap) {
 function checkQuoteWidth() {
     const allQuotes = document.querySelectorAll(".quote");
     allQuotes.forEach(quote => {
+        const addLabel = quote.querySelector(".quote-footer-buttons-add-label");
         if (quote.getBoundingClientRect().width < 360) {
             quote.querySelector(".more-info-button").innerHTML = '<i class="fa-solid fa-circle-info"></i>';
-            quote.querySelector(".quote-footer-buttons-add-label").style.display = "none";
+            if(addLabel)
+                addLabel.style.display = "none";
         } else {
             quote.querySelector(".more-info-button").innerHTML = "More Info";
-            quote.querySelector(".quote-footer-buttons-add-label").style.display = "inline";
+            if(addLabel)
+                addLabel.style.display = "inline";
         }
     });
 }
