@@ -174,22 +174,29 @@ def new_post():
     follow_unfollow_post(user_id, pid)
     
     #category addition for a new post
-    category = request.form.get('category', 'NOT FILLED OUT')
-    add_post_category(pid, category)
+    categories = request.form.getlist('post-category')
+    if len(categories) > 0:
+        for category in categories:
+            add_post_category(pid, category)
     return redirect("/")
 
 @app.route("/edit_post", methods=["POST"])
 def edit_post():
-    # I can't really test this without the form for 
     if 'user' in session:
+        # edit the post within the post table
         user_id = session.get("uid", "jakdghjgdshJHBshjqUAs")
         post_id = request.form.get("quote_id", "NOT FILLED OUT")
         quote = request.form.get("quote", "NOT FILLED OUT")
         quote_author = request.form.get("quote_author", "NOT FILLED OUT")
         context = request.form.get("context", "NOT FILLED OUT")
-        category = request.form.getlist('post-category')
         edit_post_db(post_id, user_id, quote, quote_author, context)
-        edit_post_category(post_id, category)
+
+        # edit the categories(remove post from post_category table then re-add with new categories)
+        remove_from_post_category(post_id)
+        categories = request.form.getlist('post-category')
+        if len(categories) > 0:
+            for category in categories:
+                add_post_category(post_id, category)
         return redirect("/")
     else:
         abort(401)
