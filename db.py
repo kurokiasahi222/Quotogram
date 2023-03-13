@@ -71,6 +71,13 @@ def check_user_id_in_database(user_id):
         current_app.logger.info("Executing query SELECT * FROM users WHERE user_id = {}".format(user_id))
         cur.execute("SELECT * FROM users WHERE user_id = %s ", (user_id,))
         return cur.fetchall()
+    
+def check_username_in_database(username):
+    # Check if a user is in the database
+    with get_db_cursor() as cur:
+        current_app.logger.info("Executing query SELECT * FROM users WHERE username = {}".format(username))
+        cur.execute("SELECT * FROM users WHERE username = %s ", (username,))
+        return cur.fetchall()
 
 
 def add_user(user_id,username,first_name,last_name,email,image):
@@ -91,7 +98,7 @@ def add_post(user_id, quote, quote_author, context):
 
 
 def get_posts_logged_in(user_id):
-    with get_db_cursor() as cur:
+    with get_db_cursor(True) as cur:
         q = "SELECT row_to_json(t) FROM ("+ POSTS_LOGGED_IN +") t"
         current_app.logger.info("Executing query {}".format(q % (user_id,user_id)))
         cur.execute(q, (user_id,user_id))
@@ -100,7 +107,7 @@ def get_posts_logged_in(user_id):
 
 
 def get_posts_not_logged_in():
-   with get_db_cursor() as cur:
+   with get_db_cursor(True) as cur:
        q = "SELECT row_to_json(t) FROM ("+ POSTS_NOT_LOGGED_IN +") t"
        current_app.logger.info("Executing query {}".format(q))
        cur.execute(q)
@@ -203,5 +210,46 @@ def search_quotes(user_id, search_text):
         
         current_app.logger.info("Executing query {}".format(FULL_TEXT_SEARCH %  {"user_id":user_id, "search_query":search_text}))
         cur.execute(FULL_TEXT_SEARCH,  {"user_id":user_id, "search_query":search_text})
+        result = cur.fetchall()
+        return [ item[0] for item in result] # return as a list of dictionaries
+
+def get_profile_data(user_id):
+    posts = get_user_posts(user_id) # gets the user's posts
+    num_quotes = len(posts) 
+    followers = get_followers(user_id) # gets the followers of user_id (user_id, first, last name, image, is_following )
+    num_followers = len(followers)
+    num_following = get_number_following(user_id) # number of people the user is following
+    return (posts,followers, num_quotes, num_followers,num_following)
+
+def get_user_posts(user_id):
+    with get_db_cursor(True) as cur:
+        # Get the posts you are following
+        # You automatically follow your own posts
+        current_app.logger.info("Executing query {}".format(USER_POSTS % (user_id,)))
+        cur.execute(USER_ALL_FOLLOWING_POSTS, (user_id,))
+        result = cur.fetchall()
+        return [ item[0] for item in result] # return as a list of dictionaries
+
+def get_followers(user_id):
+    with get_db_cursor(True) as cur:
+        # Get the followers of the user
+        # Join followers and users table
+        # Check if you are following them
+        current_app.logger.info("Executing query {}".format(POSTS_FOLLOWING % (user_id,)))
+        cur.execute(POSTS_FOLLOWING, (user_id,))
+        result = cur.fetchall()
+        return [ item for item in result] # return as a list of dictionaries
+    
+def get_number_following(user_id):
+    with get_db_cursor(True) as cur:
+        current_app.logger.info("Executing query {}".format(NUMBER_FOLLOWING % (user_id,)))
+        cur.execute(NUMBER_FOLLOWING, (user_id,))
+        result = cur.fetchone()
+        return result[0] 
+
+def get_user_posts_from_username(username):
+    with get_db_cursor(True) as cur:
+        current_app.logger.info("Executing query {}".format(USER_POSTS_FROM_USERNAME % (username,)))
+        cur.execute(USER_POSTS_FROM_USERNAME, (username,))
         result = cur.fetchall()
         return [ item[0] for item in result] # return as a list of dictionaries
