@@ -1,6 +1,7 @@
 from flask import *
 import json
 import os
+import requests
 from urllib.parse import quote_plus, urlencode
 from authlib.integrations.flask_client import OAuth
 from functools import wraps
@@ -57,11 +58,23 @@ def index():
 @app.route("/profile")
 @requires_auth                              # need to be logged in to access this page
 def profile():
-    user = None
-    if 'user' in session:
-        user = session['user']
-    return render_template("profile_dynamic.html", user=user)
-
+    # Check for query string
+    user = session['user']
+    if 'username' in request.args:
+        user_name = request.args.get("username")
+        # check if the username exits 
+        user_exists = check_username_in_database(user_name)
+        if user_exists == []:
+            # if the username does not exist then redirect to profile page
+            return redirect('/profile')
+        posts = get_user_posts_from_username(user_name)
+        return render_template("profile.html", user=user, posts=posts)
+    # If no query string, then get the user's profile
+    posts, num_quotes, followers, num_followers, num_following = get_profile_data(session['uid']) 
+    return render_template("profile.html", 
+                           user=user,posts=posts, 
+                           num_quotes=num_quotes,followers=followers, 
+                           num_followers=num_followers, num_following=num_following)
 
 @app.route('/api')                          #default api route jsonifies post table
 def default_table():
@@ -129,8 +142,38 @@ def new_post():
     quote = request.form.get("quote", "NOT FILLED OUT")
     quote_author = request.form.get("quote_author", "NOT FILLED OUT")
     context = request.form.get("context", "NOT FILLED OUT")
-    add_post(user_id, quote, quote_author, context)
+    add_post(user_id, quote, quote_author, context) # add the post to the post table
+
+    # automatically follow the post after posting
+    res = requests.get("http://127.0.0.1:5000/api/post")
+    res = res.json()
+    pid = -1
+    for post in res: #get the most recent post
+        if post['user_id'] == user_id:
+            pid = max(post['post_id'], pid)
+    follow_unfollow_post(user_id, pid)
+    
+    #category addition for a new post
+    category = request.form.get('category', 'NOT FILLED OUT')
+    add_post_category(pid, category)
     return redirect("/")
+
+@app.route("/edit_post", methods=["POST"])
+def edit_post():
+    # I can't really test this without the form for 
+    if 'user' in session:
+        user_id = session.get("uid", "jakdghjgdshJHBshjqUAs")
+        post_id = request.form.get("quote_id", "NOT FILLED OUT")
+        quote = request.form.get("quote", "NOT FILLED OUT")
+        quote_author = request.form.get("quote_author", "NOT FILLED OUT")
+        context = request.form.get("context", "NOT FILLED OUT")
+        category = request.form.getlist('post-category')
+        edit_post_db(post_id, user_id, quote, quote_author, context)
+        edit_post_category(post_id, category)
+        return redirect("/")
+    else:
+        abort(401)
+    
 
 @app.route('/api/follow/post', methods=["POST"])
 def add_post_to_following():
@@ -226,3 +269,6 @@ def logout():
             quote_via=quote_plus,
         )
     )
+
+if __name__ == '__main__':
+    app.run(host="localhost", port=8000, debug=True)
