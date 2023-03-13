@@ -140,3 +140,19 @@ posts_with_user_data AS (
     WHERE r.user_id = u.user_id
 )
 SELECT row_to_json(t) FROM posts_with_user_data t """
+
+FOLLOW_UNFOLLOW_USER = """
+DO
+$$
+DECLARE var_user_follower VARCHAR := %s;
+DECLARE var_user_followed VARCHAR := %s;
+BEGIN
+    IF (
+        SELECT COUNT(*) as count FROM followers WHERE follower_id = var_user_follower AND followed_id = var_user_followed
+    ) = 0 THEN INSERT INTO followers VALUES (var_user_follower,var_user_followed);
+    ELSE
+        DELETE FROM followers WHERE follower_id = var_user_follower and followed_id = var_user_followed;
+    END IF;
+END;
+$$;
+"""

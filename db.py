@@ -185,3 +185,12 @@ def search_quotes(user_id, search_text):
         cur.execute(FULL_TEXT_SEARCH,  {"user_id":user_id, "search_query":search_text})
         result = cur.fetchall()
         return [ item[0] for item in result] # return as a list of dictionaries
+    
+def follow_unfollow_user(user_id, followed_user_id):
+    with get_db_cursor(True) as cur:
+        # Depending on whether the user already follows the user or not INSERT OR DELETE
+        #   if user is not following we insert into followers table
+        #   else we delete row from  followers table
+        # Check FOLLOW_UNFOLLOW_USER for how the query handles this in database
+        current_app.logger.info("Executing query {}".format(FOLLOW_UNFOLLOW_USER %  (user_id,followed_user_id)))
+        cur.execute(FOLLOW_UNFOLLOW_USER, (user_id,followed_user_id))

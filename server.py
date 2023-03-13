@@ -144,6 +144,16 @@ def add_post_to_following():
     else:
         abort(401) # send back an 401 Unauthorized message
     
+@app.route("/api/follow/user", methods=["POST"])
+@requires_auth 
+def perform_follow_unfollow():
+    req = request.get_json()        # get the request object
+    if 'quote_id' in req:
+        followed_user_id = req['quote_id']
+        follow_unfollow_user(session['uid'], followed_user_id) # follow or unfollow the user
+        return jsonify({"status": 'success'})
+    else: 
+        return jsonify({"status": 'failed'})
 
 @app.errorhandler(404)
 def page_not_found(e):
