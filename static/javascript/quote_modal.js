@@ -104,11 +104,13 @@ function displayEditModal(quoteId) {
     fetch("/api/post-category/" + quoteId)
         .then(response => response.json())
         .then(data => {
+            console.log("Categories: " + JSON.stringify(data))
             for(let i = 0; i < data.categories.length; i++) {
                 let category = data.categories[i];
                 let categoryButton = document.getElementById("category-button-" + category);
-                categoryButton.checked = true;
+                if(categoryButton)
+                    categoryButton.checked = true;
             }
-            tagsDiv.style.display = "block";
+            tagsDiv.style.display = "flex";
         });
 }
