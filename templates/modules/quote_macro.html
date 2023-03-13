@@ -1,6 +1,6 @@
 {% macro display(quote_id=0, user_name="none", user_link="none", quote_text="none", quote_author="none", quote_context="none", 
         quote_added=false, user_pic=user_pic, date_posted="01-01-1970", num_likes=0, 
-        user=none, user_id=0, on_profile_page=false, inside_modal=false) %}
+        user=none, user_id=0, following_user=false, on_profile_page=false, inside_modal=false) %}
     {% macro class_name(name) %}{% if inside_modal %}{{name ~ '-modal'}}{% else %}{{name}}{% endif %}{% endmacro %}
     {% macro display_modal() %}onclick={{'displayQuoteModal(' ~ quote_id ~ ')'}}{% endmacro %}
     {% macro like_button() %}onclick={{'likeQuote(' ~ quote_id ~ ')'}}{% endmacro %}
@@ -19,7 +19,9 @@
                 <svg width="32px" height="32px"><use href="#icon-thumbtack"/></svg>
             </div>
         {% endif %}
-        <div class="quote-user pure-g">
+        <div class="quote-user pure-g" id="quote-user-{{ quote_id }}"
+        data-user-id="{{ user_id }}"
+        data-following-user="{% if following_user %}true{% else %}false{% endif %}">
             <div class="quote-user-image">
                 <img src="{{ user_pic }}" alt="User Image" width="64px" crossorigin="anonymous" id="user-picture-{{ quote_id }}"/>
             </div>
@@ -111,6 +113,16 @@
                 {% endif %}
             </div>
             <div class="quote-footer-date"{% if not inside_modal %}style="display:none;"{% endif %}>
+                {% if inside_modal and user is defined and user is not none %}
+                    <button class="quote-footer-buttons-follow pure-button" button="button" id="quote-follow-user-modal">
+                        <span class="quote-footer-buttons-follow-label">
+                            Follow User 
+                        </span>
+                        <span class="quote-footer-buttons-follow-icon">
+                            <i class="fa-sharp fa-solid fa-plus"></i>
+                        </span>
+                    </button>
+                {% endif %}
                 <p class="quote-footer-date-text" style="font-style:italic;" id="quote-date-posted-{{ quote_id }}">
                     {{ date_posted }}
                 </p>

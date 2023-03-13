@@ -85,23 +85,27 @@
     align-items: center;
 }
 
-.quote-footer-buttons-add-icon {
+.quote-footer-buttons-add-icon,
+.quote-footer-buttons-follow-icon {
     display: inline-block;
 }
 
 .quote-footer-buttons-like-count.spin,
-.quote-footer-buttons-add-icon.spin {
+.quote-footer-buttons-add-icon.spin,
+.quote-footer-buttons-follow-icon.spin {
     animation: spin 1s linear infinite;
 }
 
-.quote-footer-buttons-add {
+.quote-footer-buttons-add,
+.quote-footer-buttons-follow {
     background-color: var(--color-tertiary);
     color: #fff;
     border: 2px solid var(--color-tertiary);
     border-radius: 8px;
 }
 
-.quote-footer-buttons-add:hover {
+.quote-footer-buttons-add:hover,
+.quote-footer-buttons-follow:hover {
     background-color: #fff;
     color: var(--color-tertiary);
     border-radius: 8px;

@@ -42,7 +42,9 @@
                 <div class="navigation-create-post pure-u-1 pure-u-md-1-5">
                     <div class="navigation-create-post-button-div custom-can-transform">
                         <button class="pure-button navigation-create-post-button" onclick="displayCreatePostModal()">Create Post</button>
-                        <img src="{{ user['userinfo']['picture'] }}" alt="User Profile Picture" class="nav-photo" crossorigin="anonymous" width="48px" height="48px"/>
+                        <div style="display:inline" id="logged-in-profile" data-user-id="{{ user['userinfo']['sub'] }}">
+                            <img src="{{ user['userinfo']['picture'] }}" alt="User Profile Picture" class="nav-photo" crossorigin="anonymous" width="48px" height="48px"/>
+                        </div>
                     </div>
                 </div>
             {% else %}
