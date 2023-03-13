@@ -98,4 +98,17 @@ function displayEditModal(quoteId) {
     MicroModal.show("create-post-modal", {
         disableScroll: true,
     });
+
+    const tagsDiv = document.getElementById("create-post-modal-content").querySelector(".tags");
+    tagsDiv.style.display = "none";
+    fetch("/api/post-category/" + quoteId)
+        .then(response => response.json())
+        .then(data => {
+            for(let i = 0; i < data.categories.length; i++) {
+                let category = data.categories[i];
+                let categoryButton = document.getElementById("category-button-" + category);
+                categoryButton.checked = true;
+            }
+            tagsDiv.style.display = "block";
+        });
 }
