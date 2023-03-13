@@ -187,3 +187,47 @@ $$;
 """
 
 GET_POST_CATGEGORIES = """SELECT category FROM post_category WHERE post_id = %s"""
+
+QOD_HEADER = """
+WITH max_likes AS (
+    SELECT MAX(likes) as max
+    FROM (
+        SELECT post_id, COUNT(*) AS likes
+        FROM post_like
+        GROUP BY post_id
+    ) AS count_likes   
+),
+post_with_most_likes AS (
+    SELECT post_id, COUNT(*) AS num_likes
+    FROM post_like
+    GROUP BY post_id
+    HAVING COUNT(*) = (SELECT max FROM max_likes)
+),
+post_information AS (
+    SELECT p.post_id, p.user_id, p.quote,p.quote_author,p.context, p.creation_time, pm.num_likes, u.profile_image, u.username
+    FROM post p, post_with_most_likes pm, users u
+    WHERE p.post_id = pm.post_id AND p.user_id = u.user_id
+)"""
+
+QOD_NOT_LOGGED_IN = QOD_HEADER + """SELECT row_to_json(t)
+FROM (
+    SELECT p.post_id, p.user_id, p.quote,p.quote_author,p.context, p.creation_time, p.num_likes, p.profile_image, p.username, false AS quote_added 
+    FROM post_information p
+) AS t"""
+
+QOD_LOGGED_IN = QOD_HEADER + """
+,
+is_post_added AS (
+    SELECT COUNT(*)
+    FROM post_following f, post_information p 
+    WHERE f.post_id = p.post_id AND f.user_id = %s
+)
+SELECT row_to_json(t)
+FROM (
+    SELECT p.post_id, p.user_id, p.quote,p.quote_author,p.context, p.creation_time, p.num_likes, p.profile_image, p.username, 
+        CASE 
+            WHEN i.count > 0 THEN true
+            ELSE false
+        END AS quote_added 
+    FROM post_information p, is_post_added i
+) AS t"""

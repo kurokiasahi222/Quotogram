@@ -269,3 +269,17 @@ def get_post_categories(post_id):
         cur.execute(GET_POST_CATGEGORIES, (post_id,))
         result = cur.fetchall()
         return [ item[0] for item in result] # return categories as a list
+    
+def get_qod(logged_in=False, user_id=None):
+    with get_db_cursor() as cur:
+        if logged_in and user_id:
+            current_app.logger.info("Executing query {}".format(QOD_LOGGED_IN %  (user_id,)))
+            cur.execute(QOD_LOGGED_IN, (user_id,))
+            result = cur.fetchall()
+            return [ item[0] for item in result] # return as a list of dictionaries
+        else:
+            current_app.logger.info("Executing query {}".format(QOD_NOT_LOGGED_IN))
+            cur.execute(QOD_NOT_LOGGED_IN)
+            result = cur.fetchall()
+            return [ item[0] for item in result] # return as a list of dictionaries
+            
