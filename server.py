@@ -199,8 +199,11 @@ def add_post_to_following():
     if 'user' in session:               # user has to be logged in
         req = request.get_json()        # get the request object
         if 'quote_id' in req:
-            follow_unfollow_post(session['uid'], req['quote_id']) # follow or unfollow the quote
-            return jsonify({"status": 'success'})
+            res = follow_unfollow_post(session['uid'], req['quote_id']) # follow or unfollow the quote
+            if res:
+                return jsonify({"status": 'success'})
+            else:
+                return jsonify({"status": 'failed'})
         else: 
             return jsonify({"status": 'failed'})
     else:
