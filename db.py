@@ -263,6 +263,13 @@ def follow_unfollow_user(user_id, followed_user_id):
         current_app.logger.info("Executing query {}".format(FOLLOW_UNFOLLOW_USER %  (user_id,followed_user_id)))
         cur.execute(FOLLOW_UNFOLLOW_USER, (user_id,followed_user_id))
 
+def get_post_categories(post_id):
+    with get_db_cursor() as cur:
+        current_app.logger.info("Executing query {}".format(GET_POST_CATGEGORIES %  (post_id,)))
+        cur.execute(GET_POST_CATGEGORIES, (post_id,))
+        result = cur.fetchall()
+        return [ item[0] for item in result] # return categories as a list
+    
 def get_user_followers(user_id):
     with get_db_cursor(True) as cur:
         current_app.logger.info("Executing query {}".format(GET_FOLLOWERS % (user_id,)))

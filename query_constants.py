@@ -197,3 +197,5 @@ BEGIN
 END;
 $$;
 """
+
+GET_POST_CATGEGORIES = """SELECT category FROM post_category WHERE post_id = %s"""
