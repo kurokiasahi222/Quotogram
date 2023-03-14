@@ -9,13 +9,13 @@ async function apiRequest(quote_id, request) {
         })
     });
 
-    console.log("Response status: " + response.status);
+    // console.log("Response status: " + response.status);
     if(response.status !== 200) {
         throw new Error("Error: " + response.status);
     }
 
     let result = response.json();
-    console.log("Data: " + result);
+    // console.log("Data: " + result);
     return result;
 }
 
@@ -34,7 +34,6 @@ function likeQuote(quote_id) {
 
     apiRequest(quote_id, 'api/like')
         .then(data => {
-            console.log("Finished liking the quote, here is the call back data: " + data);
             likeCountSpan.innerHTML = data.num_likes;
             modalLikeCountSpan.innerHTML = data.num_likes;
 
@@ -124,11 +123,9 @@ function followUser(user_id) {
 
     followUserButtonIcon.innerHTML = '<i class="fa-solid fa-spinner"></i>';
     followUserButtonIcon.classList.toggle("spin");
-    console.log("Following user: " + user_id);
 
     apiRequest(user_id, 'api/follow/user')
         .then(data => {
-            console.log("Finished following, with following: " + following);
             if(following === 'true') { // user has unfollowed the user
                 followUserButton.setAttribute("data-following", false);
                 followUserButtonLabel.innerHTML = "Follow User";
@@ -179,6 +176,5 @@ document.addEventListener('click', function(event) {
 });
 
 function canInteract() {
-    console.log("Can interact: " + document.querySelector("body").getAttribute("data-can-interact"));
     return document.querySelector("body").getAttribute("data-can-interact") === "true";
 }

@@ -23,10 +23,10 @@ oauth.register(
     server_metadata_url=f'https://{os.environ.get("AUTH0_DOMAIN")}/.well-known/openid-configuration'
 )
 
-
-# The funtion below can be used with an annotation @requires_auth  
-# This will ensure that while visiting certain pages the users will be logged in or will have to log in
+ 
 def requires_auth(f):
+    """The function can be used with an annotation @requires_auth. This will ensure that while visiting 
+    certain pages the users will be logged in or will have to log in"""
     @wraps(f)
     def decorated(*args, **kwargs):
         if 'user' not in session:
@@ -60,6 +60,7 @@ def index():
     print(qod)
     return render_template("index.html", user=user, posts=posts, qod=qod)
 
+
 @app.route("/profile")
 @requires_auth                              # need to be logged in to access this page
 def profile():
@@ -86,6 +87,7 @@ def profile():
                            num_quotes=num_quotes,followers=followers, 
                            num_followers=num_followers, num_following=num_following)
 
+
 @app.route("/followers")
 @requires_auth                              # need to be logged in to access this page
 def followers():
@@ -95,6 +97,7 @@ def followers():
     num_quotes = get_posts_number(session['uid'])
     return render_template("followers.html", user=user, followers=followers, num_quotes=num_quotes, num_followers=num_followers)
 
+
 @app.route("/following")
 @requires_auth                              # need to be logged in to access this page
 def following():
@@ -103,6 +106,7 @@ def following():
     num_followers = get_number_following(session['uid']) 
     num_quotes = get_posts_number(session['uid'])
     return render_template("following.html", user=user, following=following, num_quotes=num_quotes, num_followers=num_followers)
+
 
 @app.route('/api')                          #default api route jsonifies post table
 def default_table():
@@ -188,6 +192,7 @@ def new_post():
             add_post_category(pid, category)
     return redirect("/")
 
+
 @app.route("/edit_post", methods=["POST"])
 def edit_post():
     if 'user' in session:
@@ -225,10 +230,11 @@ def add_post_to_following():
     else:
         abort(401) # send back an 401 Unauthorized message
     
+
 @app.route("/api/follow/user", methods=["POST"])
 @requires_auth 
 def perform_follow_unfollow():
-    req = request.get_json()        # get the request object
+    req = request.get_json() # get the request object
     if 'quote_id' in req:
         followed_user_id = str(req['quote_id'])
         follow_unfollow_user(session['uid'], followed_user_id) # follow or unfollow the user
@@ -236,17 +242,23 @@ def perform_follow_unfollow():
     else: 
         return jsonify({"status": 'failed'})
 
+
 @app.route("/api/post-category/<post_id>")
 def fetch_post_categories(post_id):
     return jsonify({
         "categories": get_post_categories(post_id)
         })
  
+
 @app.route("/api/is-following/<user_id>")
 @requires_auth
 def fetch_if_following(user_id):
     other_user = 'google-oauth2|'+str(user_id)
     return jsonify(get_is_following(session['uid'],other_user)) 
+
+
+######### Error Handling Functions ########
+
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -286,7 +298,8 @@ app.register_error_handler(410, gone)
 app.register_error_handler(500, internal_server_error)
 
 
-######### Auth0 stuff ########
+######### Auth0 Functions ########
+
 
 @app.route("/login")
 def login():
@@ -330,5 +343,7 @@ def logout():
         )
     )
 
+
 if __name__ == '__main__':
     app.run(host="localhost", port=8000, debug=True)
+    
