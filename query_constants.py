@@ -73,6 +73,16 @@ FROM user_followers
 WHERE follower_id = %s
 """
 
+GET_USER_INFO = """
+SELECT row_to_json(t)
+FROM (
+    SELECT u.user_id, u.username, u.first_name, u.last_name, u.profile_image, u.email
+    FROM users u
+    WHERE u.user_id = %s
+)
+AS t
+"""
+
 
 # Get users posts from username
 USER_POSTS_FROM_USERID = """

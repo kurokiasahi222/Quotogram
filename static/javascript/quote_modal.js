@@ -49,7 +49,6 @@ function displayQuoteModal(quoteId) {
             fetch("/api/is-following/" + userNum)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
                     followUserButton.style.display = "block";
                     followUserButton.setAttribute("onclick", "followUser('" + userId + "')");
 
@@ -103,17 +102,12 @@ function displayEditModal(quoteId) {
 
     const tagsDiv = document.getElementById("create-post-modal-content").querySelector(".tags");
     tagsDiv.style.display = "none";
-    console.log("Fetching categories with " + quoteId);
     fetch("/api/post-category/" + quoteId)
         .then(response => response.json())
         .then(data => {
-            console.log("Categories: " + JSON.stringify(data))
-            console.log("Categories Length: " + data.categories.length)
             for(let i = 0; i < data.categories.length; i++) {
                 let category = data.categories[i];
-                console.log("Category: " + category);
                 let categoryButton = document.getElementById("post-category-" + category);
-                console.log("Category Button: " + categoryButton);
                 if(categoryButton)
                     categoryButton.checked = true;
             }
