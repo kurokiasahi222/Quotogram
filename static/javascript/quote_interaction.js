@@ -101,7 +101,7 @@ function deleteQuote(quote_id) {
     if(!canInteract())
         return;
 
-    apiRequest(quote_id, 'api/delete')
+    apiRequest(quote_id, '/api/delete')
         .then(data => {
             if(data.status === 'success') {
                 location.reload();
