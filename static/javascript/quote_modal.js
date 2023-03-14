@@ -101,13 +101,17 @@ function displayEditModal(quoteId) {
 
     const tagsDiv = document.getElementById("create-post-modal-content").querySelector(".tags");
     tagsDiv.style.display = "none";
+    console.log("Fetching categories with " + quoteId);
     fetch("/api/post-category/" + quoteId)
         .then(response => response.json())
         .then(data => {
             console.log("Categories: " + JSON.stringify(data))
+            console.log("Categories Length: " + data.categories.length)
             for(let i = 0; i < data.categories.length; i++) {
                 let category = data.categories[i];
-                let categoryButton = document.getElementById("category-button-" + category);
+                console.log("Category: " + category);
+                let categoryButton = document.getElementById("post-category-" + category);
+                console.log("Category Button: " + categoryButton);
                 if(categoryButton)
                     categoryButton.checked = true;
             }
