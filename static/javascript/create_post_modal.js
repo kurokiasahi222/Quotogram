@@ -5,10 +5,13 @@ function displayCreatePostModal() {
     document.querySelector(".create-post-modal-title-text").innerHTML = "Create Post";
     document.querySelector(".create-post-modal-form-submit").innerHTML = "Post Quote";
 
-    let formText = document.getElementById("form-quote");
-    let formAuthor = document.getElementById("form-quote-author");
-    let formContext = document.getElementById("form-context");
-    let formQuoteId = document.getElementById("form-quote-id");
+    const form = document.getElementById("quote-post-form");
+    form.setAttribute("action", "/new_post");
+
+    const formText = document.getElementById("form-quote");
+    const formAuthor = document.getElementById("form-quote-author");
+    const formContext = document.getElementById("form-context");
+    const formQuoteId = document.getElementById("form-quote-id");
 
     // Clear the form
     formText.value = "";
