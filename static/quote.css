@@ -12,6 +12,7 @@
     font-weight: bold;
     color: var(--color-tertiary);
     margin-left: 5px;
+    overflow-wrap: break-word;
 }
 
 .quote-user-name-content:hover {
