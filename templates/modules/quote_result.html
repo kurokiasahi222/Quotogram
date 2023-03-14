@@ -2,7 +2,7 @@
 <div class="pure-u-1 quote-wrapper">
     {{ quote.display(quote_id=quote_id,
                     user_name=quote_user, 
-                    user_link="#", 
+                    user_link="/profile?username=" + user_id.split("|")[1], 
                     quote_text=quote_text, 
                     quote_author=quote_author,
                     quote_context=quote_context)}}

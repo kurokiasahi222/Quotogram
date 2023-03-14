@@ -8,7 +8,7 @@
 {% block content %}
     {% include "modules/quote_modal.html" %}
     <h2>Most Liked Quote</h2>
-    {% if qod is defined %}
+    {% if qod and qod is defined %}
         {% with 
             quote_id=qod[0].post_id,
             quote_user=qod[0].username,
