@@ -87,16 +87,18 @@ def profile():
 def followers():
     user = session['user']
     followers = get_user_followers(session['uid'])
-    print('Followers:',followers)
-    return render_template("followers.html", user=user, followers=followers)
+    num_followers = get_number_following(session['uid']) 
+    num_quotes = get_posts_number(session['uid'])
+    return render_template("followers.html", user=user, followers=followers, num_quotes=num_quotes, num_followers=num_followers)
 
 @app.route("/following")
 @requires_auth                              # need to be logged in to access this page
 def following():
     user = session['user']
     following = get_user_following(session['uid'])
-    print('Following:',following)
-    return render_template("following.html", user=user, following=following)
+    num_followers = get_number_following(session['uid']) 
+    num_quotes = get_posts_number(session['uid'])
+    return render_template("following.html", user=user, following=following, num_quotes=num_quotes, num_followers=num_followers)
 
 @app.route('/api')                          #default api route jsonifies post table
 def default_table():

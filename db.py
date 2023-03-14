@@ -219,6 +219,12 @@ def search_quotes(user_id, search_text):
         result = cur.fetchall()
         return [ item[0] for item in result] # return as a list of dictionaries
 
+
+def get_posts_number(user_id):
+    posts = get_user_posts(user_id) # gets the user's posts
+    num_quotes = len(posts) 
+    return num_quotes;
+
 def get_profile_data(user_id):
     posts = get_user_posts(user_id) # gets the user's posts
     num_quotes = len(posts) 

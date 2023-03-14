@@ -23,8 +23,8 @@
 
 {% with 
     user_name=user['userinfo']['name'],
-    user_quote_count = "1234",
-    user_follower_count = "5678",
+    user_quote_count = num_quotes,
+    user_follower_count = num_followers,
     user_profile_pic =user['userinfo']['picture'] %}
     {% include "modules/profileSideBar.html" %}
 {% endwith %}
