@@ -260,11 +260,12 @@ def get_number_following(user_id):
         result = cur.fetchone()
         return result[0] 
 
-def get_user_posts_from_username(username):
+def get_user_posts_from_id(userid):
     with get_db_cursor(True) as cur:
-        current_app.logger.info("Executing query {}".format(USER_POSTS_FROM_USERNAME % (username,)))
-        cur.execute(USER_POSTS_FROM_USERNAME, (username,))
+        current_app.logger.info("Executing query {}".format(USER_ALL_FOLLOWING_POSTS % (userid,)))
+        cur.execute(USER_ALL_FOLLOWING_POSTS, (userid,))
         result = cur.fetchall()
+        print(result)
         return [ item[0] for item in result] # return as a list of dictionaries
     
 def follow_unfollow_user(user_id, followed_user_id):

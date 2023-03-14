@@ -75,8 +75,10 @@ WHERE follower_id = %s
 
 
 # Get users posts from username
-USER_POSTS_FROM_USERNAME = """SELECT row_to_json(p.post_id,p.user_id,p.quote,p.quote_author,p.context, p.creation_time, p.num_likes, p.quote_added, u.profile_image, u.username)
-                                FROM post p, users u WHERE p.user_id = u.user_id AND u.username = %s """
+USER_POSTS_FROM_USERID = """
+SELECT row_to_json(p.post_id,p.user_id,p.quote,p.quote_author,p.context, p.creation_time, p.num_likes, p.quote_added, u.profile_image, u.username)
+FROM post p, users u WHERE p.user_id = u.user_id AND u.username = %s 
+"""
 
 # Get the number of peole user is following
 NUMBER_FOLLOWING = "SELECT COUNT(*) FROM followers WHERE follower_id = %s"

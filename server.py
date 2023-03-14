@@ -65,14 +65,15 @@ def index():
 def profile():
     # Check for query string
     user = session['user']
-    if 'username' in request.args:
-        user_name = request.args.get("username")
+    authzero = 'google-oauth2|'
+    if 'userid' in request.args:
+        userid = request.args.get('userid')
         # check if the username exits 
-        user_exists = check_username_in_database(user_name)
+        user_exists = check_user_id_in_database(authzero + userid)
         if user_exists == []:
-            # if the username does not exist then redirect to profile page
+            # if the userid does not exist then redirect to profile page
             return redirect('/profile')
-        posts = get_user_posts_from_username(user_name)
+        posts = get_user_posts_from_id(authzero + userid)
         return render_template("profile_dynamic.html", user=user, posts=posts)
     # If no query string, then get the user's profile
     posts, followers, num_quotes, num_followers, num_following = get_profile_data(session['uid']) 
