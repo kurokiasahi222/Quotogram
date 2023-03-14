@@ -307,3 +307,9 @@ def get_qod(logged_in=False, user_id=None):
             result = cur.fetchall()
             return [ item[0] for item in result] # return as a list of dictionaries
             
+def get_is_following(user_id, followed_id):
+    with get_db_cursor() as cur:
+        current_app.logger.info("Executing query {}".format(IS_FOLLOWING % (user_id,followed_id)))
+        cur.execute(IS_FOLLOWING, (user_id,followed_id))
+        result = cur.fetchall()
+        return result[0][0] # return as a dictionary

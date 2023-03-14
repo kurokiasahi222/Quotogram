@@ -234,7 +234,13 @@ def perform_follow_unfollow():
 def fetch_post_categories(post_id):
     return jsonify({
         "categories": get_post_categories(post_id)
-        }) 
+        })
+ 
+@app.route("/api/is-following/<user_id>")
+@requires_auth
+def fetch_if_following(user_id):
+    other_user = 'google-oauth2|'+str(user_id)
+    return jsonify(get_is_following(session['uid'],other_user)) 
 
 @app.errorhandler(404)
 def page_not_found(e):

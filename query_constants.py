@@ -257,3 +257,13 @@ FROM (
         END AS quote_added 
     FROM post_information p, is_post_added i
 ) AS t"""
+
+IS_FOLLOWING = """
+SELECT row_to_json(t) FROM (
+    SELECT 
+        CASE WHEN (SELECT COUNT(*) FROM followers f WHERE f.follower_id = %s AND f.followed_id = %s) > 0
+                THEN true
+            ELSE false
+        END AS following
+) AS t
+"""
