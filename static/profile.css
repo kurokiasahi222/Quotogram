@@ -44,7 +44,7 @@ aside {
   /* Toggler Functionality */
 #toggler:checked ~ aside {
     left: -240px;
-  }
+}
 
 .sidebar {
     padding: 0 40px;

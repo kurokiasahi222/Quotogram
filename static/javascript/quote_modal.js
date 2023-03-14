@@ -12,7 +12,6 @@ function displayQuoteModal(quoteId) {
     const likeCount = document.getElementById("quote-like-count-" + quoteId).innerText;
     const datePosted = document.getElementById("quote-date-posted-" + quoteId).innerText;
     const addButton = document.getElementById("quote-add-" + quoteId);
-    const isFollowing = document.getElementById("quote-user-" + quoteId).getAttribute("data-following-user");
     const userId = document.getElementById("quote-user-" + quoteId).getAttribute("data-user-id");
 
     document.getElementById("quote-text-modal").innerText = quoteText;
@@ -43,22 +42,24 @@ function displayQuoteModal(quoteId) {
     // Follow User Button
     const followUserButton = document.getElementById("quote-follow-user-modal");
     if(followUserButton) {
+        followUserButton.style.display = "none";
         const loggedInUser = document.getElementById("logged-in-profile").getAttribute("data-user-id");
-        if(loggedInUser === userId) {
-            followUserButton.style.display = "none";
-        } else {
-            followUserButton.style.display = "block";
-            let userNum = userId.split('|')[1];
-            console.log("User Num: " + userNum);
-            followUserButton.setAttribute("onclick", "followUser('" + userId + "')");
-            followUserButton.setAttribute("data-following", isFollowing);
-            if(isFollowing === "true") {
-                followUserButton.querySelector(".quote-footer-buttons-follow-label").innerHTML = "Unfollow User";
-                followUserButton.querySelector(".quote-footer-buttons-follow-icon").innerHTML = '<i class="fa-solid fa-check"></i>';
-            } else {
-                followUserButton.querySelector(".quote-footer-buttons-follow-label").innerHTML = "Follow User";
-                followUserButton.querySelector(".quote-footer-buttons-follow-icon").innerHTML = '<i class="fa-solid fa-plus"></i>';
-            }
+        let userNum = userId.split('|')[1];
+        if(loggedInUser !== userId) {
+            fetch("/api/is-following/" + userNum)
+                .then(response => response.json())
+                .then(data => {
+                    followUserButton.style.display = "block";
+                    followUserButton.setAttribute("onclick", "followUser('" + userId + "')");
+
+                    if(data["following"]) {
+                        followUserButton.querySelector(".quote-footer-buttons-follow-label").innerHTML = "Unfollow User";
+                        followUserButton.querySelector(".quote-footer-buttons-follow-icon").innerHTML = '<i class="fa-solid fa-check"></i>';
+                    } else {
+                        followUserButton.querySelector(".quote-footer-buttons-follow-label").innerHTML = "Follow User";
+                        followUserButton.querySelector(".quote-footer-buttons-follow-icon").innerHTML = '<i class="fa-solid fa-plus"></i>';
+                    }
+                });
         }
     }
 
@@ -101,17 +102,12 @@ function displayEditModal(quoteId) {
 
     const tagsDiv = document.getElementById("create-post-modal-content").querySelector(".tags");
     tagsDiv.style.display = "none";
-    console.log("Fetching categories with " + quoteId);
     fetch("/api/post-category/" + quoteId)
         .then(response => response.json())
         .then(data => {
-            console.log("Categories: " + JSON.stringify(data))
-            console.log("Categories Length: " + data.categories.length)
             for(let i = 0; i < data.categories.length; i++) {
                 let category = data.categories[i];
-                console.log("Category: " + category);
                 let categoryButton = document.getElementById("post-category-" + category);
-                console.log("Category Button: " + categoryButton);
                 if(categoryButton)
                     categoryButton.checked = true;
             }

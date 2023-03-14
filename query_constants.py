@@ -73,10 +73,22 @@ FROM user_followers
 WHERE follower_id = %s
 """
 
+GET_USER_INFO = """
+SELECT row_to_json(t)
+FROM (
+    SELECT u.user_id, u.username, u.first_name, u.last_name, u.profile_image, u.email
+    FROM users u
+    WHERE u.user_id = %s
+)
+AS t
+"""
+
 
 # Get users posts from username
-USER_POSTS_FROM_USERNAME = """SELECT row_to_json(p.post_id,p.user_id,p.quote,p.quote_author,p.context, p.creation_time, p.num_likes, p.quote_added, u.profile_image, u.username)
-                                FROM post p, users u WHERE p.user_id = u.user_id AND u.username = %s """
+USER_POSTS_FROM_USERID = """
+SELECT row_to_json(p.post_id,p.user_id,p.quote,p.quote_author,p.context, p.creation_time, p.num_likes, p.quote_added, u.profile_image, u.username)
+FROM post p, users u WHERE p.user_id = u.user_id AND u.username = %s 
+"""
 
 # Get the number of peole user is following
 NUMBER_FOLLOWING = "SELECT COUNT(*) FROM followers WHERE follower_id = %s"
@@ -103,7 +115,8 @@ likes_for_all_posts_id AS (
 POSTS_NOT_LOGGED_IN = POST_LIKES_HEADER + """
 SELECT p.post_id,p.user_id,p.quote,p.context, p.creation_time, l.num_likes, false as quote_added, u.profile_image, u.username
 FROM post p, likes_for_all_posts_id l, users u
-WHERE p.post_id = l.post_id AND p.user_id = u.user_id"""
+WHERE p.post_id = l.post_id AND p.user_id = u.user_id
+LIMIT %s OFFSET %s"""
 
 POSTS_LOGGED_IN = POST_LIKES_HEADER + """,
 posts_added AS (
@@ -132,7 +145,8 @@ all_posts AS (
 )
 SELECT  p.post_id,p.user_id,p.quote,p.quote_author,p.context, p.creation_time, p.num_likes, p.quote_added, u.profile_image, u.username
 FROM all_posts p , users u
-WHERE p.user_id = u.user_id"""
+WHERE p.user_id = u.user_id
+LIMIT %s OFFSET %s"""
 
 POST_LIKES = """SELECT COUNT(*) AS num_likes
                 FROM post_like
@@ -257,3 +271,13 @@ FROM (
         END AS quote_added 
     FROM post_information p, is_post_added i
 ) AS t"""
+
+IS_FOLLOWING = """
+SELECT row_to_json(t) FROM (
+    SELECT 
+        CASE WHEN (SELECT COUNT(*) FROM followers f WHERE f.follower_id = %s AND f.followed_id = %s) > 0
+                THEN true
+            ELSE false
+        END AS following
+) AS t
+"""

@@ -24,7 +24,7 @@
         data-user-id="{{ user_id }}"
         data-following-user="{% if following_user %}true{% else %}false{% endif %}">
             <div class="quote-user-image">
-                <img src="{{ user_pic }}" alt="User Image" width="64px" crossorigin="anonymous" id="user-picture-{{ quote_id }}"/>
+                <img src="{{ user_pic }}" alt="User Image" width="64px" referrerpolicy="no-referrer" id="user-picture-{{ quote_id }}"/>
             </div>
             <div class="quote-user-name">
                 <a href="{{ user_link }}" class="quote-user-name-content" id="user-link-{{ quote_id }}">

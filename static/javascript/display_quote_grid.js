@@ -1,6 +1,8 @@
 // Code from article: https://medium.com/@andybarefoot/a-masonry-style-layout-using-css-grid-8c663d355ebb
 function resizeAllGridItems() {
     const grid = document.querySelector(".popular-posts");
+    grid.style.gridAutoRows = "40px";
+
     const rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
     const rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
 

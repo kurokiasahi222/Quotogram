@@ -1,6 +1,6 @@
 {% block profileSideBar %}
     <!-- https://codepen.io/swastikyadav/pen/zYZPyrN?editors=1100 -->
-    <input type="checkbox" id="toggler" />
+    <input type="checkbox" id="toggler" class="toggler" />
     <aside class="sidebar"> 
         <div class="profile-user-name">
             {{ user_name }}
@@ -10,7 +10,7 @@
         </label>
         
         <div class="profile-user-image">
-            <img src="{{ user_profile_pic }}" alt="User Image" width="64px" crossorigin="anonymous" />
+            <img src="{{ user_profile_pic }}" alt="User Image" width="64px" referrerpolicy="no-referrer" />
         </div>
         <div class="profile-user-quote-count">
             <div class="profile-info"> {{ user_quote_count }} </div>
@@ -20,10 +20,12 @@
             <div class="profile-info"> {{ user_follower_count }} </div>
             <div> Followers </div>
         </div>
-        <div class="sidebar-buttons">
-            <a href="/followers" class="pure-button followers-button">Followers</a>
-            <a href="/following" class="pure-button following-button">Following</a>
-            <a href="/logout" class="pure-button logout-button">Logout</a>
-        </div>
+        {% if not no_buttons %}
+            <div class="sidebar-buttons">
+                <a href="/followers" class="pure-button followers-button">Followers</a>
+                <a href="/following" class="pure-button following-button">Following</a>
+                <a href="/logout" class="pure-button logout-button">Logout</a>
+            </div>
+        {% endif %}
     </aside>   
 {% endblock %}

@@ -15,16 +15,19 @@
             firstname = follower[2],
             lastname = follower[3],
             user_photo = follower[4],
+            user_id = follower[0],
+            link = "/profile?username=" + follower[0].split("|")[1],
             following = True %}
             {% include "modules/follower.html" %}
         {% endwith %}
     {% endfor %}
+    <script src="/static/javascript/sidebar.js" defer></script>
 {% endblock %} 
 
 {% with 
     user_name=user['userinfo']['name'],
-    user_quote_count = "1234",
-    user_follower_count = "5678",
+    user_quote_count = num_quotes,
+    user_follower_count = num_followers,
     user_profile_pic =user['userinfo']['picture'] %}
     {% include "modules/profileSideBar.html" %}
 {% endwith %}

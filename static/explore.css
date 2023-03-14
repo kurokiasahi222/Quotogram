@@ -22,3 +22,7 @@
 .search-form button:hover {
     background-image: none;
 }
+
+.quote-wrapper {
+    margin-top: 1em;
+}

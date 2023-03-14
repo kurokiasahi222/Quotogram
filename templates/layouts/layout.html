@@ -4,73 +4,76 @@
     {% block head %}
     {% include "layouts/dependencies.html" %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="/static/icon.ico" />
     <title>{% block title %}{% endblock %} - Quotagram</title>
     {% endblock %}
 </head>
 <body data-can-interact="{% if user is defined and user is not none %}true{% else %}false{% endif %}">
-    <nav class="navigation">
-        <div class="pure-g navigation-wrapper">
-            <div class="pure-u-1 pure-u-md-1-5">
-                <div class="navigation-logo pure-menu">
-                    <div class="navigation-logo-container pure-menu-heading">
-                        <a href="/">
-                            <img src="/static/images/logo.png" alt="Quotagram Logo" height="64px" />
-                        </a>
+    <div class="page-container">
+        <nav class="navigation">
+            <div class="pure-g navigation-wrapper">
+                <div class="pure-u-1 pure-u-md-1-5">
+                    <div class="navigation-logo pure-menu">
+                        <div class="navigation-logo-container pure-menu-heading">
+                            <a href="/">
+                                <img src="/static/images/logo.png" alt="Quotagram Logo" height="64px" />
+                            </a>
+                        </div>
+                        <a href="#" class="navigation-custom-toggle"><s class="navigation-bar"></s><s class="navigation-bar"></s></a>
                     </div>
-                    <a href="#" class="navigation-custom-toggle"><s class="navigation-bar"></s><s class="navigation-bar"></s></a>
                 </div>
-            </div>
-            <div class="pure-u-1 pure-u-md-3-5">
-                <div class="navigation-links pure-menu pure-menu-horizontal custom-can-transform">
-                    <ul class="pure-menu-list">
-                        <li class="pure-menu-item">
-                            <a class="pure-menu-link" href="/">Home Page</a>
-                        </li>
-                        <li class="pure-menu-item">
-                            <a class="pure-menu-link" href="/explore">Explore  <i class="fa-sharp fa-solid fa-magnifying-glass"></i></a>
-                        </li>
-                        {% if user is defined and user is not none %}
+                <div class="pure-u-1 pure-u-md-3-5">
+                    <div class="navigation-links pure-menu pure-menu-horizontal custom-can-transform">
+                        <ul class="pure-menu-list">
                             <li class="pure-menu-item">
-                                <a class="pure-menu-link" href="/profile">Profile <i class="fas fa-solid fa-user"></i></a>
+                                <a class="pure-menu-link" href="/">Home Page</a>
                             </li>
-                        {% endif %} 
-                    </ul>
+                            <li class="pure-menu-item">
+                                <a class="pure-menu-link" href="/explore">Explore  <i class="fa-sharp fa-solid fa-magnifying-glass"></i></a>
+                            </li>
+                            {% if user is defined and user is not none %}
+                                <li class="pure-menu-item">
+                                    <a class="pure-menu-link" href="/profile">Profile <i class="fas fa-solid fa-user"></i></a>
+                                </li>
+                            {% endif %} 
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            {% if user is defined and user is not none %}
-                <div class="navigation-create-post pure-u-1 pure-u-md-1-5">
-                    <div class="navigation-create-post-button-div custom-can-transform">
-                        <button class="pure-button navigation-create-post-button" onclick="displayCreatePostModal()">Create Post</button>
-                        <div style="display:inline" id="logged-in-profile" data-user-id="{{ user['userinfo']['sub'] }}">
-                            <img src="{{ user['userinfo']['picture'] }}" alt="User Profile Picture" class="nav-photo" crossorigin="anonymous" width="48px" height="48px"/>
+                {% if user is defined and user is not none %}
+                    <div class="navigation-create-post pure-u-1 pure-u-md-1-5">
+                        <div class="navigation-create-post-button-div custom-can-transform">
+                            <button class="pure-button navigation-create-post-button" onclick="displayCreatePostModal()">Create Post</button>
+                            <div style="display:inline" id="logged-in-profile" data-user-id="{{ user['userinfo']['sub'] }}">
+                                <a href="/profile">
+                                    <img src="{{ user['userinfo']['picture'] }}" alt="User Profile Picture" class="nav-photo" referrerpolicy="no-referrer" width="48px" height="48px"/>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% else %}
-                <div class="navigation-login pure-u-1 pure-u-md-1-5">
-                    <div class="navigation-login-button-div custom-can-transform pure-g">
-                        <a class="pure-button pure-button-primary navigation-login-button" href="/login">Login <i class="fa-solid fa-user"></i></a>
+                {% else %}
+                    <div class="navigation-login pure-u-1 pure-u-md-1-5">
+                        <div class="navigation-login-button-div custom-can-transform pure-g">
+                            <a class="pure-button pure-button-primary navigation-login-button" href="/login">Login <i class="fa-solid fa-user"></i></a>
+                        </div>
                     </div>
+                {% endif %}
+            </div>
+        </nav>
+        <div class="main-content">
+            {% block content %}{% endblock %}
+            {% if user is defined and user is not none %}
+                <div class="new-post-circle">
+                    <button class="new-post-circle-button pure-button" onclick="displayCreatePostModal()">
+                        <svg width="100px" height="100px" style="stroke: var(--color-accent);"><use href="#icon-circleplus"/></svg>
+                    </button>
                 </div>
             {% endif %}
         </div>
-    </nav>
-    <div class="main-content">
-        {% block content %}{% endblock %}
-        {% if user is defined and user is not none %}
-            <div class="new-post-circle">
-                <button class="new-post-circle-button pure-button" onclick="displayCreatePostModal()">
-                    <svg width="100px" height="100px" style="stroke: var(--color-accent);"><use href="#icon-circleplus"/></svg>
-                </button>
+        <div class="footer">
+            <div class="footer-content">
+                {% block footer %}
+                Quotagram is a project developed at the University of Minnesota &copy; Copyright 2023.
+                {% endblock %}
             </div>
-        {% endif %}
-    </div>
-    <div class="footer">
-        <div class="footer-content">
-            {% block footer %}
-            Quotagram is a project developed at the University of Minnesota &copy; Copyright 2023.
-            {% endblock %}
         </div>
     </div>
     {% include "modules/create_post_modal.html" %}

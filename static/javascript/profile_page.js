@@ -57,7 +57,6 @@ function calculatePositions() {
     for (let i = 0; i < iterations; i++) {
         sentence = generateTree(sentence);
     }
-    console.log(sentence);
 
     let pos = {x: -len, y: 0};
     let stack = [];
