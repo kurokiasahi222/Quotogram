@@ -223,7 +223,7 @@ def search_quotes(user_id, search_text):
 def get_posts_number(user_id):
     posts = get_user_posts(user_id) # gets the user's posts
     num_quotes = len(posts) 
-    return num_quotes;
+    return num_quotes
 
 def get_profile_data(user_id):
     posts = get_user_posts(user_id) # gets the user's posts
@@ -259,6 +259,15 @@ def get_number_following(user_id):
         cur.execute(NUMBER_FOLLOWING, (user_id,))
         result = cur.fetchone()
         return result[0] 
+
+
+def get_user_info(user_id):
+    with get_db_cursor(True) as cur:
+        current_app.logger.info("Executing query {}".format(GET_USER_INFO % (user_id,)))
+        cur.execute(GET_USER_INFO, (user_id,))
+        result = cur.fetchone()
+        return result[0]
+
 
 def get_user_posts_from_id(userid):
     with get_db_cursor(True) as cur:

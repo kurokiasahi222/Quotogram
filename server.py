@@ -70,11 +70,14 @@ def profile():
         userid = request.args.get('userid')
         # check if the username exits 
         user_exists = check_user_id_in_database(authzero + userid)
-        if user_exists == []:
+        if user_exists == [] or userid == session['uid']:
             # if the userid does not exist then redirect to profile page
             return redirect('/profile')
         posts = get_user_posts_from_id(authzero + userid)
-        return render_template("profile_dynamic.html", user=user, posts=posts)
+        followers = get_followers(authzero + userid)
+        user_info = get_user_info(authzero + userid)
+        print(user_info)
+        return render_template("profile_dynamic.html", user=user, posts=posts, num_quotes=len(posts), num_followers=len(followers), other_user=user_info)
     # If no query string, then get the user's profile
     posts, followers, num_quotes, num_followers, num_following = get_profile_data(session['uid']) 
     print("My posts" + str(posts))

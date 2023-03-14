@@ -35,11 +35,21 @@
     <script src='https://unpkg.com/panzoom@9.4.0/dist/panzoom.min.js'></script>
     <script src="/static/javascript/profile_page.js"></script>
 {% endblock %}
-
-{% with 
-    user_name=user['userinfo']['name'],
-    user_quote_count=num_quotes,
-    user_follower_count=num_followers,
-    user_profile_pic=user['userinfo']['picture'] %}
-    {% include "modules/profileSideBar.html" %}
-{% endwith %}
+{% if other_user and other_user is defined %}
+    {% with 
+        user_name=other_user['username'],
+        user_quote_count=num_quotes,
+        user_follower_count=num_followers,
+        user_profile_pic=other_user['profile_image'],
+        no_buttons=true %}
+        {% include "modules/profileSideBar.html" %}
+    {% endwith %}
+{% else %}
+    {% with 
+        user_name=user['userinfo']['name'],
+        user_quote_count=num_quotes,
+        user_follower_count=num_followers,
+        user_profile_pic=user['userinfo']['picture'] %}
+        {% include "modules/profileSideBar.html" %}
+    {% endwith %}
+{% endif %}

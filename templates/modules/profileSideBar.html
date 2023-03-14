@@ -20,10 +20,12 @@
             <div class="profile-info"> {{ user_follower_count }} </div>
             <div> Followers </div>
         </div>
-        <div class="sidebar-buttons">
-            <a href="/followers" class="pure-button followers-button">Followers</a>
-            <a href="/following" class="pure-button following-button">Following</a>
-            <a href="/logout" class="pure-button logout-button">Logout</a>
-        </div>
+        {% if not no_buttons %}
+            <div class="sidebar-buttons">
+                <a href="/followers" class="pure-button followers-button">Followers</a>
+                <a href="/following" class="pure-button following-button">Following</a>
+                <a href="/logout" class="pure-button logout-button">Logout</a>
+            </div>
+        {% endif %}
     </aside>   
 {% endblock %}
