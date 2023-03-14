@@ -93,7 +93,7 @@ def profile():
 def followers():
     user = session['user']
     followers = get_user_followers(session['uid'])
-    num_followers = get_number_following(session['uid']) 
+    num_followers = get_num_followers(session['uid']) 
     num_quotes = get_posts_number(session['uid'])
     return render_template("followers.html", user=user, followers=followers, num_quotes=num_quotes, num_followers=num_followers)
 
@@ -103,7 +103,7 @@ def followers():
 def following():
     user = session['user']
     following = get_user_following(session['uid'])
-    num_followers = get_number_following(session['uid']) 
+    num_followers = get_num_followers(session['uid']) 
     num_quotes = get_posts_number(session['uid'])
     return render_template("following.html", user=user, following=following, num_quotes=num_quotes, num_followers=num_followers)
 

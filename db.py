@@ -224,6 +224,11 @@ def get_posts_number(user_id):
     return num_quotes
 
 
+def get_num_followers(user_id):
+    followers = get_followers(user_id) # gets the followers of user_id (user_id, first, last name, image, is_following )
+    num_followers = len(followers)
+    return num_followers;
+
 def get_profile_data(user_id):
     posts = get_user_posts(user_id) # gets the user's posts
     num_quotes = len(posts) 
