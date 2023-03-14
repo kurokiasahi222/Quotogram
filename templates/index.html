@@ -50,4 +50,12 @@
             {% endfor %}
         {% endif %}
     </div>
+    <div class="pagination">
+        {% if page > 1 %}
+            <a href="/?page={{page-1}}" class="pure-button pagination-prev-button">Previous Page</a>
+        {% endif %}
+        {% if page < num_pages %}
+            <a href="/?page={{page+1}}" class="pure-button pagination-next-button">Next Page</a>
+        {% endif %}
+    </div>
 {% endblock %}

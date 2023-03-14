@@ -20,7 +20,8 @@
 }
 
 .quote-user {
-    float: right;
+    float: none;
+    justify-content: right;
     padding: 0.25em;
 }
 
@@ -30,10 +31,14 @@
     height: 64px;
 }
 
+.quote-user-image > img {
+    border-radius: 8px;
+}
+
 .quote-content-text-quote {
     font-size: 1.25em;
     text-indent: 3em;
-    padding-top: 1em;
+    padding-top: 0.25em;
     overflow-wrap: break-word;
 }
 
@@ -167,5 +172,16 @@
     }
     to {
         transform:rotate(360deg);
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .quote-user {
+        float: right;
+        justify-content: unset;
+    }
+
+    .quote-content-text-quote { 
+        padding-top: 1em;
     }
 }

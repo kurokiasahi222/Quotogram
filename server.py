@@ -44,21 +44,26 @@ def init():
 
 @app.route("/")
 def index():
+    page = int(request.args.get("page", 1)) - 1
     user = None
     posts = None
     qod = None
+
+    num_pages = get_num_posts() // 24 + 1
+    if(page < 0 or page >= num_pages):
+        page = 0
+
     if 'user' in session:                   # check if user is logged in or not
         user = session['user']
-        res = get_posts_logged_in(session["uid"]) 
+        res = get_posts_logged_in(session["uid"], page=page)
         posts = json.loads(json.dumps(res))  # convert result to json string
         qod = json.loads(json.dumps(get_qod(True, session["uid"])))
-
     else:
-        res = get_posts_not_logged_in()
+        res = get_posts_not_logged_in(page=page)
         posts = json.loads(json.dumps(res))  # convert result to json string
         qod = json.loads(json.dumps(get_qod(False)))
     print(qod)
-    return render_template("index.html", user=user, posts=posts, qod=qod)
+    return render_template("index.html", user=user, posts=posts, qod=qod, page=page+1, num_pages=num_pages)
 
 
 @app.route("/profile")
@@ -239,7 +244,7 @@ def perform_follow_unfollow():
         followed_user_id = str(req['quote_id'])
         follow_unfollow_user(session['uid'], followed_user_id) # follow or unfollow the user
         return jsonify({"status": 'success'})
-    else: 
+    else:
         return jsonify({"status": 'failed'})
 
 

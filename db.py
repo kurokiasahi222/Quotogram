@@ -22,7 +22,14 @@ def setup():
     global pool
     DATABASE_URL = os.environ['DATABASE_URL']
     current_app.logger.info(f"creating db connection pool")
-    pool = ThreadedConnectionPool(1, 10, dsn=DATABASE_URL, sslmode='require')
+    pool = ThreadedConnectionPool(1, 
+                                  10, 
+                                  dsn=DATABASE_URL, 
+                                  sslmode='require',
+                                  keepalives=1,
+                                  keepalives_idle=5,
+                                  keepalives_interval=2,
+                                  keepalives_count=2)
 
 
 @contextmanager
@@ -97,20 +104,24 @@ def add_post(user_id, quote, quote_author, context):
             (user_id, quote, quote_author, context))
 
 
-def get_posts_logged_in(user_id):
+def get_posts_logged_in(user_id, page=0, per_page=24):
+    if page < 0:
+        page = 0
     with get_db_cursor(True) as cur:
         q = "SELECT row_to_json(t) FROM ("+ POSTS_LOGGED_IN +") t"
-        current_app.logger.info("Executing query {}".format(q % (user_id,user_id)))
-        cur.execute(q, (user_id,user_id))
+        current_app.logger.info("Executing query {}".format(q % (user_id,user_id, per_page, per_page*page)))
+        cur.execute(q, (user_id,user_id, per_page, per_page*page))
         result = cur.fetchall()
         return [ item[0] for item in result] # return as a list of dictionaries
 
 
-def get_posts_not_logged_in():
-   with get_db_cursor(True) as cur:
+def get_posts_not_logged_in(page=0, per_page=24):    
+    if page < 0:
+        page = 0
+    with get_db_cursor(True) as cur:
        q = "SELECT row_to_json(t) FROM ("+ POSTS_NOT_LOGGED_IN +") t"
-       current_app.logger.info("Executing query {}".format(q))
-       cur.execute(q)
+       current_app.logger.info("Executing query {}".format(q % (per_page, per_page*page)))
+       cur.execute(q, (per_page, per_page*page))
        result = cur.fetchall()
        return [ item[0] for item in result] # return as a list of dictionaries
 
@@ -341,3 +352,10 @@ def get_is_following(user_id, followed_id):
         cur.execute(IS_FOLLOWING, (user_id,followed_id))
         result = cur.fetchall()
         return result[0][0] # return as a dictionary
+
+
+def get_num_posts():
+    with get_db_cursor() as cur:
+        cur.execute("SELECT COUNT(*) FROM post")
+        result = cur.fetchone()
+        return result[0]

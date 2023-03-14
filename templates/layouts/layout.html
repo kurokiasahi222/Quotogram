@@ -4,7 +4,6 @@
     {% block head %}
     {% include "layouts/dependencies.html" %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="/static/icon.ico" />
     <title>{% block title %}{% endblock %} - Quotagram</title>
     {% endblock %}
 </head>
@@ -44,7 +43,9 @@
                         <div class="navigation-create-post-button-div custom-can-transform">
                             <button class="pure-button navigation-create-post-button" onclick="displayCreatePostModal()">Create Post</button>
                             <div style="display:inline" id="logged-in-profile" data-user-id="{{ user['userinfo']['sub'] }}">
-                                <img src="{{ user['userinfo']['picture'] }}" alt="User Profile Picture" class="nav-photo" crossorigin="anonymous" width="48px" height="48px"/>
+                                <a href="/profile">
+                                    <img src="{{ user['userinfo']['picture'] }}" alt="User Profile Picture" class="nav-photo" referrerpolicy="no-referrer" width="48px" height="48px"/>
+                                </a>
                             </div>
                         </div>
                     </div>

@@ -115,7 +115,8 @@ likes_for_all_posts_id AS (
 POSTS_NOT_LOGGED_IN = POST_LIKES_HEADER + """
 SELECT p.post_id,p.user_id,p.quote,p.context, p.creation_time, l.num_likes, false as quote_added, u.profile_image, u.username
 FROM post p, likes_for_all_posts_id l, users u
-WHERE p.post_id = l.post_id AND p.user_id = u.user_id"""
+WHERE p.post_id = l.post_id AND p.user_id = u.user_id
+LIMIT %s OFFSET %s"""
 
 POSTS_LOGGED_IN = POST_LIKES_HEADER + """,
 posts_added AS (
@@ -144,7 +145,8 @@ all_posts AS (
 )
 SELECT  p.post_id,p.user_id,p.quote,p.quote_author,p.context, p.creation_time, p.num_likes, p.quote_added, u.profile_image, u.username
 FROM all_posts p , users u
-WHERE p.user_id = u.user_id"""
+WHERE p.user_id = u.user_id
+LIMIT %s OFFSET %s"""
 
 POST_LIKES = """SELECT COUNT(*) AS num_likes
                 FROM post_like
