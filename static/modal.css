@@ -1,0 +1,129 @@
+.modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(6px);
+}
+
+.quote-modal,
+.delete-quote-modal-widget {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 4px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    min-width: 50%;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-header,
+.delete-quote-modal-header {
+    position: relative;
+    height: 1.25em;
+}
+
+.modal-close {
+    width: 34px;
+    height: 34px;
+    position: absolute;
+    top: -1.25em;
+    right: 0em;
+}
+
+.modal-close .modal-close-bar {
+    background-color: #b4b4b4;
+    display: block;
+    width: 20px;
+    height: 2px;
+    border-radius: 100px;
+    position: absolute;
+    top: 18px;
+    right: 7px;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    transition: all 0.5s;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.modal-close .modal-close-bar:first-child {
+    -webkit-transform: translateY(-6px);
+    -moz-transform: translateY(-6px);
+    -ms-transform: translateY(-6px);
+    transform: translateY(-6px);
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+@keyframes mmfadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes mmfadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes mmslideIn {
+from { transform: translateY(15%); }
+    to { transform: translateY(0); }
+}
+
+@keyframes mmslideOut {
+    from { transform: translateY(0); }
+    to { transform: translateY(-10%); }
+}
+
+.micromodal-slide {
+    display: none;
+}
+
+.micromodal-slide.is-open {
+    display: block;
+}
+
+.micromodal-slide[aria-hidden="false"] .modal-background {
+    animation: mmfadeIn .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+.micromodal-slide[aria-hidden="false"] .quote-modal {
+    animation: mmslideIn .3s cubic-bezier(0, 0, .2, 1);
+}
+
+.micromodal-slide[aria-hidden="true"] .modal-background {
+    animation: mmfadeOut .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+.micromodal-slide[aria-hidden="true"] .quote-modal {
+    animation: mmslideOut .3s cubic-bezier(0, 0, .2, 1);
+}
+
+.micromodal-slide .quote-modal,
+.micromodal-slide .modal-background {
+    will-change: transform;
+}
+
+@media screen and (min-width: 768px) {
+    .quote-modal,
+    .delete-quote-modal-widget {
+        width: unset;
+        height: unset;
+
+        max-width: 600px;
+        max-height: 70vh;
+    }
+}

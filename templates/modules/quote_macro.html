@@ -1,0 +1,133 @@
+{% macro display(quote_id=0, user_name="none", user_link="none", quote_text="none", quote_author="none", quote_context="none", 
+        quote_added=false, user_pic=user_pic, date_posted="01-01-1970", num_likes=0, 
+        user=none, user_id=0, following_user=false, on_profile_page=false, inside_modal=false) %}
+    {% macro class_name(name) %}{% if inside_modal %}{{name ~ '-modal'}}{% else %}{{name}}{% endif %}{% endmacro %}
+    {% macro display_modal() %}onclick={{'displayQuoteModal(' ~ quote_id ~ ')'}}{% endmacro %}
+    {% macro like_button() %}onclick={{'likeQuote(' ~ quote_id ~ ')'}}{% endmacro %}
+    {% macro add_button() %}onclick={{'addQuote(' ~ quote_id ~ ')'}}{% endmacro %}
+    {% macro delete_quote() %}onclick={{'displayDeleteModal(' ~ quote_id ~ ')'}}{% endmacro %}
+    {% macro edit_quote() %}onclick={{'displayEditModal(' ~ quote_id ~ ')'}}{% endmacro %}
+    {% macro toggle_options() %}onclick={{'toggleEditOptions(' ~ quote_id ~ ')'}}{% endmacro %}
+    <div class="{{ class_name('quote') }}" {% if inside_modal %}role="dialog" aria-modal="true" aria-labelledby="quote-text"{% endif %}>
+        {% if inside_modal %}
+            <div class="modal-header">
+                <a href="#" class="modal-close" aria-label="Close modal" data-micromodal-close><s class="modal-close-bar"></s><s class="modal-close-bar"></s></a>
+            </div>
+        {% endif %}
+        {% if on_profile_page and not inside_modal %}
+            <div class="quote-pin-handle" width="32px" height="32px">
+                <svg width="32px" height="32px" class="quote-pin-handle-circle"><use href="#icon-circle"/></svg>
+                <svg width="32px" height="32px" class="quote-pin-handle-thumbtack" style="display:none;"><use href="#icon-thumbtack"/></svg>
+            </div>
+        {% endif %}
+        <div class="quote-user pure-g" id="quote-user-{{ quote_id }}"
+        data-user-id="{{ user_id }}"
+        data-following-user="{% if following_user %}true{% else %}false{% endif %}">
+            <div class="quote-user-image">
+                <img src="{{ user_pic }}" alt="User Image" width="64px" crossorigin="anonymous" id="user-picture-{{ quote_id }}"/>
+            </div>
+            <div class="quote-user-name">
+                <a href="{{ user_link }}" class="quote-user-name-content" id="user-link-{{ quote_id }}">
+                    {{ user_name }}
+                </a>
+            </div>
+        </div>
+        <div class="quote-content">
+            <div class="quote-content-img">
+                <svg width="64px" height="64px"><use href="#icon-right-quotation"/></svg>
+            </div>
+            <div class="quote-content-text">
+                <p class="quote-content-text-quote" id="quote-text-{{ quote_id }}">
+                    {{ quote_text }}
+                </p>
+            </div>
+            <div class="quote-content-author">
+                <p style="font-weight:bold;" class="quote-content-author-name" id="quote-author-{{ quote_id }}">
+                    {{ quote_author }}
+                </p>
+            </div>
+            <div class="quote-content-extra"{% if not inside_modal %}style="display:none;"{% endif %}>
+                <p style="font-style: italic;">User Posted Information</p>
+                <p class="quote-content-extra-text" id="quote-context-{{ quote_id }}">
+                    {{ quote_context | safe }}
+                </p>
+            </div>
+        </div>
+        <div class="quote-footer">
+            {% if not inside_modal %}
+                <div class="quote-footer-info">
+                    <button class="pure-button more-info-button" {{ display_modal() }}>More Info</button>
+                </div>
+            {% endif %}
+            <div class="quote-footer-buttons pure-g">    
+                {% if not inside_modal %}
+                    <div class="quote-footer-buttons-dropdown-container">
+                        <button class="quote-footer-buttons-dropdown pure-button" type="button" aria-label="More Options" {{ toggle_options() }}>
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                        <div class="quote-footer-buttons-dropdown-content" id="quote-dropdown-content-{{ quote_id }}">
+                            <div class="quote-footer-buttons-dropdown-wrapper">
+                                <button class="quote-footer-buttons-dropdown-content-info pure-button dropdown-button" type="button" {{ display_modal() }}>
+                                    More Info <i class="fa-solid fa-circle-info"></i>
+                                </button>
+                                {% if user is defined and user is not none %}
+                                    {% if user_id == user['userinfo']['sub'] %}
+                                        <button class="quote-footer-buttons-dropdown-content-delete pure-button dropdown-button" type="button" {{ delete_quote() }}>
+                                            Delete Quote <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                        <button class="quote-footer-buttons-dropdown-content-edit pure-button dropdown-button" type="button" {{ edit_quote() }}>
+                                            Edit Quote <i class="fa-solid fa-pencil"></i>
+                                        </button>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="quote-footer-buttons-like-group">
+                    <button class="quote-footer-buttons-like pure-button" id="quote-like-button-{{ quote_id }}" type="button" {{ like_button() }} aria-label="Like Quote">
+                        <i class="fa-solid fa-heart"></i>
+                    </button>
+                    <div class="quote-footer-buttons-like-count-wrapper">
+                        <span class="quote-footer-buttons-like-count" id="quote-like-count-{{ quote_id }}">{{ num_likes }}</span>
+                    </div>
+                </div>
+                {% if user is defined and user is not none %}
+                    <button class="quote-footer-buttons-add pure-button" button="button" {{ add_button() }} id="quote-add-{{ quote_id }}"
+                        quote-added="{% if quote_added %}true{% else %}false{% endif %}">
+                        {% if not quote_added %}
+                            <span class="quote-footer-buttons-add-label">
+                                Add 
+                            </span>
+                            <span class="quote-footer-buttons-add-icon">
+                                <i class="fa-sharp fa-solid fa-plus"></i>
+                            </span>
+                        {% else %}
+                            <span class="quote-footer-buttons-add-label">
+                                Remove 
+                            </span>
+                            <span class="quote-footer-buttons-add-icon">
+                                <i class="fa-solid fa-check"></i>
+                            </span>
+                        {% endif %}
+                    </button>
+                {% endif %}
+            </div>
+            <div class="quote-footer-date"{% if not inside_modal %}style="display:none;"{% endif %}>
+                {% if inside_modal and user is defined and user is not none %}
+                    <button class="quote-footer-buttons-follow pure-button" button="button" id="quote-follow-user-modal">
+                        <span class="quote-footer-buttons-follow-label">
+                            Follow User 
+                        </span>
+                        <span class="quote-footer-buttons-follow-icon">
+                            <i class="fa-sharp fa-solid fa-plus"></i>
+                        </span>
+                    </button>
+                {% endif %}
+                <p class="quote-footer-date-text" style="font-style:italic;" id="quote-date-posted-{{ quote_id }}">
+                    {{ date_posted }}
+                </p>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

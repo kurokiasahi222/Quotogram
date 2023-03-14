@@ -1,0 +1,28 @@
+.popular-posts {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-auto-rows: 40px;
+    grid-gap: 1em;
+}
+
+.quote-wrapper {
+    background-color: #e9e9e9;
+    border-radius: 10px;
+}
+
+.quote {
+    background-color: transparent;
+    border-radius: unset;
+}
+
+@media screen and (min-width: 48em) {
+    .popular-posts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media screen and (min-width: 80em) {
+    .popular-posts {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}

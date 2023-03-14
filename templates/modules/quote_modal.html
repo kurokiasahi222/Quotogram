@@ -1,0 +1,6 @@
+{% import "modules/quote_macro.html" as quote %}
+<div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+    <div class="modal-background" tabindex="-1" data-micromodal-close>
+        {{ quote.display(quote_id='modal', inside_modal=true, user=user) }}
+    </div>
+</div>

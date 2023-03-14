@@ -1,0 +1,19 @@
+{% import "modules/quote_macro.html" as quote %}
+<div class="{% for class in classes %}{{class ~ ' '}}{% endfor %}quote-wrapper" {% if not custom_width %}style="width:clamp(300px, 50%, 500px);"{% endif %}
+    data-quote-id="{{ quote_id }}">
+    {{ quote.display(quote_id=quote_id,
+                    user_name=quote_user, 
+                    user_link="#", 
+                    quote_text=quote_text, 
+                    quote_author=quote_author,
+                    quote_context=quote_context,
+                    quote_added=quote_added,
+                    user_pic=user_pic,
+                    date_posted=date_posted,
+                    num_likes=num_likes,
+                    user=user,
+                    user_id=user_id,
+                    on_profile_page=on_profile_page,
+                    following_user=following_user,
+                    )}}
+</div>

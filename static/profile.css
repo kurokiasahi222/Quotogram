@@ -1,0 +1,136 @@
+.main-content {
+    width: 90%;
+}
+
+.navigation{
+    position:relative;
+}
+
+.quote-content-img > img {
+    z-index: 0;
+}
+
+aside {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    
+    background-color: var(--color-secondary);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  
+    box-shadow: 3px 1px 5px 0px rgba(0, 0, 0, 0.75);
+
+    z-index: +2;
+  }
+       
+  .sidebar-toggle {
+    position: absolute;
+    font-size: 2em;
+    top: 85px;
+    left: 245px;
+    background: var(--color-secondary);
+    padding: 4px 11px;
+    
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+#toggler{
+    display: none;
+  }
+  
+  /* Toggler Functionality */
+#toggler:checked ~ aside {
+    left: -240px;
+  }
+
+.sidebar {
+    padding: 0 40px;
+    box-sizing: border-box;
+    text-align: center;
+}
+  
+.profile-user-name {
+    margin-top: 120px;
+    margin-bottom: 1em;
+    font-size: 1.5em;
+    position: relative;
+}
+
+.profile-user-image {
+    margin: 1% auto;
+}
+
+.profile-user-image > img {
+    border-radius: 8px;
+}
+
+.profile-user-quote-count{
+    font-size: 1.25em;
+    margin: 8% auto;
+}
+
+.profile-user-follower-count{
+    font-size: 1.25em;
+    margin: 8% auto;
+}
+
+.profile-info {
+    font-weight: bold;
+}
+
+.sidebar-buttons{
+    margin-top: 35%;
+}
+
+.followers-button, .following-button, .settings-button, .logout-button{
+    margin: 5px;
+    background-color: var(--color-primary);
+    width: 70%;
+    color: white;
+    font-weight: 500;
+} 
+
+.content{
+    background-color: darkgrey;
+    margin: 1% 0;
+    min-height: 100vh;
+}
+
+.profile-posts {
+    overflow: hidden;
+    width: 100%;
+    height: 80vh;
+    border: 1px solid var(--color-primary);
+}
+
+.profile-posts-wrapper {
+    width: 100%;
+    position: relative;
+    height: 500vh;
+    width: 500vw;
+
+    background-image: url("/static/images/cork-repeat.png");
+}
+
+.quote-wrapper {
+    position: absolute;
+}
+
+.quote-wrapper > div {
+    margin: 0;
+    box-shadow: 7px 7px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.quote {
+    position: relative;
+}
+
+.quote-pin-handle {
+    position: absolute;
+    top: 0;
+    left: 250px;
+    cursor: move;
+}

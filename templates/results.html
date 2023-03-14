@@ -1,0 +1,21 @@
+{% extends "layouts/layout.html" %}
+{% import "macros/set_quote_variables.html" as set_quote_vars %}
+{% block title %}Search Results{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/explore.css">
+{% endblock %}
+{% block content %}
+    {% include "modules/quote_modal.html" %}
+    <form class="search-form pure-form" action="/explore" method="post">
+        <fieldset>
+            <legend>Search</legend>
+            <input type="text" name="search" placeholder="Search for a quote">
+            <button type="submit" class="pure-button pure-button-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </fieldset>
+    </form>
+    {% for result in results %}
+        {% set_quote_vars.set_vars(result) %}
+        {% include "modules/quote_result.html" %}
+    {% endfor %}
+{% endblock %}

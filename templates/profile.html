@@ -1,0 +1,79 @@
+{% extends "layouts/layout.html" %}
+{% block title %}Profile{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/profile.css" />
+    <link rel="stylesheet" href="/static/follower.css" />
+{% endblock %}
+
+{% block content %}
+    {% include "modules/quote_modal.html" %}
+    <h2> My Posts</h2>
+    <div class="profile posts pure-g">
+    {% with classes=["pure-u-1-1", "pure-u-md-1-2", "pure-u-xl-1-3"] %}
+        {% with 
+            quote_id=1,
+            quote_text = "So, if you cannot understand that there is something in man which responds to the challenge of this mountain and goes out to meet it, that the struggle is the struggle of life itself upward and forever upward, then you wont see why we go. What we get from this adventure is just sheer joy. And joy is, after all, the end of life.",
+            quote_author="David Foster Wallace",
+            quote_user="Random User",   
+            custom_width=true %}
+            {% include "modules/quote.html" %}
+        {% endwith %}
+        {% with 
+            quote_id=2,
+            quote_text = "The whole trick is keeping the truth up front in daily consciousness.",
+            quote_author="David Foster Wallace",
+            quote_user="Random User",
+            custom_width=true %}
+            {% include "modules/quote.html" %}
+        {% endwith %}
+        {% with 
+            quote_id=3,
+            quote_text = "The whole trick is keeping the truth up front in daily consciousness.",
+            quote_author="David Foster Wallace",
+            quote_user="Random User",
+            custom_width=true %}
+            {% include "modules/quote.html" %}
+        {% endwith %}
+        {% with 
+            quote_id=4,
+            quote_text = "The whole trick is keeping the truth up front in daily consciousness.",
+            quote_author="David Foster Wallace",
+            quote_user="Random User",
+            custom_width=true %}
+            {% include "modules/quote.html" %}
+        {% endwith %}
+        {% with 
+            quote_id=5,
+            quote_text = "The whole trick is keeping the truth up front in daily consciousness.",
+            quote_author="David Foster Wallace",
+            quote_user="Random User",
+            custom_width=true %}
+            {% include "modules/quote.html" %}
+        {% endwith %}
+    {% endwith %}
+    <h2> My Followers</h2>
+    {% with 
+        quote_user = "Tom Brady",
+        following = True %}
+        {% include "modules/follower.html" %}
+    {% endwith %}
+    {% with 
+        quote_user = "Aaron Rodgers",
+        following = False %}
+        {% include "modules/follower.html" %}
+    {% endwith %}
+    {% with 
+        quote_user = "Patrick Mahomes",
+        following = False %}
+        {% include "modules/follower.html" %}
+    {% endwith %}
+{% endblock %}
+
+{% with 
+    user_name=user['userinfo']['name'],
+    user_quote_count = "1234",
+    user_follower_count = "5678",
+    user_profile_pic =user['userinfo']['picture'] %}
+    {% include "modules/profileSideBar.html" %}
+{% endwith %}

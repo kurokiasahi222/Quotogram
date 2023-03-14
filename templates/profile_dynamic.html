@@ -1,0 +1,45 @@
+{% extends "layouts/layout.html" %}
+{% block title %}Profile{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/profile.css" />
+    <link rel="stylesheet" href="/static/follower.css" />
+{% endblock %}
+
+{% block content %}
+    {% include "modules/quote_modal.html" %}
+    <h2> My Quote Board</h2>
+    <div class="profile-posts">
+        <div class="profile-posts-wrapper">
+            {% if posts is defined %}
+                {% for post in posts %}
+                    {% with 
+                        quote_id=post.post_id,
+                        quote_user=post.username,
+                        quote_text=post.quote,
+                        quote_author=post.quote_author,
+                        quote_context=post.context,
+                        date_posted=post.creation_time.split("T")[0],
+                        num_likes=post.num_likes,
+                        quote_added=post.quote_added,
+                        user_id=post.user_id,
+                        user_pic=post.profile_image,
+                        following_user=post.following_user,
+                        on_profile_page=true %}
+                        {% include "modules/quote.html" %}
+                    {% endwith %}
+                {% endfor %}
+            {% endif %} 
+        </div>
+    </div>
+    <script src='https://unpkg.com/panzoom@9.4.0/dist/panzoom.min.js'></script>
+    <script src="/static/javascript/profile_page.js"></script>
+{% endblock %}
+
+{% with 
+    user_name=user['userinfo']['name'],
+    user_quote_count=num_quotes,
+    user_follower_count=num_followers,
+    user_profile_pic=user['userinfo']['picture'] %}
+    {% include "modules/profileSideBar.html" %}
+{% endwith %}

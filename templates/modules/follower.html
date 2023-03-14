@@ -1,0 +1,21 @@
+{% block follower %}
+    <div class="follower">
+        <div class="follower-user-image">
+            <img src="{{ user_photo }}" alt="User Image" width="64px"/>
+        </div>
+        <div class="follower-text">
+            <a href="#">{{ username }}</a>
+            <div class="follower-name">
+                <span> {{ firstname }} </span>
+                <span> {{ lastname }} </span>
+            </div>
+        </div>
+        <div class="follower-follow-button">
+            {% if following %}
+                <button class="pure-button follow-button">Unfollow</button>
+            {% else %}
+                <button class="pure-button unfollow-button">Follow</button>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

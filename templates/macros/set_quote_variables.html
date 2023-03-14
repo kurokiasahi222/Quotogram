@@ -1,0 +1,12 @@
+{% macro set_vars(dictionary) %}
+    {% set quote_id = dictionary['quote_id'] %}
+    {% set quote_user = dictionary['user_name'] %}
+    {% set quote_text = dictionary['quote_text'] %}
+    {% set quote_author = dictionary['quote_author'] %}
+    {% set quote_context = dictionary['quote_context'] %}
+    {% set date_posted = dictionary['date_posted'] %}
+    {% set num_likes = dictionary['num_likes'] %}
+    {% set user_pic = dictionary['picture_src_url'] %}
+    {% set user_id = dictionary['user_id'] %}
+    {% set quote_added = dictionary['quote_added'] %}
+{% endmacro %}
