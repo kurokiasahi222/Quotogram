@@ -289,14 +289,16 @@ def get_user_followers(user_id):
         current_app.logger.info("Executing query {}".format(GET_FOLLOWERS % (user_id,)))
         cur.execute(GET_FOLLOWERS, (user_id,))
         result = cur.fetchall()
-        return [ item[0] for item in result] # return as a list of dictionaries
+        print('follower-query-result:',result);
+        return [item for item in result] # return as a list of dictionaries
     
 def get_user_following(user_id):
     with get_db_cursor(True) as cur:
         current_app.logger.info("Executing query {}".format(GET_FOLLOWING % (user_id,)))
         cur.execute(GET_FOLLOWING, (user_id,))
         result = cur.fetchall()
-        return [ item[0] for item in result] # return as a list of dictionaries
+        print(result);
+        return [item for item in result] # return as a list of dictionaries
 
     
 def get_qod(logged_in=False, user_id=None):

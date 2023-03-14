@@ -1,0 +1,30 @@
+{% extends "layouts/layout.html" %}
+{% block title %}Profile{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/profile.css" />
+    <link rel="stylesheet" href="/static/follower.css" />
+{% endblock %}
+
+{% block content %}
+    <h2 class="follower-header"> Following </h2>
+
+    {% for follower in following %} 
+        {% with 
+            username = follower[1],
+            firstname = follower[2],
+            lastname = follower[3],
+            user_photo = follower[4],
+            following = True %}
+            {% include "modules/follower.html" %}
+        {% endwith %}
+    {% endfor %}
+{% endblock %} 
+
+{% with 
+    user_name=user['userinfo']['name'],
+    user_quote_count = "1234",
+    user_follower_count = "5678",
+    user_profile_pic =user['userinfo']['picture'] %}
+    {% include "modules/profileSideBar.html" %}
+{% endwith %}

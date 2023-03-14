@@ -87,6 +87,7 @@ def profile():
 def followers():
     user = session['user']
     followers = get_user_followers(session['uid'])
+    print('Followers:',followers)
     return render_template("followers.html", user=user, followers=followers)
 
 @app.route("/following")
@@ -94,6 +95,7 @@ def followers():
 def following():
     user = session['user']
     following = get_user_following(session['uid'])
+    print('Following:',following)
     return render_template("following.html", user=user, following=following)
 
 @app.route('/api')                          #default api route jsonifies post table

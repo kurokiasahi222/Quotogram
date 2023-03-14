@@ -1,6 +1,7 @@
 .follower {
     background-color: #e2e0e0;
-    width: 100%;
+    width: 90%;
+    max-width: 500px;
     border-radius: 10px;
     padding: 0.75em 1em;
     margin: 1em 0;
@@ -9,22 +10,31 @@
     display:flex;
 }
 
+.follower-header{
+    margin-left: 1.5em;
+}
 
 .follower-user-image {
     margin-left: 0.5em;
 }
 
-.follower-user-name{
+.follower-text{
     margin:auto;
 }
+
+.follower-follow-button{
+    width:30%;
+    min-width: 90px;
+}
+
 .unfollow-button{
-    margin: 5px;
+    margin-top: 13px;
     background-color: var(--color-primary);
-    width: auto;
+    width: 100%;
 } 
 
 .follow-button{
-    margin: 5px;
+    margin-top: 13px;
     background-color: var(--color-secondary);
-    width: auto;
+    width: 100%;
 } 

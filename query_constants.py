@@ -53,24 +53,24 @@ FROM all_posts_following_with_userinfo a;
 
 # Get followers of a user
 GET_FOLLOWERS = """
-WITH user_followers AS (SELECT *
+WITH user_followers AS (
+SELECT *
 FROM users 
-JOIN followers ON users.user_id = followers.followed_id)
-SELECT user_id, username, first_name, last_name, 
-profile_image
+JOIN followers ON users.user_id = followers.follower_id)
+SELECT *
 FROM user_followers
-WHERE user_id = %s
+WHERE followed_id = %s
 """
 
 # Get following of a user
 GET_FOLLOWING = """
-WITH user_following AS (SELECT *
-FROM users
-JOIN followers ON users.user_id = followers.follower_id)
-SELECT user_id, username, first_name, last_name,
-profile_image
-FROM user_following
-WHERE user_id = %s
+WITH user_followers AS (
+SELECT *
+FROM users 
+JOIN followers ON users.user_id = followers.followed_id)
+SELECT *
+FROM user_followers
+WHERE follower_id = %s
 """
 
 
