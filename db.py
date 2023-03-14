@@ -25,11 +25,7 @@ def setup():
     pool = ThreadedConnectionPool(1, 
                                   10, 
                                   dsn=DATABASE_URL, 
-                                  sslmode='require',
-                                  keepalives=1,
-                                  keepalives_idle=5,
-                                  keepalives_interval=2,
-                                  keepalives_count=2)
+                                  sslmode='require')
 
 
 @contextmanager
