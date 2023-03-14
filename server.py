@@ -182,7 +182,7 @@ def new_post():
     add_post(user_id, quote, quote_author, context) # add the post to the post table
 
     # automatically follow the post after posting
-    res = requests.get("http://127.0.0.1:5000/api/post")
+    res = requests.get("/api/post")
     res = res.json()
     pid = -1
     for post in res: #get the most recent post
