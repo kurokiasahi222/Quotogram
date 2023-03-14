@@ -27,24 +27,26 @@
     {% endif %}
     <h2>Your Homepage</h2>
     <div class="popular-posts">
-        {% if posts is defined %}
+        {% if posts is defined and qod and qod is defined %}
             {% for post in posts %}
-                {% with 
-                    quote_id=post.post_id,
-                    quote_user=post.username,
-                    quote_text=post.quote,
-                    quote_author=post.quote_author,
-                    quote_context=post.context,
-                    date_posted=post.creation_time.split("T")[0],
-                    num_likes=post.num_likes,
-                    quote_added=post.quote_added,
-                    user_id=post.user_id,
-                    user_pic=post.profile_image,
-                    following_user=post.following_user,
-                    custom_width=true
-                    %}
-                    {% include "modules/quote.html" %}
-                {% endwith %}
+                {% if post.post_id != qod[0].post_id %}
+                    {% with 
+                        quote_id=post.post_id,
+                        quote_user=post.username,
+                        quote_text=post.quote,
+                        quote_author=post.quote_author,
+                        quote_context=post.context,
+                        date_posted=post.creation_time.split("T")[0],
+                        num_likes=post.num_likes,
+                        quote_added=post.quote_added,
+                        user_id=post.user_id,
+                        user_pic=post.profile_image,
+                        following_user=post.following_user,
+                        custom_width=true
+                        %}
+                        {% include "modules/quote.html" %}
+                    {% endwith %}
+                {% endif %}
             {% endfor %}
         {% endif %}
     </div>
