@@ -130,6 +130,7 @@ def table(table_name='post'):
 
 @app.route('/api/delete', methods=["POST"])
 def delete_quote():
+    print("Attempting to delete a quote")
     if 'user' in session:       # user has to be logged in
         body = request.get_json()
         quote_id = body['quote_id']
@@ -182,10 +183,9 @@ def new_post():
     add_post(user_id, quote, quote_author, context) # add the post to the post table
 
     # automatically follow the post after posting
-    res = requests.get("/api/post")
-    res = res.json()
+    res = get_table_json("post")
     pid = -1
-    for post in res: #get the most recent post
+    for post in res: # get the most recent post
         if post['user_id'] == user_id:
             pid = max(post['post_id'], pid)
     follow_unfollow_post(user_id, pid)
