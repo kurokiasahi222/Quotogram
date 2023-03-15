@@ -32,11 +32,23 @@ CSCI 5117, Spring 2023, [assignment description](https://canvas.umn.edu/courses/
 
 
 ## Screenshots of Site
+Desktop version homepage
+![Desktop version homepage](/static/images/photos/homepage_web.png)
 
-**[Add a screenshot of each key page (around 4)](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository)
-along with a very brief caption:**
+Mobile version homepage
+![Mobile version homepage](/static/images/photos/homepage_mobile.png)
 
-![](https://media.giphy.com/media/o0vwzuFwCGAFO/giphy.gif)
+Quote Modal
+![Quote modal](/static/images/photos/quote_modal.png)
+
+Post Creation (adding quotes)
+![Create post](/static/images/photos/create_post.png)
+
+Profile page
+![Profile page](/static/images/photos/profile_page.png)
+
+Explore (Search) Page
+![Explore page](/static/images/photos/explore_search.png)
 
 
 ## Mock-ups
@@ -61,5 +73,3 @@ This is our explore and search page. Very standard search bar at the top and als
 * Font Awesome [Website Link](https://fontawesome.com/): An icon library that we pull from quite a bit to get nice high quality icons on our pages.
 
 Stack overflow and various online articles were used throughout building this project. A lot of times the code in their solution was exactly the code needed for our uses. These particlar cases have been documented within the actual code itself and can be found in the source files. 
-
-...
